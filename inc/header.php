@@ -17,10 +17,10 @@
 <body>
     <header>
         <ul class="flexheader">
-            <li><a href="./register.php">Inscription</a></li>
-            <li><a href='./login.php'>Connexion</a></li>
+            <li><a href="./inscription.php">Inscription</a></li>
+            <li><a href='./connexion.php'>Connexion</a></li>
         </ul>
-        <img id="csLogo" src="./img/logo.png" alt="Configuration Supreme">
+        <img id="csLogo" src="./img/logoR.png" alt="Configuration Suprême">
     </header>
     
     <nav>

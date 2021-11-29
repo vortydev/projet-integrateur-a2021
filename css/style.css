@@ -3,8 +3,10 @@
     --rouge: #660000;
     --rouge_accent: #440000;
     --gris: #aaa;
-    /* bleu */
-    /* gris */
+    --bleu: #000088;
+    --bleu_accent: #000066;
+    --vert: #006600;
+    --vert_accent: #004400;
 }
 
 /* CSS RESET */
@@ -46,7 +48,7 @@ body {
     font-family: "Calibri", sans-serif;
 }
 
-a, b, h1, h2 {
+a, h1, h2 {
     color: white;
 }
 
@@ -61,6 +63,7 @@ main {
     padding: 20px;
     border-radius: 5px;
     background-color: var(--rouge);
+    padding-bottom: 100px;
 }
 
 /* HEADER */
@@ -74,6 +77,10 @@ main {
     padding: 10px;
     list-style: none;
     text-align: center;
+}
+
+.flexheader a {
+    transition: all 0.1s ease-in-out;
 }
 
 .flexheader a:hover {
@@ -120,6 +127,49 @@ footer {
     margin-top: 10px;
     margin-bottom: 10px;
     text-align: center;
+}
+
+/* CHANGEMENT DE THÈME */
+.blue_theme .flexnav a, .blue_theme main {
+    background-color: var(--bleu);
+}
+
+.blue_theme .flexnav a:hover {
+    background-color: var(--bleu_accent);
+}
+
+.green_theme .flexnav a, .green_theme main {
+    background-color: var(--vert);
+}
+
+.green_theme .flexnav a:hover {
+    background-color: var(--vert_accent);
+}
+
+.flextheme {
+    margin: auto;
+    margin-top: 5px;
+    width: max-content;
+    text-align: center;
+}
+
+.flextheme button {
+    width: 20px;
+    display: block;
+    color: white;
+    border-color: black;
+}
+
+#btn_r {
+    background-color: var(--rouge);
+}
+
+#btn_g {
+    background-color: var(--vert);
+}
+
+#btn_b {
+    background-color: var(--bleu);
 }
 
 /* MEDIA QUERY */
