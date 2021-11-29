@@ -15,19 +15,21 @@
 </head>
 
 <body>
- 
     <header>
-        <img src="./img/logo.png" class="indexLogo" alt="ConfigurateurSupreme">
-        <a href="./inscription.php">S'inscrire</a>
-        <a href="./connexion.php">Connexion</a>
+        <ul class="flexheader">
+            
+            <li><a href="./register.php">Inscription</a></li>
+            <li><a href='./login.php'>Connexion</a></li>
+        </ul>
+        <img id="csLogo" src="./img/logo.png" alt="Configuration Supreme">
     </header>
     
     <nav>
         <ul class="flexnav">
-            <li class=""><a class="nav_btn" href="./index.php">Accueil</a></li>
-            <li class=""><a class="nav_btn" href="./configuration.php">Configurer</a></li>
-            <li class=""><a class="nav_btn" href="./mesConfigurations.php">Mes créations</a></li>
-            <li class=""><a class="nav_btn" href="./contact.php">Contact</a></li>
+            <li class=""><a href="./index.php">Accueil</a></li>
+            <li class=""><a href="./configuration.php">Configurer</a></li>
+            <li class=""><a href="./mesConfigurations.php">Mes configurations</a></li>
+            <li class=""><a href="./contact.php">Contact</a></li>
         </ul>
     </nav>
 

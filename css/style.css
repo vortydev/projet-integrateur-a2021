@@ -1,6 +1,8 @@
 /* COLOR PALETTE */
 :root {
-
+    --rouge: #660000;
+    /* bleu */
+    /* gris */
 }
 
 /* CSS RESET */
@@ -34,6 +36,74 @@
 .col-10 {width: 83.33%;}
 .col-11 {width: 91.66%;}
 .col-12 {width: 100%;}
+
+body {
+    background-color: black;
+    color: white;
+    font-family: "Calibri", sans-serif;
+}
+
+a, b, h1, h2 {
+    color: white;
+}
+
+main {
+    width: 80%;
+    margin: auto;
+    background-color: var(--rouge);
+}
+
+/* HEADER */
+.flexheader {
+    margin-left: auto;
+    width: max-content;
+    align-content: flex-end;
+}
+
+.flexheader li {
+    padding: 10px;
+    list-style: none;
+    text-align: center;
+    font-size: 24px;
+}
+
+#csLogo {
+    margin: auto;
+    display: block;
+    width: 200px;
+}
+
+/* NAVBAR */
+.flexnav {
+    margin: auto;
+    width: 80%;
+    padding-bottom: 20px;
+}
+
+.flexnav li {
+    list-style: none;
+    text-align: center;
+    width: 25%;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.flexnav a {
+    padding: 10px;
+    display: block;
+    background-color: var(--rouge);
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+    border-radius: 10px;
+    transition: all 0.2s ease-in-out;
+}
+
+/* FOOTER */
+footer {
+    margin-top: 10px;
+    text-align: center;
+}
 
 /* MEDIA QUERY */
 @media only screen and (max-width: 980px) {
