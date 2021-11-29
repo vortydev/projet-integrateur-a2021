@@ -15,15 +15,13 @@
 </head>
 
 <body>
-    
-    
+ 
     <header>
         <img src="./img/logo.png" class="indexLogo" alt="ConfigurateurSupreme">
         <a href="./inscription.php">S'inscrire</a>
         <a href="./connexion.php">Connexion</a>
     </header>
     
-
     <nav>
         <ul class="flexnav">
             <li class=""><a class="nav_btn" href="./index.php">Accueil</a></li>
