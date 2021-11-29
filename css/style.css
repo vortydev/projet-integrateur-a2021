@@ -17,6 +17,7 @@
 /* RESPONSIVE */
 [class*="flex"] {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     align-content: center;
 }
@@ -117,6 +118,7 @@ main {
 /* FOOTER */
 footer {
     margin-top: 10px;
+    margin-bottom: 10px;
     text-align: center;
 }
 
@@ -134,4 +136,18 @@ footer {
     .col-10m {width: 83.33%;}
     .col-11m {width: 91.66%;}
     .col-12m {width: 100%;}
+
+    .flexnav {
+        flex-direction: row;
+        width: 90%;
+    }
+
+    .flexnav li {
+        width: 50%;
+        padding: 5px;
+    }
+
+    main {
+        width: 90%;
+    }
 }
