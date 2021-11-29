@@ -1,6 +1,8 @@
 /* COLOR PALETTE */
 :root {
     --rouge: #660000;
+    --rouge_accent: #440000;
+    --gris: #aaa;
     /* bleu */
     /* gris */
 }
@@ -47,9 +49,16 @@ a, b, h1, h2 {
     color: white;
 }
 
+h1, h2 {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
 main {
     width: 80%;
     margin: auto;
+    padding: 20px;
+    border-radius: 5px;
     background-color: var(--rouge);
 }
 
@@ -64,7 +73,10 @@ main {
     padding: 10px;
     list-style: none;
     text-align: center;
-    font-size: 24px;
+}
+
+.flexheader a:hover {
+    color: var(--gris);
 }
 
 #csLogo {
@@ -76,7 +88,7 @@ main {
 /* NAVBAR */
 .flexnav {
     margin: auto;
-    width: 80%;
+    width: 75%;
     padding-bottom: 20px;
 }
 
@@ -94,9 +106,12 @@ main {
     background-color: var(--rouge);
     color: white;
     text-decoration: none;
-    font-size: 24px;
-    border-radius: 10px;
+    border-radius: 5px;
     transition: all 0.2s ease-in-out;
+}
+
+.flexnav a:hover {
+    background-color: var(--rouge_accent);
 }
 
 /* FOOTER */
