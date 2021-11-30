@@ -1,19 +1,20 @@
-USE msdb
-DROP DATABASE IF EXISTS ConfigurationSupreme
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
 
-CREATE DATABASE ConfigurationSupreme
-GO
-
+CREATE DATABASE ConfigurationSupreme;
 USE ConfigurationSupreme;
 
 /***********************/
 /* Création des tables */
 /***********************/
 
-CREATE TABLE Client(
-	id INT IDENTITY(1,1) NOT NULL,
+CREATE TABLE Client (
+	id INT NOT NULL AUTO_INCREMENT,
 	prenom VARCHAR(20) NOT NULL,
 	nom VARCHAR(50) NOT NULL,
+	courriel VARCHAR(50) NOT NULL,
 	motDePasse VARCHAR(20) NOT NULL,
 	dateNaissance DATE NOT NULL,
 	adresse VARCHAR(50),
@@ -21,7 +22,7 @@ CREATE TABLE Client(
 );
 
 CREATE TABLE Config (
-	id INT IDENTITY(1,1) NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	idClient INT NOT NULL,
 	idCarteMere INT NOT NULL,
 	idProcesseur INT NOT NULL,
@@ -34,7 +35,7 @@ CREATE TABLE Config (
 );
 
 CREATE TABLE CarteMere (
-	id INT IDENTITY(1,1) NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	idFabricant INT NOT NULL,
 	modele VARCHAR(40) NOT NULL,
 	idForme INT NOT NULL,
@@ -49,7 +50,7 @@ CREATE TABLE CarteMere (
 );
 
 CREATE TABLE Processeur (
-	id INT IDENTITY(1,1) NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	idFabricant INT NOT NULL,
 	modele VARCHAR(40) NOT NULL,
 	nbCoeurs INT NOT NULL,
@@ -59,7 +60,7 @@ CREATE TABLE Processeur (
 );
 
 CREATE TABLE SystemeRefroidissement (
-	id INT IDENTITY(1,1) NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	idFabricant INT NOT NULL,
 	modele VARCHAR(40) NOT NULL,
 	dimension VARCHAR(20) NOT NULL,
@@ -67,7 +68,7 @@ CREATE TABLE SystemeRefroidissement (
 );
 
 CREATE TABLE MemoireVive (
-	id INT IDENTITY(1,1) NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	idFabricant INT NOT NULL,
 	modele VARCHAR(40) NOT NULL,
 	capacite INT NOT NULL,
@@ -79,7 +80,7 @@ CREATE TABLE MemoireVive (
 );
 
 CREATE TABLE SupportStockage (
-	id INT IDENTITY(1,1) NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	idFabricant INT NOT NULL,
 	modele VARCHAR(40) NOT NULL,
 	typeStockage VARCHAR(10) NOT NULL,
@@ -91,7 +92,7 @@ CREATE TABLE SupportStockage (
 );
 
 CREATE TABLE CarteGraphique (
-	id INT IDENTITY(1,1) NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	idFabricant INT NOT NULL,
 	modele VARCHAR(40) NOT NULL,
 	chipset VARCHAR(20) NOT NULL,
@@ -104,7 +105,7 @@ CREATE TABLE CarteGraphique (
 );
 
 CREATE TABLE Boitier (
-	id INT IDENTITY(1,1) NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	idFabricant INT NOT NULL,
 	modele VARCHAR(40) NOT NULL,
 	typeBoitier INT NOT NULL,
@@ -117,63 +118,66 @@ CREATE TABLE Boitier (
 );
 
 CREATE TABLE Connecteur (
-	id INT IDENTITY(1,1) NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	nom VARCHAR(40) NOT NULL,
 	CONSTRAINT PK_Connecteur PRIMARY KEY (id)
 );
 
 CREATE TABLE Socket (
-	id INT IDENTITY(1,1) NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	nom VARCHAR(40) NOT NULL,
 	CONSTRAINT PK_Socket PRIMARY KEY (id)
 );
 
 CREATE TABLE Fabricant (
-	id INT IDENTITY(1,1) NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	nom VARCHAR(40) NOT NULL,
 	CONSTRAINT PK_Fabricant PRIMARY KEY (id)
 );
 
 CREATE TABLE FormeCarteMere (
-	id INT IDENTITY(1,1) NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	nom VARCHAR(40) NOT NULL,
 	CONSTRAINT PK_FormeCarteMere PRIMARY KEY (id)
 );
 
 CREATE TABLE TypeBoitier (
-	id INT IDENTITY(1,1) NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	nom VARCHAR(40) NOT NULL,
 	CONSTRAINT PK_TypeBoitier PRIMARY KEY (id)
 );
 
 CREATE TABLE TypeMemoire (
-	id INT IDENTITY(1,1) NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	nom VARCHAR(40) NOT NULL,
 	CONSTRAINT PK_TypeMemoire PRIMARY KEY (id)
 );
 
 CREATE TABLE SupportUSB (
-	id INT IDENTITY(1,1) NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	nom VARCHAR(40) NOT NULL,
 	CONSTRAINT PK_SupportUSB PRIMARY KEY (id)
 );
 
 CREATE TABLE JointureConfigStockage (
+	id INT NOT NULL AUTO_INCREMENT,
 	idConfig INT NOT NULL,
 	idStockage INT NOT NULL,
-	CONSTRAINT PK_JointureConfigStockage PRIMARY KEY (idConfig, idStockage)
+	CONSTRAINT PK_JointureConfigStockage PRIMARY KEY (id)
 );
 
 CREATE TABLE JointureCarteMereConnecteur (
+	id INT NOT NULL AUTO_INCREMENT,
 	idCarteMere INT NOT NULL,
 	idConnecteur INT NOT NULL,
-	CONSTRAINT PK_JointureCarteMereConnecteur PRIMARY KEY (idCarteMere, idConnecteur)
+	CONSTRAINT PK_JointureCarteMereConnecteur PRIMARY KEY (id)
 );
 
 CREATE TABLE JointureSocketCooler (
+	id INT NOT NULL AUTO_INCREMENT,
 	idSocket INT NOT NULL,
 	idCooler INT NOT NULL,
-	CONSTRAINT PK_JointureSocketCooler PRIMARY KEY (idSocket, idCooler)
+	CONSTRAINT PK_JointureSocketCooler PRIMARY KEY (id)
 );
 
 /********************/
@@ -271,21 +275,21 @@ ADD CONSTRAINT FK_BoitierFormeCarteMere FOREIGN KEY (idFormeCarteMere) REFERENCE
 
 /* Jointure Config/Stockage */
 ALTER TABLE JointureConfigStockage
-ADD CONSTRAINT FK_JointureConfigStockage1 FOREIGN KEY (idConfig) REFERENCES Config (id);
+ADD CONSTRAINT FK_JointureConfigStockage FOREIGN KEY (idConfig) REFERENCES Config (id);
 
 ALTER TABLE JointureConfigStockage
-ADD CONSTRAINT FK_JointureConfigStockage2 FOREIGN KEY (idStockage) REFERENCES SupportStockage (id);
+ADD CONSTRAINT FK_JointureStockageConfig FOREIGN KEY (idStockage) REFERENCES SupportStockage (id);
 
 /* Jointure CarteMere/Connecteur */
 ALTER TABLE JointureCarteMereConnecteur
-ADD CONSTRAINT FK_JointureCarteMereConnecteur1 FOREIGN KEY (idCarteMere) REFERENCES CarteMere (id);
+ADD CONSTRAINT FK_JointureCarteMereConnecteur FOREIGN KEY (idCarteMere) REFERENCES CarteMere (id);
 
 ALTER TABLE JointureCarteMereConnecteur
-ADD CONSTRAINT FK_JointureCarteMereConnecteur2 FOREIGN KEY (idConnecteur) REFERENCES Connecteur (id);
+ADD CONSTRAINT FK_JointureConnecteurCarteMere FOREIGN KEY (idConnecteur) REFERENCES Connecteur (id);
 
 /* Jointure Socket/Cooler */
 ALTER TABLE  JointureSocketCooler
-ADD CONSTRAINT FK_JointureSocketCooler1 FOREIGN KEY (idSocket) REFERENCES Socket (id);
+ADD CONSTRAINT FK_JointureSocketCooler FOREIGN KEY (idSocket) REFERENCES Socket (id);
 
 ALTER TABLE  JointureSocketCooler
-ADD CONSTRAINT FK_JointureSocketCooler2 FOREIGN KEY (idCooler) REFERENCES SystemeRefroidissement (id);
+ADD CONSTRAINT FK_JointureCoolerSocket FOREIGN KEY (idCooler) REFERENCES SystemeRefroidissement (id);
