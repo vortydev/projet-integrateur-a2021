@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Configurateur Suprême</title>
+    <title>Configuration Suprême</title>
 
     <link rel="stylesheet" href="./css/style.css" />
 
@@ -17,10 +17,10 @@
 <body>
     <header>
         <ul class="flexheader">
-            <li><a href="./register.php">Inscription</a></li>
-            <li><a href='./login.php'>Connexion</a></li>
+            <li><a href="./inscription.php">Inscription</a></li>
+            <li><a href='./connexion.php'>Connexion</a></li>
         </ul>
-        <img id="csLogo" src="./img/logo.png" alt="Configuration Supreme">
+        <img id="csLogo" src="./img/logoR.png" alt="Configuration Suprême">
     </header>
     
     <nav>
