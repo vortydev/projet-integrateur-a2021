@@ -28,6 +28,8 @@ window.onload = function () { fetchColorTheme(); };
 document.getElementById("btn_r").addEventListener("click", redTheme);
 document.getElementById("btn_g").addEventListener("click", greenTheme);
 document.getElementById("btn_b").addEventListener("click", blueTheme);
+document.getElementById("error1").addEventListener("load", error1);
+document.getElementById("error2").addEventListener("load",error2);
 
 function redTheme() {
     let bodyTag = document.getElementsByTagName("body")[0];
@@ -69,4 +71,12 @@ function fetchColorTheme() {
     else {
         redTheme();
     }
+}
+
+function error1() {
+    document.getElementById('email').insertAdjacentHTML("afterend",'<p style="color:white" >Le courriel que vous avez entree est deja utilise</p>')
+}
+
+function error2() {
+    document.getElementsByName('password').insertAdjacentHTML("afterend",'<p style="color:white" >Le mot de passe de confirmation n est pas le meme que celui choisie initialement</p>');
 }

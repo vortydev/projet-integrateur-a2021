@@ -24,6 +24,7 @@
             $this->_password = $password;
             $this->_adresse = $adresse;
             $this->_courriel = $courriel;
+            $this->_dateNaissance = $dateNaissance;
         }
 
         public function __destruct(){
@@ -69,7 +70,7 @@
         }
 
         public function get_nom() : string {
-            return $this->nom;
+            return $this->_nom;
         }
 
         public function get_courriel() : string {
