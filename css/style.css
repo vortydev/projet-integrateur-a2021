@@ -129,6 +129,11 @@ footer {
     text-align: center;
 }
 
+/* FORM CHOIX DE COMPOSANTS */
+.formChoixComposant input[type='text']{
+    width: 50px;
+}
+
 /* CHANGEMENT DE THÈME */
 .blue_theme .flexnav a, .blue_theme main {
     background-color: var(--bleu);
