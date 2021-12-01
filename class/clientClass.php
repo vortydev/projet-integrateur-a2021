@@ -8,13 +8,32 @@
                 $_password,
                 $_dateNaissance,
                 $_adresse;
-        
+
         private function set_id (int $id){
             $this->_id = $id;
         }
 
         private function set_password (string $password){
             $this->_password = $password;
+        }
+
+        public function __construct ($id, $prenom, $nom, $courriel, $password, $dateNaissance, $adresse) {
+            $this->_id = $id;
+            $this->_prenom = $prenom;
+            $this->_nom = $nom;
+            $this->_password = $password;
+            $this->_adresse = $adresse;
+            $this->_courriel = $courriel;
+        }
+
+        public function __destruct(){
+            $this->_id = 0;
+            $this->_prenom = "";
+            $this->_nom = "";
+            $this->_courriel = "";
+            $this->_password = "";
+            $this->_dateNaissance = "";
+            $this->_adresse = "";
         }
 
         public function set_prenom (string $prenom) {
