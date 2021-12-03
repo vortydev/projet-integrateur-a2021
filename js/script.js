@@ -28,8 +28,31 @@ window.onload = function () { fetchColorTheme(); };
 document.getElementById("btn_r").addEventListener("click", redTheme);
 document.getElementById("btn_g").addEventListener("click", greenTheme);
 document.getElementById("btn_b").addEventListener("click", blueTheme);
-document.getElementById("error1").addEventListener("load", error1);
-document.getElementById("error2").addEventListener("load",error2);
+document.getElementById("email").addEventListener("change", removeErrorEmail);
+
+if (document.getElementById("f_inscription"))
+    window.addEventListener("load",errorForm);
+
+let form = document.getElementById("f_inscription").querySelectorAll('input[type=password]');
+for (let i = 0; i < form.length; i++) {
+    form[i].addEventListener("change", removeErrorPassword);
+}
+
+function removeErrorEmail() {
+    document.getElementById('email').classList.remove("red_text_Form");
+    document.getElementById('email').placeholder = "Adresse electronique";
+}
+
+function removeErrorPassword(){
+    let form = document.getElementById("f_inscription").querySelectorAll('input[type=password]');
+    for (let i = 0; i < form.length; i++) {
+        if (i == 0)
+            form[i].placeholder = 'Mot de passe';
+        else if (i == 1)
+            form[i].placeholder = 'Confirmer le mot de passe';
+        form[i].classList.remove('red_text_Form');
+    }
+}
 
 function redTheme() {
     let bodyTag = document.getElementsByTagName("body")[0];
@@ -45,7 +68,6 @@ function greenTheme() {
 
     bodyTag.classList.remove("blue_theme");
     bodyTag.classList.add("green_theme");
-
     setCookie("colorTheme", 1, 365);
 }
 
@@ -73,10 +95,22 @@ function fetchColorTheme() {
     }
 }
 
-function error1() {
-    document.getElementById('email').insertAdjacentHTML("afterend",'<p style="color:white" >Le courriel que vous avez entree est deja utilise</p>')
+function errorForm() {
+    
+   if(document.getElementById("f_inscription")){
+        if (document.getElementById("f_inscription").classList.contains("error1"))
+        {
+            document.getElementById('email').placeholder = 'Le courriel que vous avez entrée est déjà utilisé';
+            document.getElementById('email').classList.add('red_text_Form');
+        } 
+        else if (document.getElementById("f_inscription").classList.contains("error2")){
+           
+            let form = document.getElementById("f_inscription").querySelectorAll('input[type=password]');
+            for (let i = 0; i < form.length; i++) {
+                form[i].placeholder = 'Erreur lors de la confirmation du mot de passe';
+                form[i].classList.add('red_text_Form');
+            }
+        }
+    }
 }
 
-function error2() {
-    document.getElementsByName('password').insertAdjacentHTML("afterend",'<p style="color:white" >Le mot de passe de confirmation n est pas le meme que celui choisie initialement</p>');
-}
