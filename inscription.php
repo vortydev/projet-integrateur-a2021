@@ -5,15 +5,14 @@
 ?>
     <section class="inscription" id="formulaire_inscription">
     <h2>Creer votre compte</h2>
-    <form action="./traitement.php" id="f_inscription" class="<?php if (isset($_SESSION['error'])) echo $_SESSION['error'];?>" method="post">
+    <form action="./traitement.php" id="f_inscription" class="<?php if (isset($_SESSION['error'])) echo $_SESSION['error'];?>" method="get">
+        <input type="hidden" id="inscription" name="action" value="inscription">
         
         <input type="text" name="prenom" id="prenom" placeholder="Prenom">
     
         <input type="text" name="nom" id="nom" placeholder="Nom">
         
         <input type="text" name="email" id="email" placeholder="Adresse electronique">
-        
-        <input type="hidden" id="inscription" name="action" value="inscription">
 
         <input type="password" name="password" placeholder="Mot de passe">
 

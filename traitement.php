@@ -4,7 +4,7 @@
 
     if (session_status() === PHP_SESSION_NONE) session_start();
     require_once './inc/header.php';
-    // echo 'traitement.php';
+
    
     if (isset($_REQUEST['action'])){
         if ($_REQUEST['action'] == "inscription"){
@@ -12,11 +12,15 @@
             
             $bdd = PDOFactory::getMySQLConnection();
             $cm = new ClientManager($bdd);
-            
+           
             if($cm->emailVerification($_REQUEST['email']) && $_REQUEST['password'] == $_REQUEST['c_password']) {
-
-                $client_insert = new Client(0,$_REQUEST['prenom'],$_REQUEST['nom'],$_REQUEST['email'],$_REQUEST['password'],$_REQUEST['dateNaissance'],$_REQUEST['adresse']);
+                echo '<h2>' . $_REQUEST['nom'] . '</h2>';
+                echo '<script>';
+                echo 'console.log(1)';
+                echo '</script>';
+                $client_insert = new Client (1,$_REQUEST['prenom'],$_REQUEST['nom'],$_REQUEST['email'],$_REQUEST['password'],$_REQUEST['dateNaissance'],$_REQUEST['adresse']);
                 $_SESSION['idClient'] = $cm->addClient($client_insert);
+                echo '</br><h2>Bienvenue'. $_REQUEST['prenom'] . '</h2>';
             }
             else if ($cm->emailVerification($_REQUEST['email']) == false){
                 $_SESSION['error'] = 'error1';

@@ -30,7 +30,6 @@ class ClientManager {
     }
 
     public function addClient(Client $c) : int {
-
         $bindParams = array (
             ":prenom" => $c->get_prenom(),
             ":nom" => $c->get_nom(),
