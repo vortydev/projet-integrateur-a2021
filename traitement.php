@@ -1,9 +1,10 @@
 <?php 
     require_once './class/PDOFactory.php';
     require_once './class/classClientManager.php';
+    require_once './class/classClient.php';
 
     if (session_status() === PHP_SESSION_NONE) session_start();
-    require_once './inc/header.php';
+        require_once './inc/header.php';
 
    
     if (isset($_REQUEST['action'])){
@@ -14,13 +15,10 @@
             $cm = new ClientManager($bdd);
            
             if($cm->emailVerification($_REQUEST['email']) && $_REQUEST['password'] == $_REQUEST['c_password']) {
-                echo '<h2>' . $_REQUEST['nom'] . '</h2>';
-                echo '<script>';
-                echo 'console.log(1)';
-                echo '</script>';
+
                 $client_insert = new Client (1,$_REQUEST['prenom'],$_REQUEST['nom'],$_REQUEST['email'],$_REQUEST['password'],$_REQUEST['dateNaissance'],$_REQUEST['adresse']);
                 $_SESSION['idClient'] = $cm->addClient($client_insert);
-                echo '</br><h2>Bienvenue'. $_REQUEST['prenom'] . '</h2>';
+                echo '</br><h2>Bienvenue '. $_REQUEST['prenom'] . '</h2>';
             }
             else if ($cm->emailVerification($_REQUEST['email']) == false){
                 $_SESSION['error'] = 'error1';

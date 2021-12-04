@@ -31,7 +31,7 @@ document.getElementById("btn_b").addEventListener("click", blueTheme);
 document.getElementById("email").addEventListener("change", removeErrorEmail);
 
 if (document.getElementById("f_inscription"))
-    window.addEventListener("load",errorForm);
+    window.addEventListener("load",errorFormInscription);
 
 let form = document.getElementById("f_inscription").querySelectorAll('input[type=password]');
 for (let i = 0; i < form.length; i++) {
@@ -95,7 +95,7 @@ function fetchColorTheme() {
     }
 }
 
-function errorForm() {
+function errorFormInscription() {
     
    if(document.getElementById("f_inscription")){
         if (document.getElementById("f_inscription").classList.contains("error1"))
@@ -110,6 +110,14 @@ function errorForm() {
                 form[i].placeholder = 'Erreur lors de la confirmation du mot de passe';
                 form[i].classList.add('red_text_Form');
             }
+        }
+        else {
+            let form = document.getElementById("f_inscription").querySelectorAll('input[type=password]');
+            for (let i = 0; i < form.length; i++) {
+                form[i].placeholder = 'Erreur lors de la confirmation du mot de passe';
+                form[i].classList.remove('red_text_Form');
+            }
+            document.getElementById('email').classList.remove('red_text_Form');
         }
     }
 }

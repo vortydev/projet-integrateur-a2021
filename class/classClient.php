@@ -70,7 +70,7 @@
         }
 
         public function get_nom() : string {
-            return $this->nom;
+            return $this->_nom;
         }
 
         public function get_courriel() : string {
