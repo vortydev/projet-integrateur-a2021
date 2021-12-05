@@ -3,21 +3,23 @@
     require_once './inc/header.php'; 
 ?>
 
-<h2>Connexion</h2>
-<form action="connexion" method="post">
+<section class="connexion" id="formulaire_connexion">
+    <h2>Connexion</h2>
+    <form action="./traitement.php" class="<?php if(isset($_SESSION['errorConnexion'])) echo $_SESSION['errorConnexion']; ?>" id="f_connexion" method="post">
+ 
+        <input type="hidden" id="connexion" name="action" value="connexion">
+        <input type="text" name="co_email" class="connexion_properties" placeholder="Votre adresse electronique">
 
-    <!-- <label for="courriel">Courriel: </label> -->
-    <input type="text" name="co_email" placeholder="Votre adresse electronique">
+        <input type="text" name="co_password" class="connexion_properties" placeholder="Mot de passe" >
 
-    <!-- <label for="motDePasse">Mot de passe: </label> -->
-    <input type="text" name="co_password" placeholder="Mot de passe" >
-
-    <button type="submit">Se connecter</button>
-</form>
+        <button type="submit" class="btn_connexion">Se connecter</button>
+    </form>
+</section>
     
     
     
 <?php
     // echo 'connexion.php';
     require_once './inc/footer.php';
+    $_SESSION['errorConnexion'] = 0;
 ?>

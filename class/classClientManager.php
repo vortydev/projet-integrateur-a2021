@@ -8,6 +8,8 @@ class ClientManager {
                             WHERE courriel = :courriel;';
     CONST INSERT_CLIENT = 'INSERT INTO client (prenom,nom,courriel,motDePasse,dateNaissance,adresse)
                             VALUES (:prenom,:nom,:courriel,:motDePasse,:dateNaissance,:adresse);'; 
+    CONST CONNEXION = 'SELECT id, prenom FROM Client
+                            WHERE courriel = :courriel AND motDePasse = :motDePasse';
 
     public function __construct(PDO $bdd) { $this->_bdd = $bdd; }
     public function __destruct() { $this->_bdd = null; }
@@ -45,6 +47,22 @@ class ClientManager {
         $last_id = $this->_bdd->lastInsertId();
         return $last_id;
 
+    }
+
+    public function connexionVerification(string $courriel, string $password) {
+        
+        $bindParams = array (
+            ":courriel" => $courriel,
+            ":motDePasse" => $password 
+        );
+
+        $checkClient = $this->_bdd->prepare(self::CONNEXION);
+        $checkClient->execute($bindParams);
+
+        $results = $checkClient->fetch();
+        if (is_array($results))
+            return $results;
+        return false;
     }
 
 };
