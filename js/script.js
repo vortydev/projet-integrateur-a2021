@@ -150,7 +150,7 @@ function errorFormInscription() {
                 form[i].classList.add('red_text_Form');
             }
         }
-        else if(document.getElementById("f_inscription").contains("error3")){
+        else if(document.getElementById("f_inscription").classList.contains("error3")){
             
             for (let i = 0; i < form.length; i++) {
 
