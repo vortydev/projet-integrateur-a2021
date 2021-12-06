@@ -32,6 +32,6 @@
 
 
 <?php
-    $_SESSION['error'] = 0;
+    $_SESSION['errorInscription'] = 0;
     require_once './inc/footer.php';
 ?>

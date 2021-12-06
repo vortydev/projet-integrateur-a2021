@@ -32,7 +32,7 @@ document.getElementById("btn_b").addEventListener("click", blueTheme);
 
 if (document.getElementById("f_connexion")) {
     window.addEventListener("load", errorFormConnexion);
-    window.addEventListener("unload", removeErrorConnexion);
+    // window.addEventListener("unload", removeErrorConnexion);
 
     let input = document.getElementsByTagName('input');
     for (let i = 0; i < input.length; i++ )
@@ -42,8 +42,8 @@ if (document.getElementById("f_connexion")) {
 if (document.getElementById("f_inscription")) {
     
     window.addEventListener("load",errorFormInscription);
-    window.addEventListener("unload",removeErrorEmail);
-    window.addEventListener("unload",removeErrorPassword);
+    // window.addEventListener("unload",removeErrorEmail);
+    // window.addEventListener("unload",removeErrorPassword);
 
     document.getElementById("email").addEventListener("mouseover", removeErrorEmail);
     
