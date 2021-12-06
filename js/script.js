@@ -30,67 +30,6 @@ document.getElementById("btn_g").addEventListener("click", greenTheme);
 document.getElementById("btn_b").addEventListener("click", blueTheme);
 
 
-if (document.getElementById("f_connexion")) {
-    window.addEventListener("load", errorFormConnexion);
-    // window.addEventListener("unload", removeErrorConnexion);
-
-    let input = document.getElementsByTagName('input');
-    for (let i = 0; i < input.length; i++ )
-        input[i].addEventListener("mouseover",removeErrorConnexion);
-}
-
-if (document.getElementById("f_inscription")) {
-    
-    window.addEventListener("load",errorFormInscription);
-    // window.addEventListener("unload",removeErrorEmail);
-    // window.addEventListener("unload",removeErrorPassword);
-
-    document.getElementById("email").addEventListener("mouseover", removeErrorEmail);
-    
-    let form = document.getElementById("f_inscription").querySelectorAll('input[type=password]');
-    for (let i = 0; i < form.length; i++) {
-        form[i].addEventListener("mouseover", removeErrorPassword);
-    }
-}
-
-function removeErrorEmail() {
-    document.getElementById('email').classList.remove("red_text_Form");
-
-    if (document.getElementById('email').classList.contains('error1'))
-        document.getElementById('email').classList.remove('error1');
-
-    document.getElementById('email').placeholder = "Adresse electronique";
-}
-
-function removeErrorPassword(){
-    let form = document.getElementById("f_inscription").querySelectorAll('input[type=password]');
-
-    if(document.getElementById("f_inscription").classList.contains('error2'))
-        document.getElementById("f_inscription").classList.contains('error2');
-
-    if(document.getElementById("f_inscription").classList.contains('error3'))
-        document.getElementById("f_inscription").classList.contains('error3');
-
-    for (let i = 0; i < form.length; i++) {
-        if (i == 0)
-            form[i].placeholder = 'Mot de passe';
-        else if (i == 1)
-            form[i].placeholder = 'Confirmer le mot de passe';
-        form[i].classList.remove('red_text_Form');
-    }
-}
-
-function removeErrorConnexion() {
-    let input = document.getElementsByTagName('input');
-    for (let i = 0; i < input.length; i++) {
-        input[i].classList.remove("red_text_Form");
-        if (i == 1)
-            input[i].placeholder = 'Votre adresse electronique';
-        else if (i == 2)
-            input[i].placeholder = 'Mot de passe'; 
-    }
-}
-
 function redTheme() {
     let bodyTag = document.getElementsByTagName("body")[0];
 
@@ -132,6 +71,30 @@ function fetchColorTheme() {
     }
 }
 
+//Event listener des elements relier au form d'inscription et au form de connexion 
+
+if (document.getElementById("f_connexion")) {
+    window.addEventListener("load", errorFormConnexion);
+
+    let input = document.getElementsByTagName('input');
+    for (let i = 0; i < input.length; i++ )
+        input[i].addEventListener("mouseover",removeErrorConnexion);
+}
+
+if (document.getElementById("f_inscription")) {
+    
+    window.addEventListener("load",errorFormInscription);
+
+    document.getElementById("email").addEventListener("mouseover", removeErrorEmail);
+    
+    let form = document.getElementById("f_inscription").querySelectorAll('input[type=password]');
+    for (let i = 0; i < form.length; i++) {
+        form[i].addEventListener("mouseover", removeErrorPassword);
+    }
+}
+
+//Fonction d'erreur pour le form inscription
+ 
 function errorFormInscription() {
     
     let form = document.getElementById("f_inscription").querySelectorAll('input[type=password]');
@@ -164,6 +127,36 @@ function errorFormInscription() {
 
 
 
+function removeErrorPassword(){
+    let form = document.getElementById("f_inscription").querySelectorAll('input[type=password]');
+
+    if(document.getElementById("f_inscription").classList.contains('error2'))
+        document.getElementById("f_inscription").classList.contains('error2');
+
+    if(document.getElementById("f_inscription").classList.contains('error3'))
+        document.getElementById("f_inscription").classList.contains('error3');
+
+    for (let i = 0; i < form.length; i++) {
+        if (i == 0)
+            form[i].placeholder = 'Mot de passe';
+        else if (i == 1)
+            form[i].placeholder = 'Confirmer le mot de passe';
+        form[i].classList.remove('red_text_Form');
+    }
+}
+
+function removeErrorEmail() {
+    document.getElementById('email').classList.remove("red_text_Form");
+
+    if (document.getElementById('email').classList.contains('error1'))
+        document.getElementById('email').classList.remove('error1');
+
+    document.getElementById('email').placeholder = "Adresse electronique";
+}
+
+
+//fonction relier au erreur de connexion 
+
 function errorFormConnexion() {
   
     let input = document.getElementsByTagName("input");
@@ -175,6 +168,18 @@ function errorFormConnexion() {
            input[i].classList.add("red_text_Form");
            input[i].placeholder = "Veuillez essayez de nouveau";
         }
+    }
+}
+
+
+function removeErrorConnexion() {
+    let input = document.getElementsByTagName('input');
+    for (let i = 0; i < input.length; i++) {
+        input[i].classList.remove("red_text_Form");
+        if (i == 1)
+            input[i].placeholder = 'Votre adresse electronique';
+        else if (i == 2)
+            input[i].placeholder = 'Mot de passe'; 
     }
 }
 
