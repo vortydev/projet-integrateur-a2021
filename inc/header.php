@@ -33,7 +33,7 @@
             <li class=""><a href="./index.php">Accueil</a></li>
             <li class=""><a href="./configuration.php">Configurer</a></li>
             <li class=""><a href="./mesConfigurations.php">Mes configurations</a></li>
-            <li class=""><a href="./contact.php">Contact</a></li>
+            <li class=""><a target="_blank" href="mailto:contact@configurationsupreme.ca">Contact</a></li>
         </ul>
     </nav>
 

@@ -24,9 +24,7 @@ class ConfigurationManager {
                                     WHERE idConfig = :idConfig';
     
     // select les configurations d'un client (idClient)
-    const SELECT_CLIENT_CONFIGS = 'SELECT id FROM Config WHERE idClient = :idClient';
-
-
+    const SELECT_CLIENT_CONFIGS = 'SELECT id FROM Config WHERE idClient = :idClient ORDER BY dateCreation ASC';
 
     private $_bdd;
     public function __construct(PDO $bdd) { $this->_bdd = $bdd; }
@@ -93,11 +91,37 @@ class ConfigurationManager {
         $query->execute();
     }
 
-    // public function getClientConfigs(int $idClient) : array {
-    //     $query = $this->_bdd->prepare(self::SELECT_CLIENT_CONFIGS);
-    //     $query->bindParam(':idClient', $idClient);
-    //     $query->execute();
-    //     $dbResult = $query->fetchColumn();
-    // }
+    public function getClientConfigs(int $idClient) : array {
+        $query = $this->_bdd->prepare(self::SELECT_CLIENT_CONFIGS);
+        $query->bindParam(':idClient', $idClient);
+        $query->execute();
+        $dbResult = $query->fetchColumn();
+
+        $clientConfigArr = array();
+        for ($i = 0; $i < sizeof($dbResult); $i++) {
+            array_push($clientConfigArr, $this->getConfig($dbResult[$i]));
+        }
+
+        return $clientConfigArr;
+    }
+
+    // ALBERTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+    public function printConfig(Configuration $configObj) {
+        echo '<div class="config">
+            <p>Configuration #' . $configObj->get_id() . '</p>
+            <ul>
+                <li>Carte mère: '. $this->selectCarteMere($configObj->get_idCarteMere()) .' </li>
+                <li>Processeur: </li>
+                <li>Système de refroidissement: </li>
+                <li>Mémoire vive: </li>
+                <li>Stockage: </li>
+                <li>Carte graphique: </li>
+                <li>Boitier: </li>
+            </ul></div>';
+    }
+
+    private function selectCarteMere(int $id) {
+        
+    }
 };
 ?>
