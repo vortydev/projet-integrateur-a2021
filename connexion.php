@@ -19,7 +19,6 @@
     
     
 <?php
-    // echo 'connexion.php';
     require_once './inc/footer.php';
     $_SESSION['errorConnexion'] = 0;
 ?>

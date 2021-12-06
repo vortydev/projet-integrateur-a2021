@@ -32,6 +32,7 @@ document.getElementById("btn_b").addEventListener("click", blueTheme);
 
 function redTheme() {
     let bodyTag = document.getElementsByTagName("body")[0];
+    document.getElementById("csLogo").src='./img/logoR.png';
 
     bodyTag.classList.remove("blue_theme");
     bodyTag.classList.remove("green_theme");
@@ -41,14 +42,17 @@ function redTheme() {
 
 function greenTheme() {
     let bodyTag = document.getElementsByTagName("body")[0];
+    document.getElementById("csLogo").src='./img/logoG.png';
 
     bodyTag.classList.remove("blue_theme");
     bodyTag.classList.add("green_theme");
+
     setCookie("colorTheme", 1, 365);
 }
 
 function blueTheme() {
     let bodyTag = document.getElementsByTagName("body")[0];
+    document.getElementById("csLogo").src='./img/logoB.png';
 
     bodyTag.classList.add("blue_theme");
     bodyTag.classList.remove("green_theme");
