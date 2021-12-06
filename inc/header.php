@@ -18,7 +18,12 @@
     <header>
         <ul class="flexheader">
             <li><a href="./inscription.php">Inscription</a></li>
-            <li><a href='./connexion.php'>Connexion</a></li>
+            <?php 
+            if (isset($_SESSION['idClient']))
+                echo '<li><a href="./deconnexion.php">Se deconnecter</a></li>';
+            else 
+                echo '<li><a href="./connexion.php">Connexion</a></li>';
+            ?>
         </ul>
         <img id="csLogo" src="./img/logoR.png" alt="Configuration Suprême">
     </header>
