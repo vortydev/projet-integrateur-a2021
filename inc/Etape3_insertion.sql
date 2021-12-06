@@ -267,6 +267,41 @@ VALUES((SELECT id FROM Client WHERE prenom = 'Alberto'),(SELECT id FROM CarteMer
 /**********************/
 /* REQUÊTES D'ALBERTO */
 /**********************/
+SELECT id FROM Socket WHERE nom ='FCBGA1528'
+
+SELECT co.id, ca.modele, so.nom  FROM 
+Config co
+INNER JOIN CarteMere ca ON ca.id = co.idCarteMere
+INNER JOIN Socket so ON so.id = ca.idSocket
+
+SELECT * FROM Client 
+ORDER BY prenom;
+
+SELECT modele FROM memoirevive 
+WHERE capacite > 12 
+AND nbBarrettes = 1;
+
+INSERT INTO Config(idClient,idCarteMere,idProcesseur,idCooler,idMemoireVive,idCarteGraphique,idBoitier,dateCreation)
+VALUES((SELECT id FROM Client WHERE prenom = 'Alberto'),(SELECT id FROM CarteMere WHERE modele = '990FX Killer'),(SELECT id FROM Processeur WHERE modele = 'Core i7-1195G7'),(SELECT id FROM SystemeRefroidissement WHERE modele = 'Kraken X40'),(SELECT id FROM MemoireVive WHERE modele = 'Owc1333d3'),(SELECT id FROM CarteGraphique WHERE modele = 'GeForce GTX 1650'),(SELECT id FROM Boitier WHERE modele = '4000D Airflow'),CURDATE())
+
+Select AVG(frequence) FROM processeur;
+
+CREATE VIEW viewALB AS
+SELECT prenom, nom
+FROM client;
+
+UPDATE config
+SET dateCreation = CURDATE()
+WHERE idClient = (SELECT id FROM Client WHERE prenom = 'Alberto');
+
+SELECT COUNT(*) FROM client;
+
+
+UPDATE client
+set nom = 'Albarracin Oviedo'
+WHERE prenom = 'Alberto';
+
+
 
 
 
