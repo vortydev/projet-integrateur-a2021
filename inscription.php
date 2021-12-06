@@ -5,7 +5,7 @@
 ?>
     <section class="inscription" id="formulaire_inscription">
     <h2>Creer votre compte</h2>
-    <form action="./traitement.php" id="f_inscription" class="<?php if (isset($_SESSION['error'])) echo $_SESSION['error'];?>" method="get">
+    <form action="./traitement.php" id="f_inscription" class="<?php if (isset($_SESSION['errorInscription'])) echo $_SESSION['errorInscription'];?>" method="post">
         <input type="hidden" id="inscription" name="action" value="inscription">
         
         <input type="text" name="prenom" id="prenom" placeholder="Prenom">
@@ -32,6 +32,6 @@
 
 
 <?php
-    $_SESSION['error'] = 0;
+    $_SESSION['errorInscription'] = 0;
     require_once './inc/footer.php';
 ?>

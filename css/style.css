@@ -177,9 +177,11 @@ footer {
     background-color: var(--bleu);
 }
 
-/* Formulaire inscription */
 
-.inscription {
+
+/* Formulaire inscription/connexion */
+
+.inscription, .connexion {
     width: 500px;
     margin: auto;
     border-width: 1px;
@@ -189,19 +191,18 @@ footer {
 }
 
 
-.btn_inscription {
+.btn_inscription, .btn_connexion  {
     height: 50px;
     width: 300px;
     margin: auto;
     border-radius: 35px;
     color: white;
-    /* background-color: black; */
     background-color: var(--gris); 
     border-style: solid 1px;
     border-color: white;
 }
 
-#f_inscription > input
+#f_inscription > input, #f_connexion > input 
 {
     width: 300px;
     border-radius: 35px;
@@ -211,12 +212,12 @@ footer {
     margin-top: 10px;
 }
 
-#f_inscription {
+#f_inscription, #f_connexion {
     display: flex;
     flex-direction: column;
 }
 
-#f_inscription > input:last-of-type {
+#f_inscription > input:last-of-type, #f_connexion > input:last-of-type {
     margin-bottom: 10px;
 }
 
