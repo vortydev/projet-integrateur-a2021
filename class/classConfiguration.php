@@ -6,6 +6,7 @@
 
 class Configuration {
     private $_id;               // identifiant de la configuration
+    private $_idClient;         // identifiant du client
     private $_idCarteMere;      // id de la carte mère
     private $_idProcesseur;     // id du processeur
     private $_idCooler;         // id du système de refroidissements
@@ -15,8 +16,8 @@ class Configuration {
     private $_dateCreation;     // date de création de la configuration
 
     // TODO AVEC LE MANAGER
-    private $_idStockageArr = array(); // tableau des id des enregistrements de la table 
-                                    // de jointure de la configuration et du stockage
+    private $_stockageArr = array();    // tableau des id des enregistrements de la table 
+                                        // de jointure de la configuration et du stockage
 
     // constructeur
     public function __construct($params = array()) {
@@ -37,6 +38,16 @@ class Configuration {
     private function set_id(int $id) : void {
         assert($id > 0);
         $this->_id = $id;
+    }
+
+    // id client
+    public function get_idClient() : int {
+        return $this->_idClient;
+    }
+
+    public function set_idClient(int $idClient)  {
+        $this->_idClient = $idClient;
+        return $this;
     }
 
     // id carte mere
@@ -110,8 +121,13 @@ class Configuration {
         return $this;
     }
 
-    public function get_idStockage() {
-        return $this->_idStockageArr;
+    // array des supports de stockage
+    public function get_stockageArr() {
+        return $this->_stockageArr;
+    }
+
+    public function add_idStockage(int $idStockage) {
+        array_push($this->_stockageArr, $idStockage);
     }
 };
 ?>
