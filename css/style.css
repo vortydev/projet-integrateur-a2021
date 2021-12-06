@@ -195,7 +195,7 @@ footer {
     height: 50px;
     width: 300px;
     margin: auto;
-    border-radius: 35px;
+    border-radius: 5px;
     color: white;
     background-color: var(--gris); 
     border-style: solid 1px;
@@ -205,7 +205,7 @@ footer {
 #f_inscription > input, #f_connexion > input 
 {
     width: 300px;
-    border-radius: 35px;
+    border-radius: 5px;
     height: 50px;
     text-align: center;
     margin: auto;

@@ -6,9 +6,14 @@
     $cm = new ClientManager($bdd);
 
     if (session_status() === PHP_SESSION_NONE) session_start();
-        require_once './inc/header.php';
+        
+    
 
     if (isset($_REQUEST['action'])){
+        
+        if($_REQUEST['action'] != 'inscription' && $_REQUEST['action'] != 'connexion')
+            require_once './inc/header.php';
+
         if ($_REQUEST['action'] == "inscription"){
             //section entrer de donne client dans base de donne
             
@@ -16,6 +21,7 @@
 
                 $client_insert = new Client (1,$_REQUEST['prenom'],$_REQUEST['nom'],$_REQUEST['email'],$_REQUEST['password'],$_REQUEST['dateNaissance'],$_REQUEST['adresse']);
                 $_SESSION['idClient'] = $cm->addClient($client_insert);
+                require_once './inc/header.php';
                 echo '</br><h2>Bienvenue '. $_REQUEST['prenom'] . '</h2>';
             }
             else if ($cm->emailVerification($_REQUEST['email']) == false){
@@ -47,6 +53,7 @@
             else {
                 $results = $cm->connexionVerification($_REQUEST['co_email'],$_REQUEST['co_password']);
                 $_SESSION['idClient'] = $results['id'];
+                require_once './inc/header.php';
                 echo '</br><h2>Bienvenue '. $results['prenom'] . '</h2>';
             }
         
