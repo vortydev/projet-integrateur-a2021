@@ -1,22 +1,19 @@
-USE Ordinateur
 
-
--- insertion dans Clients
-INSERT INTO Client(prenom, nom, motDePasse, dateNaissance, adresse)
-values  ("Alberto","Oviedo","alboviedo","1995-02-11","168 Rue Mont-Plaisant"),
-("Etienne","Menard","etimenard","2001-01-11","199 Rue Sarah"),
-("Pier-Olivier","Corriveau","pocorriveau","2002-09-01","01 Bacon"),
-("Camilo","Torres","camtorres","1992-10-11","05 Des boises"),
-("Karen","Torres","kartorres","1995-12-28","16 Rue Darche"),
-("Samuel","Gagnon","samgagnon","2005-10-12","34 vaisseau d'or"),
-("Shelane","Kathe","shekate","1999-05-05","4 Rue Montreal"),
-("Francis","Perron","fraperron","1994-02-18","50 Rue Evageline"),
-("Jimmy","Peterson","jimpeterson","1984-11-06","19 La cantera"),
-("Charlotte","Thevenin","chathevenin","1993-11-19","168 Rue Mont-Plaisant");
+INSERT INTO Client(prenom, nom,courriel, motDePasse, dateNaissance, adresse)
+values  ("Alberto","Oviedo","alboviedo@hotmail.com","alboviedo","1995-02-11","168 Rue Mont-Plaisant"),
+("Etienne","Menard","etimenard@hotmail.com","etimenard","2001-01-11","199 Rue Sarah"),
+("Pier-Olivier","Corriveau","pocorriveau@hotmail.com","pocorriveau","2002-09-01","01 Bacon"),
+("Camilo","Torres","camtorres@hotmail.com","camtorres","1992-10-11","05 Des boises"),
+("Karen","Torres","kartorres@hotmail.com","kartorres","1995-12-28","16 Rue Darche"),
+("Samuel","Gagnon","samgagnon@hotmail.com","samgagnon","2005-10-12","34 vaisseau d'or"),
+("Shelane","Kathe","shekate@hotmail.com","shekate","1999-05-05","4 Rue Montreal"),
+("Francis","Perron","fraperron@hotmail.com","fraperron","1994-02-18","50 Rue Evageline"),
+("Jimmy","Peterson","jimpeterson@hotmail.com","jimpeterson","1984-11-06","19 La cantera"),
+("Charlotte","Thevenin","chathevenin@hotmail.com","chathevenin","1993-11-19","168 Rue Mont-Plaisant");
 
 
 
--- Insertion dans MemoireVive
+
 INSERT INTO Fabricant(nom)
 Values ("Asus"),
 ("MSI"),
@@ -85,8 +82,8 @@ VALUES ("AM4"),
 INSERT INTO SupportUSB(nom)
 VALUES ("USB 3.2 GEN 1, USB 3.2 GEN 2, USB 2.0"),
 ("USB 3.2 GEN 1, USB 2.0"),
-("USB 3.2 Gen 2 Type-C, USB 3.2 Gen 1 Type-A")
-("USB 3.2 Gen 1 Type-A, USB 2.0 Type-A")
+("USB 3.2 Gen 2 Type-C, USB 3.2 Gen 1 Type-A"),
+("USB 3.2 Gen 1 Type-A, USB 2.0 Type-A"),
 ("USB 3.2 Gen 1 Type-A"),
 ("USB 3.2 Gen 1"),
 ("USB 3.2 GEN 2"),
@@ -119,10 +116,10 @@ VALUES ("ATX Mid Tower"),
 ("HTPC"),
 ("MicroATX Desktop"),
 ("ATX Desktop"),
-("ATX Test Bench"),
+("ATX Test Bench");
 
 
-INSERT INTO FormeCarteMere(description)
+INSERT INTO FormeCarteMere(nom)
 VALUES("ATX"),
 ("Micro ATX"),
 ("Mini ITX"),
@@ -132,12 +129,18 @@ VALUES("ATX"),
 ("Mini DTX"),
 ("SSI CEB"),
 ("SSI EEB"),
-("XL ATX")
-
+("XL ATX");
 
 INSERT INTO Connecteur(nom)
-VALUES ("")
-
-
-        
+VALUES ("PCI x16"),
+("DIMM"),
+("SO-DIMM"),
+("SATA"),
+("M.2"),
+("SAS2"),
+("NVME.2"),
+("PCI-EX16"),
+("PCI-E X1"),
+("PCI-EX16, PCI-E X1"),
+("M.2, SATA 6GB/s");
 

@@ -24,12 +24,12 @@ CREATE TABLE Client (
 CREATE TABLE Config (
 	id INT NOT NULL AUTO_INCREMENT,
 	idClient INT NOT NULL,
-	idCarteMere INT NOT NULL,
-	idProcesseur INT NOT NULL,
-	idCooler INT NOT NULL,
-	idMemoireVive INT NOT NULL,
-	idCarteGraphique INT NOT NULL,
-	idBoitier INT NOT NULL,
+	idCarteMere INT,
+	idProcesseur INT,
+	idCooler INT,
+	idMemoireVive INT,
+	idCarteGraphique INT,
+	idBoitier INT,
 	dateCreation DATE NOT NULL,
 	CONSTRAINT PK_Config PRIMARY KEY (id)
 );
