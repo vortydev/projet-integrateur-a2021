@@ -95,7 +95,7 @@ CREATE TABLE CarteGraphique (
 	id INT NOT NULL AUTO_INCREMENT,
 	idFabricant INT NOT NULL,
 	modele VARCHAR(40) NOT NULL,
-	chipset VARCHAR(20) NOT NULL,
+	chipset VARCHAR(40) NOT NULL,
 	capacite INT NOT NULL,
 	typeMemoire INT NOT NULL,
 	frequence INT NOT NULL,
