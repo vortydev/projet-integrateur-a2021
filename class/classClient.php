@@ -17,8 +17,7 @@
             $this->_password = $password;
         }
 
-        public function __construct(int $id,string $prenom,string $nom,string $courriel,string $password,string $dateNaissance,string $adresse) { 
-
+        public function __construct ($id, $prenom, $nom, $courriel, $password, $dateNaissance, $adresse) {
             $this->_id = $id;
             $this->_prenom = $prenom;
             $this->_nom = $nom;
@@ -88,7 +87,7 @@
 
 
 
-    }3
+    }
 
 
 
