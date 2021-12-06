@@ -24,7 +24,7 @@ class ConfigurationManager {
                                     WHERE idConfig = :idConfig';
     
     // select les configurations d'un client (idClient)
-    const SELECT_CLIENT_CONFIGS = 'SELECT id FROM Config WHERE idClient = :idClient ORDER BY dateCreation ASC';
+    const SELECT_CLIENT_CONFIGS = 'SELECT id FROM Config WHERE idClient = :idClient ORDER BY dateCreation DESC';
 
     private $_bdd;
     public function __construct(PDO $bdd) { $this->_bdd = $bdd; }
@@ -121,7 +121,7 @@ class ConfigurationManager {
     }
 
     private function selectCarteMere(int $id) {
-        
+
     }
 };
 ?>
