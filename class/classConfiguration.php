@@ -35,7 +35,7 @@ class Configuration {
         return $this->_id;
     }
 
-    private function set_id(int $id) : void {
+    public function set_id(int $id) : void {
         assert($id > 0);
         $this->_id = $id;
     }

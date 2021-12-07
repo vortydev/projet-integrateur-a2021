@@ -3,9 +3,9 @@
     --rouge: #660000;
     --rouge_accent: #440000;
     --gris: #aaa;
-    --bleu: #000088;
-    --bleu_accent: #000066;
-    --vert: #006600;
+    --bleu: #222288;
+    --bleu_accent: #1b1b6b;
+    --vert: #005500;
     --vert_accent: #004400;
 }
 
@@ -135,19 +135,19 @@ footer {
 }
 
 /* CHANGEMENT DE THÈME */
-.blue_theme .flexnav a, .blue_theme main {
+.blue_theme .flexnav a, .blue_theme main, .blue_theme .config .pale {
     background-color: var(--bleu);
 }
 
-.blue_theme .flexnav a:hover {
+.blue_theme .flexnav a:hover, .blue_theme .config {
     background-color: var(--bleu_accent);
 }
 
-.green_theme .flexnav a, .green_theme main {
+.green_theme .flexnav a, .green_theme main, .green_theme .config .pale {
     background-color: var(--vert);
 }
 
-.green_theme .flexnav a:hover {
+.green_theme .flexnav a:hover, .green_theme .config {
     background-color: var(--vert_accent);
 }
 
@@ -225,6 +225,41 @@ footer {
 .red_text_Form::-webkit-input-placeholder
 {
     color: red;
+}
+
+/* MES CONFIGURATIONS */
+.config {
+    width: 50%;
+    margin: auto;
+    margin-top: 25px;
+    padding: 10px;
+    text-align: center;
+    border: black 2px solid;
+    border-spacing: 0;
+    border-collapse: 0;
+    background-color: var(--rouge_accent);
+}
+
+.config tr.pale {
+    background-color: var(--rouge);
+}
+
+.config td {
+    width: 50%;
+    padding: 5px;
+}
+
+.config td.config_top {
+    width: 100%;
+}
+
+.config h2 {
+    margin: 0;
+}
+
+.config h3 {
+    color: var(--gris);
+    margin-bottom: 10px;
 }
 
 /* MEDIA QUERY */
