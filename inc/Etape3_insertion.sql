@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 /************************/
 /* INSERTION DE DONNÉES */
 /************************/
@@ -253,11 +251,6 @@ VALUES((SELECT id FROM Client WHERE prenom = 'Alberto'),(SELECT id FROM CarteMer
 ((SELECT id FROM Client WHERE prenom = 'Jimmy'),(SELECT id FROM CarteMere WHERE modele = 'Z370-A LGA1151'),(SELECT id FROM Processeur WHERE modele = 'Core i3-6100T'),(SELECT id FROM SystemeRefroidissement WHERE modele = 'Tundra TD02'),(SELECT id FROM MemoireVive WHERE modele = 'XLR8 MD16GK2D4320016AXR'),(SELECT id FROM CarteGraphique WHERE modele = 'GeForce GTX 1070 Ti'),(SELECT id FROM Boitier WHERE modele = '4000D Airflow'),CURDATE()),
 ((SELECT id FROM Client WHERE prenom = 'Charlotte'),(SELECT id FROM CarteMere WHERE modele = 'Z370-A LGA1151'),(SELECT id FROM Processeur WHERE modele = 'Core i5-10210U'),(SELECT id FROM SystemeRefroidissement WHERE modele = 'H100i'),(SELECT id FROM MemoireVive WHERE modele = 'SO2666CL19-16GB-1PK'),(SELECT id FROM CarteGraphique WHERE modele = 'Radeon RX 580'),(SELECT id FROM Boitier WHERE modele = 'H510'),CURDATE());
 
-
-
-
-=======
-
 /****************************/
 /* REQUÊTES DE PIER-OLIVIER */
 /****************************/
@@ -409,4 +402,3 @@ AS
 			FROM Config c
 			WHERE c.idClient = @idClient)
 GO
->>>>>>> cb0f8cb46fcddb16f3de69372accd7cfe8b62618
