@@ -262,11 +262,72 @@ VALUES((SELECT id FROM Client WHERE prenom = 'Alberto'),(SELECT id FROM CarteMer
 /* REQUÊTES DE PIER-OLIVIER */
 /****************************/
 
+-- Delete un modele de memoire vive 
+DELETE FROM  MemoireVive WHERE modele = "nom modele";
 
+-- Delete un user 
+DELETE FROM Client WHERE id = "id du client";
+
+-- Update le mot de passe d’un client qui désire le changer
+UPDATE Client 
+SET motDePasse = 'nouveaumotdepasse'
+WHERE id = 1;
+ 
+-- Update l’adresse d’un client qui désire la changer 
+UPDATE 
+SET adresse = "nouvelle_adresse"
+WHERE id = 1;
+
+-- Select tous les propriétés de la mémoire vive 
+SELECT m.id, f.nom, m.modele, m.capacite, m.nbBarrettes, m.frequence. c.nom, m.tauxTransfert FROM MemoireVive
+INNER JOIN Connecteur c ON c.id = m.idConnecteur,
+INNER JOIN Fabricant f ON f.id = m.idFabricant;
+
+-- SELECT tous les propritétés de la memoire vive en ordre decroissant de capacite
+SELECT m.id, f.nom, m.modele, m.capacite, m.nbBarrettes, m.frequence. c.nom, m.tauxTransfert FROM MemoireVive
+INNER JOIN Connecteur c ON c.id = m.idConnecteur,
+INNER JOIN Fabricant f ON f.id = m.idFabricant 
+ORDER BY m.capacite DESC;
+
+-- select de connexion d'utilisateur  / verifie si ce email existe 
+SELECT id FROM Client 
+WHERE courriel = “courrielHasard@outlook.com”
+AND motDePasse = “12345”
+
+-- Select de memoire vive avec la meilleure fréquence 
+SELECT id FROM MemoireVive
+WHERE frequence = (SELECT MAX(frequence) FROM MemoireVive);
+
+-- SELECT le nombre de configuration d’un client
+SELECT COUNT(*) FROM Config WHERE
+idClient = 1;
+
+-- View des memoire vive d’un fabricant mentionner
+CREATE VIEW memoirevive_asus AS
+SELECT * FROM MemoireVive m 
+INNER JOIN Fabricant f on f.id = m.idFabricant
+WHERE f.nom = "asus";
+
+-- fonction return table de prenom, courriel, nom de tous les utilisateurs
+CREATE FUNCTION chercheClient ()
+RETURNS TABLE 
+AS
+RETURN (SELECT prenom, nom, courriel FROM Client);
+
+
+-- AUTRE REQUETES UTILES 
+-- Insert un nouveau client lors de l’inscription
+INSERT INTO client (prenom,nom,courriel,motDePasse,dateNaissance,adresse)
+            VALUES ("prenomNouveauClient","nomNouveauClient","courrielNouveauClient","motDePasseNouveauClient","dateNaissanceNouveauClient","adresseNouveauClient");
+
+-- Regarde si le email est déjà utilisé lors de l’inscription
+SELECT id FROM Client
+             WHERE courriel = "courrielVerifier";
 
 /**********************/
 /* REQUÊTES D'ALBERTO */
 /**********************/
+
 SELECT id FROM Socket WHERE nom ='FCBGA1528'
 
 SELECT co.id, ca.modele, so.nom  FROM 
@@ -300,10 +361,6 @@ SELECT COUNT(*) FROM client;
 UPDATE client
 set nom = 'Albarracin Oviedo'
 WHERE prenom = 'Alberto';
-
-
-
-
 
 /**********************/
 /* REQUÊTES D'ÉTIENNE */
