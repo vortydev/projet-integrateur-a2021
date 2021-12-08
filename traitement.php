@@ -14,11 +14,11 @@ $cm = new ClientManager($bdd);
 
 // INSCRIPTION DU CLIENT
 if (isset($_REQUEST['action']) && $_REQUEST['action'] == "inscription") {
-    require_once './inc/header.php';
 
     if ($cm->emailVerification($_REQUEST['email']) && $_REQUEST['password'] == $_REQUEST['c_password'] && strlen($_REQUEST['c_password']) > 8) {
         $client_insert = new Client (1, $_REQUEST['prenom'],$_REQUEST['nom'],$_REQUEST['email'],$_REQUEST['password'],$_REQUEST['dateNaissance'],$_REQUEST['adresse']);
         $_SESSION['idClient'] = $cm->addClient($client_insert);
+        require_once './inc/header.php';
         echo '</br><h2>Bienvenue '. $_REQUEST['prenom'] . '!</h2>';
     }
     else if ($cm->emailVerification($_REQUEST['email']) == false){
