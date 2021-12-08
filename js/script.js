@@ -75,6 +75,25 @@ function fetchColorTheme() {
     }
 }
 
+//event listener relier a la page de creation de configuration
+
+if(document.getElementById("creationConfig")) {
+   let btn = document.getElementsByTagName('button');
+   
+   for (let i = 0 ; i < btn.length;i++)
+    {
+        btn[i].addEventListener("click",printChoice);
+    }
+}
+
+//fonction relier a la page de creation
+
+function printChoice(event) { 
+   
+  let choice = event.target.nextElementSibling;
+  choice.classList.toggle('hidden');
+}
+
 //Event listener des elements relier au form d'inscription et au form de connexion 
 
 if (document.getElementById("f_connexion")) {
