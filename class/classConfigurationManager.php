@@ -50,7 +50,7 @@ class ConfigurationManager {
         $query->execute();
         $idStockageArr = $query->fetchAll();
         for ($i = 0; $i < sizeof($idStockageArr); $i++) {
-            $configObj->add_idStockage($idStockageArr[0][$i]);
+            $configObj->add_idStockage($idStockageArr[$i][0]);
         }
 
         return $configObj;
@@ -106,7 +106,7 @@ class ConfigurationManager {
 
         $clientConfigArr = array();
         for ($i = 0; $i < sizeof($dbResult); $i++) {
-            array_push($clientConfigArr, $this->getConfig($dbResult[0][$i]));
+            array_push($clientConfigArr, $this->getConfig($dbResult[$i][0]));
         }
 
         return $clientConfigArr;
