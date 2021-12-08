@@ -8,16 +8,14 @@
     <form action="./traitement.php" class="<?php if(isset($_SESSION['errorConnexion'])) echo $_SESSION['errorConnexion']; ?>" id="f_connexion" method="post">
  
         <input type="hidden" id="connexion" name="action" value="connexion">
-        <input type="text" name="co_email" class="connexion_properties" placeholder="Votre adresse electronique">
+        <input type="text" name="co_email" class="connexion_properties" placeholder="Votre adresse électronique">
 
         <input type="text" name="co_password" class="connexion_properties" placeholder="Mot de passe" >
 
         <button type="submit" class="btn_connexion">Se connecter</button>
     </form>
 </section>
-    
-    
-    
+      
 <?php
     require_once './inc/footer.php';
     $_SESSION['errorConnexion'] = 0;

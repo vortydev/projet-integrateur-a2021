@@ -44,9 +44,7 @@ class ClientManager {
         $insertClient = $this->_bdd->prepare(self::INSERT_CLIENT);
         $insertClient->execute($bindParams);
 
-        $last_id = $this->_bdd->lastInsertId();
-        return $last_id;
-
+        return $this->_bdd->lastInsertId();
     }
 
     public function connexionVerification(string $courriel, string $password) {
