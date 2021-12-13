@@ -12,13 +12,13 @@
     require_once './class/PDOFactory.php';
     $bdd = PDOFactory::getMySQLConnection();
     $configManager = new ConfigurationManager($bdd);
-    $allCarteMere = $configManager->getAllCarteMere($bdd);
-    $allProcesseur = $configManager->getAllProcesseur($bdd);
-    $allMemoireVive = $configManager->getAllMemoireVive($bdd);
-    $allCarteGraphique = $configManager->getAllCarteGraphique($bdd);
-    $allCooler = $configManager->getAllCooler($bdd);
-    $allStockage = $configManager->getAllStockage($bdd);
-    $allBoitier = $configManager->getAllBoitier($bdd);
+    $tblCarteMere = $configManager->getAllCarteMere($bdd);
+    $tblProcesseur = $configManager->getAllProcesseur($bdd);
+    $tblMemoireVive = $configManager->getAllMemoireVive($bdd);
+    $tblGpu = $configManager->getAllCarteGraphique($bdd);
+    $tblCooler = $configManager->getAllCooler($bdd);
+    $tblStockage = $configManager->getAllStockage($bdd);
+    $tblBoitier = $configManager->getAllBoitier($bdd);
    
     
 
@@ -28,13 +28,14 @@
         
         <h2>Carte mère :</h2>
         <button name='btnSelectionCarte'> Selectioner</button>
-        <form action='./traitement.php' class='formChoixComposant'>
+        <form action='configuration.php' method='post' class='formChoixComposant'>
             <h3>Filtrer </h3>
             <p class='selectChoixComposants'> 
                 <label for='choixFabricantCarte'>Fabricant : </label>
-                <select name='choixFabricantCarte' id=''>";
+                <select name='choixFabricantCarte'>
+                <option value='all' slected'>Tous/Toutes</option>";
                 $temp = array();
-                foreach ($allCarteMere as $choixFabricantCarte){
+                foreach ($tblCarteMere as $choixFabricantCarte){
                     
                     if(!trouverdoublon($choixFabricantCarte['fabricant'], $temp)){
                     echo "<option value='" . $choixFabricantCarte['fabricant'] . "'>" . $choixFabricantCarte['fabricant'] . "</option>";
@@ -46,9 +47,10 @@
                 echo "   
                 </select>
                 <label for='choixSocketCarte'>Choix de Socket :</label>
-                <select name='choixSocketCarte' id=''>";
+                <select name='choixSocketCarte' id=''>
+                <option value='all' slected'>Tous/Toutes</option>";
                 $temp = array();
-                foreach ($allCarteMere as $choixSocketCarte){
+                foreach ($tblCarteMere as $choixSocketCarte){
                     if(!trouverdoublon($choixSocketCarte['socket'], $temp)){
                     echo "<option value='" . $choixSocketCarte['socket'] . "'>" . $choixSocketCarte['socket'] . "</option>";
                     array_push($temp, $choixSocketCarte['socket']);
@@ -59,9 +61,10 @@
                 
                 
                 <label for='nbConnecteruRAM'>Nombre de connecteurs RAM : </label>
-                <select name='nbConnecteruRAM' id=''>";
+                <select name='nbConnecteruRAM' id=''>
+                <option value='all' slected'>Tous/Toutes</option>";
                 $temp = array();
-                foreach ($allCarteMere as $nbConnecteruRAM){
+                foreach ($tblCarteMere as $nbConnecteruRAM){
                     if(!trouverdoublon($nbConnecteruRAM['nbConnecteurRam'], $temp)){
                     echo "<option value='" . $nbConnecteruRAM['nbConnecteurRam'] . "'>" . $nbConnecteruRAM['nbConnecteurRam'] . "</option>";
                     array_push($temp, $nbConnecteruRAM['nbConnecteurRam']);
@@ -84,6 +87,9 @@
             </p>
             
         </form>";
+        if(isset($_POST['choixFabricantCarte']))
+               
+                $tblCarteMere = $configManager->getCarteMereFiltree($_POST);
         echo "
 
         <table class='tblProduits'>Cartes disponibles :
@@ -101,19 +107,19 @@
                 <th>selection</th>
             </tr>
             ";
-            $tblenght = count($allCarteMere);
+            $tblenght = sizeof($tblCarteMere);
             for ($i =0; $i < $tblenght; $i++){
                 echo "<tr class ='tblProduits'>
-                <td>".$allCarteMere[$i]['fabricant']."</td>
-                <td>".$allCarteMere[$i]['modele']."</td>
-                <td>".$allCarteMere[$i]['forme']."</td>
-                <td>".$allCarteMere[$i]['socket']."</td>
-                <td>".$allCarteMere[$i]['chipset']."</td>
-                <td>".$allCarteMere[$i]['capaciteRam']."</td>
-                <td>".$allCarteMere[$i]['typememoire']."</td>
-                <td>".$allCarteMere[$i]['nbConnecteurRam']."</td>
-                <td>".$allCarteMere[$i]['wifi']."</td>
-                <td>".$allCarteMere[$i]['supportusb']."</td>
+                <td>".$tblCarteMere[$i]['fabricant']."</td>
+                <td>".$tblCarteMere[$i]['modele']."</td>
+                <td>".$tblCarteMere[$i]['forme']."</td>
+                <td>".$tblCarteMere[$i]['socket']."</td>
+                <td>".$tblCarteMere[$i]['chipset']."</td>
+                <td>".$tblCarteMere[$i]['capaciteRam']."</td>
+                <td>".$tblCarteMere[$i]['typememoire']."</td>
+                <td>".$tblCarteMere[$i]['nbConnecteurRam']."</td>
+                <td>".$tblCarteMere[$i]['wifi']."</td>
+                <td>".$tblCarteMere[$i]['supportusb']."</td>
                 <td><button>choisir</button></td>
                 </tr>";
             }
@@ -127,9 +133,10 @@
             <h3>Filtrer</h3>
             <p class='selectChoixComposants'> 
                 <label for='choixFabricantProcesseur'>Fabricant : </label>
-                <select name='choixFabricantProcesseur' id=''>";
+                <select name='choixFabricantProcesseur' id=''>
+                <option value='all' slected'>Tous/Toutes</option>";
                 $temp = array();
-                foreach ($allProcesseur as $fabricants){
+                foreach ($tblProcesseur as $fabricants){
                     
                     if(!trouverdoublon($fabricants['fabricant'], $temp)){
                     echo "<option value='" . $fabricants['fabricant'] . "'>" . $fabricants['fabricant'] . "</option>";
@@ -140,9 +147,10 @@
                 unset($temp);
                 echo " </select>
                 <label for='nbCoeurs'>Nombre de coeurs physique</label>
-                <select name='nbCoeurs' id=''>";
+                <select name='nbCoeurs' id=''>
+                <option value='all' slected'>Tous/Toutes</option>";
                 $temp = array();
-                foreach ($allProcesseur as $nbCoeurs){
+                foreach ($tblProcesseur as $nbCoeurs){
                     
                     if(!trouverdoublon($nbCoeurs['nbCoeurs'], $temp)){
                     echo "<option value='" . $nbCoeurs['nbCoeurs'] . "'>" . $nbCoeurs['nbCoeurs'] . "</option>";
@@ -154,9 +162,10 @@
                 echo "</select>
             
                 <label for='typeSocketProcessue'>Type de Socket</label>
-                <select name='typeSocketProcessue' id=''>";
+                <select name='typeSocketProcessue' id=''>
+                <option value='all' slected'>Tous/Toutes</option>";
                 $temp = array();
-                foreach ($allProcesseur as $socket){
+                foreach ($tblProcesseur as $socket){
                     if(!trouverdoublon($socket['socket'], $temp)){
                     echo "<option value='" . $socket['socket'] . "'>" . $socket['socket'] . "</option>";
                     array_push($temp, $socket['socket']);
@@ -185,14 +194,14 @@
                     <th>selection</th>
                 </tr>
                 ";
-                $tblenght = count($allProcesseur);
+                $tblenght = count($tblProcesseur);
                 for ($i =0; $i < $tblenght; $i++){
                     echo "<tr class ='tblProduits'>
-                    <td>".$allProcesseur[$i]['fabricant']."</td>
-                    <td>".$allProcesseur[$i]['modele']."</td>
-                    <td>".$allProcesseur[$i]['nbCoeurs']."</td>
-                    <td>".$allProcesseur[$i]['frequence']."</td>
-                    <td>".$allProcesseur[$i]['socket']."</td>
+                    <td>".$tblProcesseur[$i]['fabricant']."</td>
+                    <td>".$tblProcesseur[$i]['modele']."</td>
+                    <td>".$tblProcesseur[$i]['nbCoeurs']."</td>
+                    <td>".$tblProcesseur[$i]['frequence']."</td>
+                    <td>".$tblProcesseur[$i]['socket']."</td>
                     <td><button>choisir</button></td>
                     </tr>";
                 }              
@@ -207,9 +216,10 @@
             <h3>Filtrer </h3>
             <p class='selectChoixComposants'> 
                 <label for='choixFabricantRAM'>Fabricant: </label>
-                <select name='choixFabricantRAM' id=''>";
+                <select name='choixFabricantRAM' id=''>
+                <option value='all' slected'>Tous/Toutes</option>";
                 $temp = array();
-                foreach ($allMemoireVive as $fabricant){
+                foreach ($tblMemoireVive as $fabricant){
                     if(!trouverdoublon($fabricant['fabricant'], $temp)){
                     echo "<option value='" . $socket['fabricant'] . "'>" . $fabricant['fabricant'] . "</option>";
                     array_push($temp, $fabricant['fabricant']);
@@ -218,9 +228,10 @@
                 unset($temp);
                 echo "</select>
                 <label for='nbBarretesRAM'>Nombre de barretes : </label>
-                <select name='nbBarretesRAM' id=''>";
+                <select name='nbBarretesRAM' id=''>
+                <option value='all' slected'>Tous/Toutes</option>";
                 $temp = array();
-                foreach ($allMemoireVive as $nbBarrettes){
+                foreach ($tblMemoireVive as $nbBarrettes){
                     if(!trouverdoublon($nbBarrettes['nbBarrettes'], $temp)){
                     echo "<option value='" . $nbBarrettes['nbBarrettes'] . "'>" . $nbBarrettes['nbBarrettes'] . "</option>";
                     array_push($temp, $nbBarrettes['nbBarrettes']);
@@ -229,9 +240,10 @@
                 unset($temp);
                 echo "</select>
                 <label for='typeConnecteurRAM'>Type de connecteur: </label>
-                <select name='typeConnecteurRAM' id=''>";
+                <select name='typeConnecteurRAM' id=''>
+                <option value='all' slected'>Tous/Toutes</option>";
                 $temp = array();
-                foreach ($allMemoireVive as $connecteur){
+                foreach ($tblMemoireVive as $connecteur){
                     if(!trouverdoublon($connecteur['connecteur'], $temp)){
                     echo "<option value='" . $nbBarrettes['connecteur'] . "'>" . $connecteur['connecteur'] . "</option>";
                     array_push($temp, $connecteur['connecteur']);
@@ -240,9 +252,10 @@
                 unset($temp);
                 echo "</select>
                 <label for='frequenceRAM'>Frequence minimale (MHz): </label>
-                <select name='frequenceRAM' id=''>";
+                <select name='frequenceRAM' id=''>
+                <option value='all' slected'>Tous/Toutes</option>";
                 $temp = array();
-                foreach ($allMemoireVive as $frequence){
+                foreach ($tblMemoireVive as $frequence){
                     if(!trouverdoublon($frequence['frequence'], $temp)){
                     echo "<option value='" . $frequence['frequence'] . "'>" . $frequence['frequence'] . "</option>";
                     array_push($temp, $frequence['frequence']);
@@ -251,9 +264,10 @@
                 unset($temp);
                 echo "</select>
                 <label for='typeMemoireRAM'>Type de Memoire: </label>
-                <select name='typeMemoireRAM' id=''>";
+                <select name='typeMemoireRAM' id=''>
+                <option value='all' slected'>Tous/Toutes</option>";
                 $temp = array();
-                foreach ($allMemoireVive as $typememoire){
+                foreach ($tblMemoireVive as $typememoire){
                     if(!trouverdoublon($typememoire['typememoire'], $temp)){
                     echo "<option value='" . $typememoire['typememoire'] . "'>" . $typememoire['typememoire'] . "</option>";
                     array_push($temp, $typememoire['typememoire']);
@@ -284,16 +298,16 @@
                     <th>selection</th>
                 </tr>
                 ";
-                $tblenght = count($allMemoireVive);
+                $tblenght = count($tblMemoireVive);
                 for ($i =0; $i < $tblenght; $i++){
                     echo "<tr class ='tblProduits'>
-                    <td>".$allMemoireVive[$i]['fabricant']."</td>
-                    <td>".$allMemoireVive[$i]['modele']."</td>
-                    <td>".$allMemoireVive[$i]['capacite']."</td>
-                    <td>".$allMemoireVive[$i]['nbBarrettes']."</td>
-                    <td>".$allMemoireVive[$i]['frequence']."</td>
-                    <td>".$allMemoireVive[$i]['connecteur']."</td>
-                    <td>".$allMemoireVive[$i]['typememoire']."</td>
+                    <td>".$tblMemoireVive[$i]['fabricant']."</td>
+                    <td>".$tblMemoireVive[$i]['modele']."</td>
+                    <td>".$tblMemoireVive[$i]['capacite']."</td>
+                    <td>".$tblMemoireVive[$i]['nbBarrettes']."</td>
+                    <td>".$tblMemoireVive[$i]['frequence']."</td>
+                    <td>".$tblMemoireVive[$i]['connecteur']."</td>
+                    <td>".$tblMemoireVive[$i]['typememoire']."</td>
                     <td><button>choisir</button></td>
                     </tr>";
                 }
@@ -308,9 +322,10 @@
 
             <p class='selectChoixComposants'> 
                 <label for='choixFabricantGPU'>Fabricant: </label>
-                <select name='choixFabricantGPU' id=''>";
+                <select name='choixFabricantGPU' id=''>
+                <option value='all' slected'>Tous/Toutes</option>";
                 $temp = array();
-                foreach ($allCarteGraphique as $fabricant){
+                foreach ($tblGpu as $fabricant){
                     if(!trouverdoublon($fabricant['fabricant'], $temp)){
                     echo "<option value='" . $socket['fabricant'] . "'>" . $fabricant['fabricant'] . "</option>";
                     array_push($temp, $fabricant['fabricant']);
@@ -319,9 +334,10 @@
                 unset($temp);
                 echo "</select>
                 <label for='baseClock'>base Clock (MHz) : </label>
-                <select name='baseClock' id=''>";
+                <select name='baseClock' id=''>
+                <option value='all' slected'>Tous/Toutes</option>";
                 $temp = array();
-                foreach ($allCarteGraphique as $frequence){
+                foreach ($tblGpu as $frequence){
                     if(!trouverdoublon($frequence['frequence'], $temp)){
                     echo "<option value='" . $frequence['frequence'] . "'>" . $frequence['frequence'] . "</option>";
                     array_push($temp, $frequence['frequence']);
@@ -331,9 +347,10 @@
                 echo "</select>
             
                 <label for='typeConnecteurGPU'>Type de connecteur: </label>
-                <select name='typeConnecteurGPU' id=''>";
+                <select name='typeConnecteurGPU' id=''>
+                <option value='all' slected'>Tous/Toutes</option>";
                 $temp = array();
-                foreach ($allCarteGraphique as $connecteur){
+                foreach ($tblGpu as $connecteur){
                     if(!trouverdoublon($connecteur['connecteur'], $temp)){
                     echo "<option value='" . $connecteur['connecteur'] . "'>" . $connecteur['connecteur'] . "</option>";
                     array_push($temp, $connecteur['connecteur']);
@@ -342,9 +359,10 @@
                 unset($temp);
                 echo "</select>
                 <label for='chipsetGPU'>Chipset: </label>
-                <select name='chipsetGPU' id=''>";
+                <select name='chipsetGPU' id=''>
+                <option value='all' slected'>Tous/Toutes</option>";
                 $temp = array();
-                foreach ($allCarteGraphique as $chipset){
+                foreach ($tblGpu as $chipset){
                     if(!trouverdoublon($chipset['chipset'], $temp)){
                     echo "<option value='" . $chipset['chipset'] . "'>" . $chipset['chipset'] . "</option>";
                     array_push($temp, $chipset['chipset']);
@@ -379,17 +397,17 @@
                     <th>selection</th>
                 </tr>
                 ";
-                $tblenght = count($allCarteGraphique);
+                $tblenght = count($tblGpu);
                 for ($i =0; $i < $tblenght; $i++){
                     echo "<tr class ='tblProduits'>
-                    <td>".$allCarteGraphique[$i]['fabricant']."</td>
-                    <td>".$allCarteGraphique[$i]['modele']."</td>
-                    <td>".$allCarteGraphique[$i]['chipset']."</td>
-                    <td>".$allCarteGraphique[$i]['capacite']."</td>
-                    <td>".$allCarteGraphique[$i]['typeMemoire']."</td>
-                    <td>".$allCarteGraphique[$i]['frequence']."</td>
-                    <td>".$allCarteGraphique[$i]['frameSync']."</td>
-                    <td>".$allCarteGraphique[$i]['connecteur']."</td>
+                    <td>".$tblGpu[$i]['fabricant']."</td>
+                    <td>".$tblGpu[$i]['modele']."</td>
+                    <td>".$tblGpu[$i]['chipset']."</td>
+                    <td>".$tblGpu[$i]['capacite']."</td>
+                    <td>".$tblGpu[$i]['typeMemoire']."</td>
+                    <td>".$tblGpu[$i]['frequence']."</td>
+                    <td>".$tblGpu[$i]['frameSync']."</td>
+                    <td>".$tblGpu[$i]['connecteur']."</td>
                     <td><button>choisir</button></td>
                     </tr>";
                 }
@@ -404,9 +422,10 @@
             <h3>Filtrer </h3>
             <p class='selectChoixComposants'> 
                 <label for='choixFabricantCooler'>Fabricant: </label>
-                <select name='choixFabricantCooler' id=''>";
+                <select name='choixFabricantCooler' id=''>
+                <option value='all' slected'>Tous/Toutes</option>";
                 $temp = array();
-                foreach ($allCooler as $fabricant){
+                foreach ($tblCooler as $fabricant){
                     if(!trouverdoublon($fabricant['fabricant'], $temp)){
                     echo "<option value='" . $socket['fabricant'] . "'>" . $fabricant['fabricant'] . "</option>";
                     array_push($temp, $fabricant['fabricant']);
@@ -416,9 +435,10 @@
                 echo "</select>
 
                 <label for='dimensionCooler'>Dimension (mm): </label>
-                <select name='dimensionCooler' id=''>";
+                <select name='dimensionCooler' id=''>
+                <option value='all' slected'>Tous/Toutes</option>";
                 $temp = array();
-                foreach ($allCooler as $dimension){
+                foreach ($tblCooler as $dimension){
                     if(!trouverdoublon($dimension['dimension'], $temp)){
                     echo "<option value='" . $dimension['dimension'] . "'>" . $dimension['dimension'] . "</option>";
                     array_push($temp, $dimension['dimension']);
@@ -449,9 +469,10 @@
         <h3>Filtrer </h3>
         <p class='selectChoixComposants'> 
             <label for='choixFabricantStockage'>Fabricant: </label>
-            <select name='choixFabricantStockage' id=''>";
+            <select name='choixFabricantStockage' id=''>
+            <option value='all' slected'>Tous/Toutes</option>";
             $temp = array();
-            foreach ($allStockage as $fabricant){
+            foreach ($tblStockage as $fabricant){
                 if(!trouverdoublon($fabricant['fabricant'], $temp)){
                 echo "<option value='" . $socket['fabricant'] . "'>" . $fabricant['fabricant'] . "</option>";
                 array_push($temp, $fabricant['fabricant']);
@@ -461,9 +482,10 @@
             echo " </select>
 
             <label for='choixTypeStockage'> support de stockage  : </label>
-            <select name='choixTypeStockage' id=''>";
+            <select name='choixTypeStockage' id=''>
+            <option value='all' slected'>Tous/Toutes</option>";
             $temp = array();
-            foreach ($allStockage as $typeStockage){
+            foreach ($tblStockage as $typeStockage){
                 if(!trouverdoublon($typeStockage['typeStockage'], $temp)){
                 echo "<option value='" . $typeStockage['typeStockage'] . "'>" . $typeStockage['typeStockage'] . "</option>";
                 array_push($temp, $typeStockage['typeStockage']);
@@ -472,9 +494,10 @@
             unset($temp);
             echo "</select>
             <label for='connecteurStockage'> Connecteur Stockage  : </label>
-            <select name='connecterStockage' id=''>";
+            <select name='connecterStockage' id=''>
+            <option value='all' slected'>Tous/Toutes</option>";
             $temp = array();
-            foreach ($allStockage as $connecteur){
+            foreach ($tblStockage as $connecteur){
                 if(!trouverdoublon($connecteur['connecteur'], $temp)){
                 echo "<option value='" . $connecteur['connecteur'] . "'>" . $connecteur['connecteur'] . "</option>";
                 array_push($temp, $connecteur['connecteur']);
@@ -483,9 +506,10 @@
             unset($temp);
             echo "</select>
             <label for='choixRMPStockage'> Vitesse de rotation (rpm): </label>
-            <select name='choixRMPStockage' id=''>";
+            <select name='choixRMPStockage' id=''>
+            <option value='all' slected'>Tous/Toutes</option>";
             $temp = array();
-            foreach ($allStockage as $rpm){
+            foreach ($tblStockage as $rpm){
                 if(!trouverdoublon($rpm['rpm'], $temp)){
                 echo "<option value='" . $rpm['rpm'] . "'>" . $rpm['rpm'] . "</option>";
                 array_push($temp, $rpm['rpm']);
@@ -519,16 +543,16 @@
                 <th>selection</th>
             </tr>
             ";
-            $tblenght = count($allStockage);
+            $tblenght = count($tblStockage);
             for ($i =0; $i < $tblenght; $i++){
                 echo "<tr class ='tblProduits'>
-                <td>".$allStockage[$i]['fabricant']."</td>
-                <td>".$allStockage[$i]['modele']."</td>
-                <td>".$allStockage[$i]['typeStockage']."</td>
-                <td>".$allStockage[$i]['capacite']."</td>
-                <td>".$allStockage[$i]['rpm']."</td>
-                <td>".$allStockage[$i]['connecteur']."</td>
-                <td>".$allStockage[$i]['tauxTransfert']."</td>
+                <td>".$tblStockage[$i]['fabricant']."</td>
+                <td>".$tblStockage[$i]['modele']."</td>
+                <td>".$tblStockage[$i]['typeStockage']."</td>
+                <td>".$tblStockage[$i]['capacite']."</td>
+                <td>".$tblStockage[$i]['rpm']."</td>
+                <td>".$tblStockage[$i]['connecteur']."</td>
+                <td>".$tblStockage[$i]['tauxTransfert']."</td>
                 <td><button>choisir</button></td>
                 </tr>";
             }  
@@ -543,9 +567,10 @@ echo "</section>
             <h3>Filtrer </h3>
             <p class='selectChoixComposants'> 
                 <label for='choixFabricantBoitier'>Fabricant: </label>
-                <select name='choixFabricantBoitier' id=''>";
+                <select name='choixFabricantBoitier' id=''>
+                <option value='all' slected'>Tous/Toutes</option>";
                 $temp = array();
-                foreach ($allBoitier as $fabricant){
+                foreach ($tblBoitier as $fabricant){
                     if(!trouverdoublon($fabricant['fabricant'], $temp)){
                     echo "<option value='" . $socket['fabricant'] . "'>" . $fabricant['fabricant'] . "</option>";
                     array_push($temp, $fabricant['fabricant']);
@@ -555,9 +580,10 @@ echo "</section>
                 echo "</select>
 
                 <label for='choixTypeBoitier'>Type de Boitier (forme): </label>
-                <select name='choixTypeBoitier' id=''>";
+                <select name='choixTypeBoitier' id=''>
+                <option value='all' slected'>Tous/Toutes</option>";
                 $temp = array();
-                foreach ($allBoitier as $typeboitier){
+                foreach ($tblBoitier as $typeboitier){
                     if(!trouverdoublon($typeboitier['typeboitier'], $temp)){
                     echo "<option value='" . $typeboitier['typeboitier'] . "'>" . $typeboitier['typeboitier'] . "</option>";
                     array_push($temp, $typeboitier['typeboitier']);
@@ -567,9 +593,10 @@ echo "</section>
                 echo "</select>
 
                 <label for='choixFenetrerBoitier'>Type de Fenêtre  : </label>
-                <select name='choixFenetreBoitier' id=''>";
+                <select name='choixFenetreBoitier' id=''>
+                <option value='all' slected'>Tous/Toutes</option>";
                 $temp = array();
-                foreach ($allBoitier as $typeFenetre){
+                foreach ($tblBoitier as $typeFenetre){
                     if(!trouverdoublon($typeFenetre['typeFenetre'], $temp)){
                     echo "<option value='" . $typeFenetre['typeFenetre'] . "'>" . $typeFenetre['typeFenetre'] . "</option>";
                     array_push($temp, $typeFenetre['typeFenetre']);
@@ -579,9 +606,10 @@ echo "</section>
                 echo "</select>
 
                 <label for='choixPanneauBoitier'>Panneau USB frontal: </label>
-                <select name='choixPanneauBoitier' id=''>";
+                <select name='choixPanneauBoitier' id=''>
+                <option value='all' slected'>Tous/Toutes</option>";
                 $temp = array();
-                foreach ($allBoitier as $supportusb){
+                foreach ($tblBoitier as $supportusb){
                     if(!trouverdoublon($supportusb['supportusb'], $temp)){
                     echo "<option value='" . $supportusb['supportusb'] . "'>" . $supportusb['supportusb'] . "</option>";
                     array_push($temp, $supportusb['supportusb']);
@@ -606,14 +634,14 @@ echo "</section>
                     <th>selection</th>
                 </tr>
                 ";
-                $tblenght = count($allCarteMere);
+                $tblenght = count($tblCarteMere);
                 for ($i =0; $i < $tblenght; $i++){
                     echo "<tr class ='tblProduits'>
-                    <td>".$allBoitier[$i]['fabricant']."</td>
-                    <td>".$allBoitier[$i]['modele']."</td>
-                    <td>".$allBoitier[$i]['typeboitier']."</td>
-                    <td>".$allBoitier[$i]['typeFenetre']."</td>
-                    <td>".$allBoitier[$i]['supportusb']."</td>
+                    <td>".$tblBoitier[$i]['fabricant']."</td>
+                    <td>".$tblBoitier[$i]['modele']."</td>
+                    <td>".$tblBoitier[$i]['typeboitier']."</td>
+                    <td>".$tblBoitier[$i]['typeFenetre']."</td>
+                    <td>".$tblBoitier[$i]['supportusb']."</td>
                     <td><button>choisir</button></td>
                     </tr>";
                 }      

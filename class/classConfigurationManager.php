@@ -174,7 +174,7 @@ class ConfigurationManager {
     INNER JOIN formecartemere fo ON fo.id = c.idForme
     INNER JOIN socket s ON s.id = c.idSocket
     INNER JOIN typememoire tm ON tm.id = c.typeMemoire
-    INNER JOIN supportusb su ON su.id = c.idSupportUSB;';
+    INNER JOIN supportusb su ON su.id = c.idSupportUSB';
 
     const SELECT_ALL_PROCESSEUR = 'SELECT p.id, f.nom as fabricant, modele, nbCoeurs,frequence, s.nom as socket
     FROM processeur p
@@ -238,6 +238,34 @@ class ConfigurationManager {
         $query = $this->_bdd->prepare(self::SELECT_ALL_BOITIER);
         $query->execute();
         return $query->fetchall();
+    }
+
+    public function getCarteMereFiltree($filtre)
+    {
+        $bindParamArray = array();
+        $whereClause ='';
+        if(isset($filtre['choixFabricantCarte']) && $filtre['choixFabricantCarte'] != 'all')
+        {
+            $this->ajoutFabricantQuery($whereClause,$bindParamArray,$filtre['choixFabricantCarte']);
+            
+        }
+
+        if (empty($whereClause)){
+            $dbResult = $this->_bdd->query(self::SELECT_ALL_CARTEMERE)->fetchAll();
+        }else {
+            
+            $query = $this->_bdd->prepare(self::SELECT_ALL_CARTEMERE." WHERE ". $whereClause);
+            $query->execute($bindParamArray);
+            $dbResult = $query->fetchAll();         
+            
+        }
+        return $dbResult;
+    }
+
+    public function ajoutFabricantQuery(string& $whereClause, array& $bindArray, string $fabricant){
+        
+        $whereClause .= 'f.nom=:fabricant' ;
+        $bindArray[':fabricant'] = $fabricant;
     }
    
 };
