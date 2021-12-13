@@ -286,6 +286,39 @@ footer {
     color: var(--gris);
 }
 
+[class*="appear"], .disappear { 
+    animation-duration: 0.75s; 
+    animation-fill-mode: forwards; 
+} 
+ 
+.appear { 
+    animation-name: appear_left; 
+} 
+
+.disappear { 
+    animation-name: disappear; 
+} 
+ 
+@keyframes appear_left { 
+    from { 
+        opacity: 0; 
+        transform: translateX(-20vw); 
+    } 
+    to { 
+        opacity: 1; 
+        transform: translateX(0); 
+    } 
+}
+ 
+@keyframes disappear { 
+    from { 
+      opacity: inherit; 
+    } 
+    to { 
+      opacity: 0; 
+    } 
+} 
+
 /* MEDIA QUERY */
 @media only screen and (max-width: 980px) {
     .col-1m {width: 8.33%;}

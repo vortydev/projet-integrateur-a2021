@@ -214,3 +214,34 @@ annuleBtn.forEach(btn => {
         }
     });
 })
+
+// ANIMATION DES CONFIGURATIONS
+let config = document.querySelectorAll(".config");
+updateConfigsShown();
+
+window.addEventListener("scroll", function() {  updateConfigsShown(); }, false);
+
+function updateConfigsShown() {
+    for (let i = 0; i < config.length; i++) {
+        if (elementInView(config[i])) {
+            appearRes(config[i], i);
+        }
+        else {
+            disappearRes(config[i]);
+        }
+    }
+}
+
+function elementInView(e) {
+    return (e.getBoundingClientRect().top <= window.screen.height) && (e.getBoundingClientRect().bottom > window.screen.top);
+}
+
+function disappearRes(r) {
+    r.classList.add("disappear");
+    r.classList.remove("appear");
+}
+
+function appearRes(r, i) {
+    r.classList.remove("disappear");
+    r.classList.add("appear");
+}
