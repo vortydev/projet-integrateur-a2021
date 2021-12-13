@@ -5,12 +5,7 @@ require_once './inc/autoLoader.php';
     
 $bdd = PDOFactory::getMySQLConnection();
 $cm = new ClientManager($bdd);
-          
-
-
-        
-        // if($_REQUEST['action'] != 'inscription' && $_REQUEST['action'] != 'connexion')
-        //     require_once './inc/header.php';
+$configManager = new ConfigurationManager($bdd);
 
 // INSCRIPTION DU CLIENT
 if (isset($_REQUEST['action']) && $_REQUEST['action'] == "inscription") {
@@ -38,7 +33,7 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] == "inscription") {
     }
 }
 // CONNEXION DU CLIENT 
-else if ($_REQUEST['action'] == "connexion") {
+else if (isset($_REQUEST['action']) && $_REQUEST['action'] == "connexion") {
     
     if ($cm->connexionVerification($_REQUEST['co_email'],$_REQUEST['co_password']) == false)
     {
@@ -51,6 +46,15 @@ else if ($_REQUEST['action'] == "connexion") {
         require_once './inc/header.php';
         echo '</br><h2>Bienvenue '. $results['prenom'] . '</h2>';
     }
+}
+// SUPRESSION DE CONFIGURATION
+else if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'delete_config') {
+    require_once './inc/header.php';
+    $idConfig = $_POST['idConfig'];
+
+    echo '<h1>La configuration #' . sprintf("%04d", $idConfig) . ' a été supprimée</h1>';
+    echo '<h2><a href="./mesConfigurations.php">Retour</a></h2>';
+    $configManager->deleteConfig($idConfig);
 }
 
 require_once './inc/footer.php';

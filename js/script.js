@@ -206,3 +206,13 @@ function removeErrorConnexion() {
     }
 }
 
+// BOUTON DE SUPRESSION DE CONFIGURATION CLIENT
+annuleBtn = document.querySelectorAll(".btn_delete_config");
+annuleBtn.forEach(btn => {
+    btn.addEventListener("click", function(e) {
+        e.preventDefault();
+        if (confirm("Êtes-vous certain de vouloir supprimer cette configuration?")) {;
+            e.target.parentElement.submit(); 
+        }
+    });
+})

@@ -115,7 +115,8 @@ class ConfigurationManager {
     public function printConfig(Configuration $configObj) {
         $stockageArrSize = sizeof($configObj->get_stockageArr());
 
-        echo '<table class="config">
+        echo '<article class="config">
+                <table>
                 <tr><td colspan=2 class="config_top"><h2>Configuration #' . sprintf("%04d", $configObj->get_id()) . '</h2></td></tr>
                 <tr><td colspan=2 class="config_top"><h2><h3 class="config_date">'. $configObj->get_dateCreation() . '</h3></td></tr>
                 <tr class="pale">
@@ -151,6 +152,13 @@ class ConfigurationManager {
                     <td>'. $this->selectComposant($configObj->get_idBoitier(), self::SELECT_BOITIER) .'</td>
                 </tr>
             </table>';
+
+            echo '<form class="delete_config" action="./traitement.php" method="post">
+                    <input type="hidden" name="action" value="delete_config">
+                    <input type="hidden" name="idConfig" value=' . $configObj->get_id() . '>
+                    <button class="btn_delete_config" type="submit">Supprimer cette configuration</button>
+                </form>';
+            echo '</article>';
     }
 
     private function selectComposant(int $id, string $sql) {
