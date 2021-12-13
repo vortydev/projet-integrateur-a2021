@@ -3,16 +3,16 @@
     require_once './inc/header.php';
     // echo 'inscription.php';
 ?>
+<h1>Créer votre compte</h1>
     <section class="inscription" id="formulaire_inscription">
-    <h2>Créer votre compte</h2>
     <form action="./traitement.php" id="f_inscription" class="<?php if (isset($_SESSION['errorInscription'])) echo $_SESSION['errorInscription'];?>" method="post">
         <input type="hidden" id="inscription" name="action" value="inscription">
         
-        <input type="text" name="prenom" id="prenom" placeholder="Prenom">
+        <input type="text" name="prenom" id="prenom" placeholder="Prénom">
     
         <input type="text" name="nom" id="nom" placeholder="Nom">
         
-        <input type="text" name="email" id="email" placeholder="Adresse electronique">
+        <input type="text" name="email" id="email" placeholder="Adresse électronique">
 
         <input type="password" name="password" placeholder="Mot de passe">
 
@@ -22,7 +22,7 @@
 
         <input type="text" id="adresse" name="adresse" placeholder="Adresse (Numero de porte & rue)">
 
-    <button type="submit" class="btn_inscription">Creer votre compte</button>
+    <button type="submit" class="btn_inscription">Créer votre compte</button>
 
     </form>
 

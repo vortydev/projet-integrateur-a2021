@@ -148,8 +148,6 @@ function errorFormInscription() {
     }
 }
 
-
-
 function removeErrorPassword(){
     let form = document.getElementById("f_inscription").querySelectorAll('input[type=password]');
 
@@ -174,7 +172,7 @@ function removeErrorEmail() {
     if (document.getElementById('email').classList.contains('error1'))
         document.getElementById('email').classList.remove('error1');
 
-    document.getElementById('email').placeholder = "Adresse electronique";
+    document.getElementById('email').placeholder = "Adresse électronique";
 }
 
 
@@ -200,7 +198,7 @@ function removeErrorConnexion() {
     for (let i = 0; i < input.length; i++) {
         input[i].classList.remove("red_text_Form");
         if (i == 1)
-            input[i].placeholder = 'Votre adresse electronique';
+            input[i].placeholder = 'Votre adresse électronique';
         else if (i == 2)
             input[i].placeholder = 'Mot de passe'; 
     }

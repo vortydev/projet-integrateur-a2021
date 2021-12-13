@@ -14,7 +14,7 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] == "inscription") {
         $client_insert = new Client (1, $_REQUEST['prenom'],$_REQUEST['nom'],$_REQUEST['email'],$_REQUEST['password'],$_REQUEST['dateNaissance'],$_REQUEST['adresse']);
         $_SESSION['idClient'] = $cm->addClient($client_insert);
         require_once './inc/header.php';
-        echo '</br><h2>Bienvenue '. $_REQUEST['prenom'] . '!</h2>';
+        echo '<h1>Bienvenue '. $_REQUEST['prenom'] . '!</h1>';
     }
     else if ($cm->emailVerification($_REQUEST['email']) == false){
         $_SESSION['errorInscription'] = 'error1';
@@ -44,7 +44,7 @@ else if (isset($_REQUEST['action']) && $_REQUEST['action'] == "connexion") {
         $results = $cm->connexionVerification($_REQUEST['co_email'],$_REQUEST['co_password']);
         $_SESSION['idClient'] = $results['id'];
         require_once './inc/header.php';
-        echo '</br><h2>Bienvenue '. $results['prenom'] . '</h2>';
+        echo '<h1>Bienvenue '. $results['prenom'] . '!</h1>';
     }
 }
 // SUPRESSION DE CONFIGURATION
