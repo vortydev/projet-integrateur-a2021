@@ -183,6 +183,13 @@ footer {
     background-color: var(--bleu);
 }
 
+/*Page de creation de configuration*/
+
+.hidden {
+    display: none;
+}
+
+
 
 
 /* Formulaire inscription/connexion */

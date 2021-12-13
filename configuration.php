@@ -22,10 +22,10 @@
    
     
 
-    echo "
-    <h1>Choisir les composantes!</h1>
-    
-    <section>
+    echo " 
+    <section id='creationConfig'>
+        <h1>Choisir les composantes!</h1>
+        
         <h2>Carte mère :</h2>
         <button name='btnSelectionCarte'> Selectioner</button>
         <form action='./traitement.php' class='formChoixComposant'>

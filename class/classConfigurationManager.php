@@ -51,15 +51,14 @@ class ConfigurationManager {
         $query->bindParam(':id', $id);
         $query->execute();
         $dbResult = $query->fetchAll();
-        $configObj = new Configuration($dbResult);
+        $configObj = new Configuration($dbResult[0]);
 
         $query = $this->_bdd->prepare(self::SELECT_CONFIG_STOCKAGE);
         $query->bindParam(':idConfig', $id);
         $query->execute();
         $idStockageArr = $query->fetchAll();
-
         for ($i = 0; $i < sizeof($idStockageArr); $i++) {
-            $configObj->add_idStockage($idStockageArr[$i]);
+            $configObj->add_idStockage($idStockageArr[$i][0]);
         }
 
         return $configObj;
@@ -111,11 +110,11 @@ class ConfigurationManager {
         $query = $this->_bdd->prepare(self::SELECT_CLIENT_CONFIGS);
         $query->bindParam(':idClient', $idClient);
         $query->execute();
-        $dbResult = $query->fetchColumn();
+        $dbResult = $query->fetchAll();
 
         $clientConfigArr = array();
         for ($i = 0; $i < sizeof($dbResult); $i++) {
-            array_push($clientConfigArr, $this->getConfig($dbResult[$i]));
+            array_push($clientConfigArr, $this->getConfig($dbResult[$i][0]));
         }
 
         return $clientConfigArr;
@@ -125,7 +124,7 @@ class ConfigurationManager {
         $stockageArrSize = sizeof($configObj->get_stockageArr());
 
         echo '<table class="config">
-                <tr><td colspan=2 class="config_top"><h2>Configuration #' . $configObj->get_id() . '</h2></td></tr>
+                <tr><td colspan=2 class="config_top"><h2>Configuration #' . sprintf("%04d", $configObj->get_id()) . '</h2></td></tr>
                 <tr><td colspan=2 class="config_top"><h2><h3 class="config_date">'. $configObj->get_dateCreation() . '</h3></td></tr>
                 <tr class="pale">
                     <td>Carte mère</td>

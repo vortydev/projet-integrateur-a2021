@@ -4,7 +4,7 @@
     // echo 'inscription.php';
 ?>
     <section class="inscription" id="formulaire_inscription">
-    <h2>Creer votre compte</h2>
+    <h2>Créer votre compte</h2>
     <form action="./traitement.php" id="f_inscription" class="<?php if (isset($_SESSION['errorInscription'])) echo $_SESSION['errorInscription'];?>" method="post">
         <input type="hidden" id="inscription" name="action" value="inscription">
         
