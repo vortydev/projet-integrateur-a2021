@@ -16,6 +16,12 @@
     padding: 0;
 }
 
+#tblProduits ,tr,th,td{
+    border:2px solid black;
+    
+}
+
+
 /* RESPONSIVE */
 [class*="flex"] {
     display: flex;

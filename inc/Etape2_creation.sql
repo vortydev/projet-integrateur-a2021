@@ -54,7 +54,7 @@ CREATE TABLE Processeur (
 	idFabricant INT NOT NULL,
 	modele VARCHAR(40) NOT NULL,
 	nbCoeurs INT NOT NULL,
-	frequence INT NOT NULL,
+	frequence DECIMAL(2,1) NOT NULL,
 	idSocket INT NOT NULL,
 	CONSTRAINT PK_Processeur PRIMARY KEY (id)
 );

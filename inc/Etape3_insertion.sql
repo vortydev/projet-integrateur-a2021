@@ -162,15 +162,15 @@ VALUES ((SELECT id FROM Fabricant WHERE nom = 'NZXT'),'H510',(SELECT id FROM Typ
 
 INSERT INTO CarteGraphique (idFabricant,modele,chipset,capacite,typeMemoire,frequence,frameSync,idConnecteur)
 VALUES ((SELECT id FROM Fabricant WHERE nom = 'Corsair'),'GeForce RTX 3080','GeForce RTX 3080',10,(SELECT id FROM TypeMemoire WHERE nom ='GDDR6X'),1440,'G-Sync',(SELECT id FROM Connecteur WHERE nom ='PCIe x16')),
-((SELECT id FROM Fabricant WHERE nom = 'EVGA'),'GeForce GTX 1650','GeForce GTX 1650',10,(SELECT id FROM TypeMemoire WHERE nom ='GDDR6'),1410,'G-Sync',(SELECT id FROM Connecteur WHERE nom ='PCIe x16')),
-((SELECT id FROM Fabricant WHERE nom = 'Zotac'),'GeForce GTX 1070 Ti','GeForce GTX 1070 Ti',10,(SELECT id FROM TypeMemoire WHERE nom ='GDDR5'),1607,'G-Sync',(SELECT id FROM Connecteur WHERE nom ='PCIe x16')),
-((SELECT id FROM Fabricant WHERE nom = 'Asus'),'GeForce RTX 3090','GeForce RTX 3090',10,(SELECT id FROM TypeMemoire WHERE nom ='GDDR6X'),1395,'G-Sync',(SELECT id FROM Connecteur WHERE nom ='PCIe x16')),
-((SELECT id FROM Fabricant WHERE nom = 'MSI'),'GeForce GTX 1660 Super','GeForce GTX 1660 Super',10,(SELECT id FROM TypeMemoire WHERE nom ='GDDR6'),1530,'G-Sync',(SELECT id FROM Connecteur WHERE nom ='PCIe x16')),
-((SELECT id FROM Fabricant WHERE nom = 'MSI'),'GeForce RTX 3060','GeForce RTX 3060',10,(SELECT id FROM TypeMemoire WHERE nom ='GDDR6'),1320,'G-Sync',(SELECT id FROM Connecteur WHERE nom ='PCIe x16')),
-((SELECT id FROM Fabricant WHERE nom = 'PowerColor'),'Radeon RX 6900 XT','Radeon RX 6900 XT',10,(SELECT id FROM TypeMemoire WHERE nom ='GDDR6'),1825,'FreeSync',(SELECT id FROM Connecteur WHERE nom ='PCIe x16')),
-((SELECT id FROM Fabricant WHERE nom = 'MSI'),'Radeon RX 6700 XT','Radeon RX 6700 XT',10,(SELECT id FROM TypeMemoire WHERE nom ='GDDR6'),2321,'FreeSync',(SELECT id FROM Connecteur WHERE nom ='PCIe x16')),
-((SELECT id FROM Fabricant WHERE nom = 'MSI'),'Radeon RX 580','Radeon RX 580',10,(SELECT id FROM TypeMemoire WHERE nom ='GDDR5'),1257,'FreeSync',(SELECT id FROM Connecteur WHERE nom ='PCIe x16')),
-((SELECT id FROM Fabricant WHERE nom = 'Gigabyte'),'Radeon RX 5700 XT','Radeon RX 5700 XT',10,(SELECT id FROM TypeMemoire WHERE nom ='GDDR6'),1650,'FreeSync',(SELECT id FROM Connecteur WHERE nom ='PCIe x16'));
+((SELECT id FROM Fabricant WHERE nom = 'EVGA'),'GeForce GTX 1650','GeForce GTX 1650',4,(SELECT id FROM TypeMemoire WHERE nom ='GDDR6'),1410,'G-Sync',(SELECT id FROM Connecteur WHERE nom ='PCIe x16')),
+((SELECT id FROM Fabricant WHERE nom = 'Zotac'),'GeForce GTX 1070 Ti','GeForce GTX 1070 Ti',8,(SELECT id FROM TypeMemoire WHERE nom ='GDDR5'),1607,'G-Sync',(SELECT id FROM Connecteur WHERE nom ='PCIe x16')),
+((SELECT id FROM Fabricant WHERE nom = 'Asus'),'GeForce RTX 3090','GeForce RTX 3090',24,(SELECT id FROM TypeMemoire WHERE nom ='GDDR6X'),1395,'G-Sync',(SELECT id FROM Connecteur WHERE nom ='PCIe x16')),
+((SELECT id FROM Fabricant WHERE nom = 'MSI'),'GeForce GTX 1660 Super','GeForce GTX 1660 Super',6,(SELECT id FROM TypeMemoire WHERE nom ='GDDR6'),1530,'G-Sync',(SELECT id FROM Connecteur WHERE nom ='PCIe x16')),
+((SELECT id FROM Fabricant WHERE nom = 'MSI'),'GeForce RTX 3060','GeForce RTX 3060',12,(SELECT id FROM TypeMemoire WHERE nom ='GDDR6'),1320,'G-Sync',(SELECT id FROM Connecteur WHERE nom ='PCIe x16')),
+((SELECT id FROM Fabricant WHERE nom = 'PowerColor'),'Radeon RX 6900 XT','Radeon RX 6900 XT',16,(SELECT id FROM TypeMemoire WHERE nom ='GDDR6'),1825,'FreeSync',(SELECT id FROM Connecteur WHERE nom ='PCIe x16')),
+((SELECT id FROM Fabricant WHERE nom = 'MSI'),'Radeon RX 6700 XT','Radeon RX 6700 XT',12,(SELECT id FROM TypeMemoire WHERE nom ='GDDR6'),2321,'FreeSync',(SELECT id FROM Connecteur WHERE nom ='PCIe x16')),
+((SELECT id FROM Fabricant WHERE nom = 'MSI'),'Radeon RX 580','Radeon RX 580',4,(SELECT id FROM TypeMemoire WHERE nom ='GDDR5'),1257,'FreeSync',(SELECT id FROM Connecteur WHERE nom ='PCIe x16')),
+((SELECT id FROM Fabricant WHERE nom = 'Gigabyte'),'Radeon RX 5700 XT','Radeon RX 5700 XT',8,(SELECT id FROM TypeMemoire WHERE nom ='GDDR6'),1650,'FreeSync',(SELECT id FROM Connecteur WHERE nom ='PCIe x16'));
 
 
 INSERT INTO SupportStockage (idFabricant, modele, typeStockage, capacite, rpm, idConnecteur, tauxTransfert)
@@ -197,7 +197,7 @@ VALUES ((SELECT id FROM Fabricant WHERE nom = 'Corsair'),'Vengeance LPX 16gb CMK
 ((SELECT id FROM Fabricant WHERE nom = 'G.SKILL'),'Trident Z Neo F4-3600C16D-32GTZNC',16,2,3600,(SELECT id FROM Connecteur WHERE nom = 'DIMM'),(SELECT id FROM TypeMemoire WHERE nom ='DDR4')),
 ((SELECT id FROM Fabricant WHERE nom = 'G.SKILL'),'Aegis F4-3000C16S-8GISB',8,1,3000,(SELECT id FROM Connecteur WHERE nom = 'DIMM'),(SELECT id FROM TypeMemoire WHERE nom ='DDR4')),
 ((SELECT id FROM Fabricant WHERE nom = 'Corsair'),'Vengeance LPX 64GB CMK64GX4M2Z4000C18',64,2,4000,(SELECT id FROM Connecteur WHERE nom = 'DIMM'),(SELECT id FROM TypeMemoire WHERE nom ='DDR4')),
-((SELECT id FROM Fabricant WHERE nom = 'Crucial'),'',16,2,3000,(SELECT id FROM Connecteur WHERE nom = 'DIMM'),(SELECT id FROM TypeMemoire WHERE nom ='DDR4')),
+((SELECT id FROM Fabricant WHERE nom = 'Crucial'),'Crucial Ballistix BL2K8G30C15U4W',16,2,3000,(SELECT id FROM Connecteur WHERE nom = 'DIMM'),(SELECT id FROM TypeMemoire WHERE nom ='DDR4')),
 ((SELECT id FROM Fabricant WHERE nom = 'PNY'),'XLR8 MD16GK2D4320016AXR',16,2,3200,(SELECT id FROM Connecteur WHERE nom = 'DIMM'),(SELECT id FROM TypeMemoire WHERE nom ='DDR4'));
 
 INSERT INTO SystemeRefroidissement (idFabricant,modele,dimension)
