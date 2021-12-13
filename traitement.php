@@ -5,12 +5,7 @@ require_once './inc/autoLoader.php';
     
 $bdd = PDOFactory::getMySQLConnection();
 $cm = new ClientManager($bdd);
-          
-
-
-        
-        // if($_REQUEST['action'] != 'inscription' && $_REQUEST['action'] != 'connexion')
-        //     require_once './inc/header.php';
+$configManager = new ConfigurationManager($bdd);
 
 // INSCRIPTION DU CLIENT
 if (isset($_REQUEST['action']) && $_REQUEST['action'] == "inscription") {
@@ -19,7 +14,7 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] == "inscription") {
         $client_insert = new Client (1, $_REQUEST['prenom'],$_REQUEST['nom'],$_REQUEST['email'],$_REQUEST['password'],$_REQUEST['dateNaissance'],$_REQUEST['adresse']);
         $_SESSION['idClient'] = $cm->addClient($client_insert);
         require_once './inc/header.php';
-        echo '</br><h2>Bienvenue '. $_REQUEST['prenom'] . '!</h2>';
+        echo '<h1>Bienvenue '. $_REQUEST['prenom'] . '!</h1>';
     }
     else if ($cm->emailVerification($_REQUEST['email']) == false){
         $_SESSION['errorInscription'] = 'error1';
@@ -38,7 +33,7 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] == "inscription") {
     }
 }
 // CONNEXION DU CLIENT 
-else if ($_REQUEST['action'] == "connexion") {
+else if (isset($_REQUEST['action']) && $_REQUEST['action'] == "connexion") {
     
     if ($cm->connexionVerification($_REQUEST['co_email'],$_REQUEST['co_password']) == false)
     {
@@ -49,8 +44,17 @@ else if ($_REQUEST['action'] == "connexion") {
         $results = $cm->connexionVerification($_REQUEST['co_email'],$_REQUEST['co_password']);
         $_SESSION['idClient'] = $results['id'];
         require_once './inc/header.php';
-        echo '</br><h2>Bienvenue '. $results['prenom'] . '</h2>';
+        echo '<h1>Bienvenue '. $results['prenom'] . '!</h1>';
     }
+}
+// SUPRESSION DE CONFIGURATION
+else if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'delete_config') {
+    require_once './inc/header.php';
+    $idConfig = $_POST['idConfig'];
+
+    echo '<h1>La configuration #' . sprintf("%04d", $idConfig) . ' a été supprimée</h1>';
+    echo '<h2><a href="./mesConfigurations.php">Retour</a></h2>';
+    $configManager->deleteConfig($idConfig);
 }
 
 require_once './inc/footer.php';

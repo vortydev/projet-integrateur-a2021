@@ -97,12 +97,12 @@ class ConfigurationManager {
     }
 
     public function deleteConfig(int $id) {
-        $query = $this->_bdd->prepare(self::DELETE_CONFIG);
-        $query->bindParam(':id', $id);
-        $query->execute();
-
         $query = $this->_bdd->prepare(self::DELETE_CONFIG_STOCKAGE);
         $query->bindParam(':idConfig', $id);
+        $query->execute();
+        
+        $query = $this->_bdd->prepare(self::DELETE_CONFIG);
+        $query->bindParam(':id', $id);
         $query->execute();
     }
 
@@ -122,10 +122,12 @@ class ConfigurationManager {
 
     public function printConfig(Configuration $configObj) {
         $stockageArrSize = sizeof($configObj->get_stockageArr());
+        setlocale(LC_TIME, "fr_FR"); 
 
-        echo '<table class="config">
+        echo '<article class="config">
+                <table>
                 <tr><td colspan=2 class="config_top"><h2>Configuration #' . sprintf("%04d", $configObj->get_id()) . '</h2></td></tr>
-                <tr><td colspan=2 class="config_top"><h2><h3 class="config_date">'. $configObj->get_dateCreation() . '</h3></td></tr>
+                <tr><td colspan=2 class="config_top"><h2><h3 class="config_date">Créée le '. strftime("%d/%m/%Y", strtotime( $configObj->get_dateCreation() )) . '</h3></td></tr>
                 <tr class="pale">
                     <td>Carte mère</td>
                     <td>'. $this->selectComposant($configObj->get_idCarteMere(), self::SELECT_CARTEMERE) .'</td>
@@ -159,6 +161,13 @@ class ConfigurationManager {
                     <td>'. $this->selectComposant($configObj->get_idBoitier(), self::SELECT_BOITIER) .'</td>
                 </tr>
             </table>';
+
+            echo '<form class="delete_config" action="./traitement.php" method="post">
+                    <input type="hidden" name="action" value="delete_config">
+                    <input type="hidden" name="idConfig" value=' . $configObj->get_id() . '>
+                    <button class="btn_delete_config" type="submit">Supprimer cette configuration</button>
+                </form>';
+            echo '</article>';
     }
 
     private function selectComposant(int $id, string $sql) {

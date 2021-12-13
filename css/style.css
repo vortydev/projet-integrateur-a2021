@@ -141,7 +141,7 @@ footer {
 }
 
 /* CHANGEMENT DE THÈME */
-.blue_theme .flexnav a, .blue_theme main, .blue_theme .config .pale {
+.blue_theme .flexnav a, .blue_theme main, .blue_theme .config .pale, .blue_theme .btn_delete_config {
     background-color: var(--bleu);
 }
 
@@ -149,7 +149,7 @@ footer {
     background-color: var(--bleu_accent);
 }
 
-.green_theme .flexnav a, .green_theme main, .green_theme .config .pale {
+.green_theme .flexnav a, .green_theme main, .green_theme .config .pale, .green_theme .btn_delete_config {
     background-color: var(--vert);
 }
 
@@ -189,18 +189,15 @@ footer {
     display: none;
 }
 
-
-
-
 /* Formulaire inscription/connexion */
-
 .inscription, .connexion {
-    width: 500px;
+    width: 50%;
     margin: auto;
-    border-width: 1px;
-    border-style: solid;
-    border-color: white;
-    padding: 30px 0px;
+    margin-top: 25px;
+    border: black 2px solid;
+    border-radius: 5px;
+    background-color: var(--rouge_accent);
+    padding: 10px;
 }
 
 
@@ -208,11 +205,17 @@ footer {
     height: 50px;
     width: 300px;
     margin: auto;
-    border-radius: 5px;
+    margin-top: 20px;
+    margin-bottom: 5px;
     color: white;
-    background-color: var(--gris); 
-    border-style: solid 1px;
-    border-color: white;
+    background-color: var(--rouge);
+    border-radius: 5px;
+    border: 2px black solid;
+    transition: all 0.1s ease-in-out;
+}
+
+.btn_inscription:hover, .btn_connexion:hover {
+    color: var(--gris);
 }
 
 #f_inscription > input, #f_connexion > input 
@@ -222,18 +225,14 @@ footer {
     height: 50px;
     text-align: center;
     margin: auto;
-    margin-top: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 #f_inscription, #f_connexion {
     display: flex;
     flex-direction: column;
 }
-
-#f_inscription > input:last-of-type, #f_connexion > input:last-of-type {
-    margin-bottom: 10px;
-}
-
 
 .red_text_Form::-webkit-input-placeholder
 {
@@ -248,9 +247,13 @@ footer {
     padding: 10px;
     text-align: center;
     border: black 2px solid;
+    border-radius: 5px;
+    background-color: var(--rouge_accent);
+}
+
+.config table {
     border-spacing: 0;
     border-collapse: 0;
-    background-color: var(--rouge_accent);
 }
 
 .config tr.pale {
@@ -274,6 +277,53 @@ footer {
     color: var(--gris);
     margin-bottom: 10px;
 }
+
+.btn_delete_config {
+    color: white;
+    background-color: var(--rouge);
+    border-radius: 5px;
+    border: 2px black solid;
+    padding: 5px;
+    margin-top: 10px;
+    transition: all 0.1s ease-in-out;
+}
+
+.btn_delete_config:hover {
+    color: var(--gris);
+}
+
+[class*="appear"], .disappear { 
+    animation-duration: 0.75s; 
+    animation-fill-mode: forwards; 
+} 
+ 
+.appear { 
+    animation-name: appear_left; 
+} 
+
+.disappear { 
+    animation-name: disappear; 
+} 
+ 
+@keyframes appear_left { 
+    from { 
+        opacity: 0; 
+        transform: translateX(-20vw); 
+    } 
+    to { 
+        opacity: 1; 
+        transform: translateX(0); 
+    } 
+}
+ 
+@keyframes disappear { 
+    from { 
+      opacity: inherit; 
+    } 
+    to { 
+      opacity: 0; 
+    } 
+} 
 
 /* MEDIA QUERY */
 @media only screen and (max-width: 980px) {

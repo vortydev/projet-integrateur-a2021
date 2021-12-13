@@ -148,8 +148,6 @@ function errorFormInscription() {
     }
 }
 
-
-
 function removeErrorPassword(){
     let form = document.getElementById("f_inscription").querySelectorAll('input[type=password]');
 
@@ -174,7 +172,7 @@ function removeErrorEmail() {
     if (document.getElementById('email').classList.contains('error1'))
         document.getElementById('email').classList.remove('error1');
 
-    document.getElementById('email').placeholder = "Adresse electronique";
+    document.getElementById('email').placeholder = "Adresse électronique";
 }
 
 
@@ -200,9 +198,50 @@ function removeErrorConnexion() {
     for (let i = 0; i < input.length; i++) {
         input[i].classList.remove("red_text_Form");
         if (i == 1)
-            input[i].placeholder = 'Votre adresse electronique';
+            input[i].placeholder = 'Votre adresse électronique';
         else if (i == 2)
             input[i].placeholder = 'Mot de passe'; 
     }
 }
 
+// BOUTON DE SUPRESSION DE CONFIGURATION CLIENT
+annuleBtn = document.querySelectorAll(".btn_delete_config");
+annuleBtn.forEach(btn => {
+    btn.addEventListener("click", function(e) {
+        e.preventDefault();
+        if (confirm("Êtes-vous certain de vouloir supprimer cette configuration?")) {;
+            e.target.parentElement.submit(); 
+        }
+    });
+})
+
+// ANIMATION DES CONFIGURATIONS
+let config = document.querySelectorAll(".config");
+updateConfigsShown();
+
+window.addEventListener("scroll", function() {  updateConfigsShown(); }, false);
+
+function updateConfigsShown() {
+    for (let i = 0; i < config.length; i++) {
+        if (elementInView(config[i])) {
+            appearRes(config[i], i);
+        }
+        else {
+            disappearRes(config[i]);
+        }
+    }
+}
+
+function elementInView(e) {
+    return (e.getBoundingClientRect().top <= window.screen.height) && (e.getBoundingClientRect().bottom > window.screen.top);
+}
+
+function disappearRes(r) {
+    r.classList.add("disappear");
+    r.classList.remove("appear");
+}
+
+function appearRes(r, i) {
+    r.classList.remove("disappear");
+    r.classList.add("appear");
+}
