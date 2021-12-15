@@ -141,7 +141,7 @@ footer {
 }
 
 /* CHANGEMENT DE THÈME */
-.blue_theme .flexnav a, .blue_theme main, .blue_theme .config .pale, .blue_theme .btn_delete_config {
+.blue_theme .flexnav a, .blue_theme main, .blue_theme .config .pale, .blue_theme button {
     background-color: var(--bleu);
 }
 
@@ -149,7 +149,7 @@ footer {
     background-color: var(--bleu_accent);
 }
 
-.green_theme .flexnav a, .green_theme main, .green_theme .config .pale, .green_theme .btn_delete_config {
+.green_theme .flexnav a, .green_theme main, .green_theme .config .pale, .green_theme button {
     background-color: var(--vert);
 }
 
@@ -216,6 +216,14 @@ footer {
 
 .btn_inscription:hover, .btn_connexion:hover {
     color: var(--gris);
+}
+
+.blue_theme .inscription, .blue_theme .connexion {
+    background-color: var(--bleu_accent);
+}
+
+.green_theme .inscription, .green_theme .connexion {
+    background-color: var(--vert_accent);
 }
 
 #f_inscription > input, #f_connexion > input 
