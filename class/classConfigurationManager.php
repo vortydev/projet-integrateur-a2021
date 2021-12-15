@@ -34,13 +34,19 @@ class ConfigurationManager {
     const SELECT_CARTEGRAPHIQUE = 'SELECT CONCAT(f.nom, " ", c.modele) FROM cartegraphique c INNER JOIN fabricant f ON f.id = c.idFabricant WHERE c.id = :id';
     const SELECT_BOITIER = 'SELECT CONCAT(f.nom, " ", b.modele) FROM boitier b INNER JOIN fabricant f ON f.id = b.idFabricant WHERE b.id = :id';
 
+    const SELECT_NB_CARTEMERE = 'SELECT COUNT(*) FROM cartemere';
     
+    const SELECT_INFO_CARTEMERE = 'SELECT CONCAT(f.nom, " ", c.modele) AS modele, c.idForme, fo.nom, c.idSocket, s.nom, c.capaciteRam, c.typeMemoire, c.nbConnecteurRam FROM cartemere c 
+                                    INNER JOIN fabricant f ON f.id = c.idFabricant 
+                                    INNER JOIN formecartemere fo ON fo.id = c.idForme 
+                                    INNER JOIN socket s ON s.id = c.idSocket 
+                                    INNER JOIN typeMemoire t ON t.id = c.typeMemoire 
+                                    WHERE c.id = :id';
+    const SELECT_IDPROCESSEUR_WITH_SOCKET = 'SELECT id FROM processeur WHERE idSocket = :idSocket';
 
+    const SELECT_IDMEMOIRE_VIVE_WITH_CONSTRAINT = 'SELECT id FROM memoirevive WHERE typeMemoire = :typeMemoire AND nbBarrettes <= :nbBarrettes AND capacite <= :capaciteMax;';
 
-
-
-
-  
+    const SELECT_CONFIG_WITH_DATE = 'SELECT * FROM config WHERE dateCreation = CURRENT_DATE()';
 
     private $_bdd;
     public function __construct(PDO $bdd) { $this->_bdd = $bdd; }
@@ -275,6 +281,29 @@ class ConfigurationManager {
         
         $whereClause .= 'f.nom=:fabricant' ;
         $bindArray[':fabricant'] = $fabricant;
+    }
+
+    public function choixDuChef() {
+        //verifie si existe deja choix du chef
+        $queryResults = $this->_bdd->query(self::SELECT_CONFIG_WITH_DATE)->fetch();
+
+        if (is_array($queryResults)){
+            return new Configuration($queryResults);
+        }
+        else {
+            $queryResults = $this->_bdd->query(self::SELECT_NB_CARTEMERE)->fetch();
+            //print_r($queryResults);
+            $randCarteMere = rand(0,$queryResults['0']);
+
+
+            $bindParams = array(":id" => $randCarteMere);
+            $queryResults = $this->_bdd->prepare(self::SELECT_INFO_CARTEMERE);
+            $queryResults->execute($bindParams);
+
+            $carteMere = $queryResults->fetch();
+            print_r($carteMere);
+            
+        }
     }
    
 };
