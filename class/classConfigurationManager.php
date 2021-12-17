@@ -34,14 +34,6 @@ class ConfigurationManager {
     const SELECT_CARTEGRAPHIQUE = 'SELECT CONCAT(f.nom, " ", c.modele) FROM cartegraphique c INNER JOIN fabricant f ON f.id = c.idFabricant WHERE c.id = :id';
     const SELECT_BOITIER = 'SELECT CONCAT(f.nom, " ", b.modele) FROM boitier b INNER JOIN fabricant f ON f.id = b.idFabricant WHERE b.id = :id';
 
-    
-
-
-
-
-
-  
-
     private $_bdd;
     public function __construct(PDO $bdd) { $this->_bdd = $bdd; }
     public function __destruct() { $this->_bdd = null; }
@@ -188,31 +180,30 @@ class ConfigurationManager {
     const SELECT_ALL_PROCESSEUR = 'SELECT p.id, f.nom as fabricant, modele, nbCoeurs,frequence, s.nom as socket
     FROM processeur p
     INNER JOIN fabricant f ON f.id = p.idFabricant
-    INNER JOIN socket s ON s.id = p.idSocket;';
+    INNER JOIN socket s ON s.id = p.idSocket';
     const SELECT_ALL_COOLER = 'SELECT s.id, f.nom as fabricant, s.modele, s.dimension
     FROM systemerefroidissement s
-    INNER JOIN fabricant f ON f.id = idFabricant;';
+    INNER JOIN fabricant f ON f.id = idFabricant';
     const SELECT_ALL_MEMOIREVIVE = 'SELECT mv.id, f.nom as fabricant, mv.modele,mv.capacite, mv.nbBarrettes, mv.frequence, c.nom as connecteur, tm.nom as typememoire
     FROM memoirevive as mv
     INNER JOIN fabricant f ON f.id = mv.idFabricant
     INNER JOIN connecteur c ON c.id = mv.idConnecteur
-    INNER JOIN typememoire tm ON tm.id = mv.typeMemoire;';
+    INNER JOIN typememoire tm ON tm.id = mv.typeMemoire';
     const SELECT_ALL_STOCKAGE = 'SELECT ss.id, f.nom as fabricant, ss.modele,ss.typeStockage,ss.capacite,ss.rpm,c.nom as connecteur,ss.tauxTransfert
     FROM supportstockage ss
     INNER JOIN fabricant f on f.id = ss.idFabricant
-    INNER JOIN connecteur c ON c.id = ss.idConnecteur;';
+    INNER JOIN connecteur c ON c.id = ss.idConnecteur';
     const SELECT_ALL_CARTEGRAPHIQUE = 'SELECT cg.id, f.nom as fabricant, cg.modele, cg.chipset,cg.capacite, tm.nom as typeMemoire, cg.frequence, cg.frameSync, c.nom as connecteur
     FROM cartegraphique cg
     INNER JOIN fabricant f ON f.id = cg.idFabricant
     INNER JOIN typeMemoire tm ON tm.id = cg.typeMemoire
-    INNER JOIN connecteur c ON c.id = cg.idConnecteur;';
+    INNER JOIN connecteur c ON c.id = cg.idConnecteur';
     const SELECT_ALL_BOITIER = 'SELECT b.id, f.nom as fabricant,b.modele, tb.nom as typeboitier, b.typeFenetre, b.psuShroud, b.psuInclus,su.nom as supportusb, fo.nom as forme
     FROM boitier b
     INNER JOIN fabricant f ON f.id = b.idFabricant
     INNER JOIN typeboitier tb ON tb.id = b.typeBoitier
     INNER JOIN supportusb su ON su.id = b.idSupportUSB
-    INNER JOIN formecartemere fo ON fo.id = b.idFormeCarteMere;';
-
+    INNER JOIN formecartemere fo ON fo.id = b.idFormeCarteMere';
     public function getAllCarteMere(PDO $bdd){
         $query = $this->_bdd->prepare(self::SELECT_ALL_CARTEMERE);
         $query->execute();
@@ -255,27 +246,351 @@ class ConfigurationManager {
         $whereClause ='';
         if(isset($filtre['choixFabricantCarte']) && $filtre['choixFabricantCarte'] != 'all')
         {
+           
             $this->ajoutFabricantQuery($whereClause,$bindParamArray,$filtre['choixFabricantCarte']);
-            
+        }
+
+        if(isset($filtre['choixSocketCarte']) && $filtre['choixSocketCarte'] != 'all')
+        {
+            $whereClause .= (empty($whereClause)) ? '' : ' AND ';
+            $this->ajoutSocketQuery($whereClause,$bindParamArray,$filtre['choixSocketCarte']);
+        }
+        if(isset($filtre['nbConnecteruRAM']) && $filtre['nbConnecteruRAM'] != 'all')
+        {
+            $whereClause .= (empty($whereClause)) ? '' : ' AND ';
+            $this->ajoutNbConnecteurs($whereClause,$bindParamArray,$filtre['nbConnecteruRAM']);
+        }
+        if(isset($filtre['wifiInclus']))
+        {
+            $whereClause .= (empty($whereClause)) ? '' : ' AND ';
+            if($filtre['wifiInclus'] == "Oui"){
+                $temp = "Non";
+                $this->ajoutWifiOui($whereClause,$bindParamArray,$temp);
+            }
+            if($filtre['wifiInclus'] =="Non"){
+                $this->ajoutWifiNon($whereClause,$bindParamArray,$filtre['wifiInclus']);
+            }  
+        }
+        if(isset($filtre['nbCapaciteRAM']) && $filtre['nbCapaciteRAM'] != 'all')
+        {
+            $whereClause .= (empty($whereClause)) ? '' : ' AND ';
+            $this->ajoutminRAM($whereClause,$bindParamArray,$filtre['nbCapaciteRAM']);
         }
 
         if (empty($whereClause)){
             $dbResult = $this->_bdd->query(self::SELECT_ALL_CARTEMERE)->fetchAll();
         }else {
-            
             $query = $this->_bdd->prepare(self::SELECT_ALL_CARTEMERE." WHERE ". $whereClause);
             $query->execute($bindParamArray);
             $dbResult = $query->fetchAll();         
-            
         }
         return $dbResult;
     }
 
-    public function ajoutFabricantQuery(string& $whereClause, array& $bindArray, string $fabricant){
+    public function getProcesseurFiltree($filtre){
+        $bindParamArray = array();
+        $whereClause ='';
+        if(isset($filtre['choixFabricantProcesseur']) && $filtre['choixFabricantProcesseur'] != 'all')
+        {
+            $this->ajoutFabricantQuery($whereClause,$bindParamArray,$filtre['choixFabricantProcesseur']);
+        }
+        if(isset($filtre['nbCoeurs']) && $filtre['nbCoeurs'] != 'all')
+        {
+            $whereClause .= (empty($whereClause)) ? '' : ' AND ';
+            $this->ajoutCoeurs($whereClause,$bindParamArray,$filtre['nbCoeurs']);
+        }
+        if(isset($filtre['typeSocketProcessue']) && $filtre['typeSocketProcessue'] != 'all')
+        {
+            $whereClause .= (empty($whereClause)) ? '' : ' AND ';
+            $this->ajoutSocketQuery($whereClause,$bindParamArray,$filtre['typeSocketProcessue']);
+        }
+        if(isset($filtre['frequenceProcesseur']) && $filtre['frequenceProcesseur'] != 'all')
+        {
+            $whereClause .= (empty($whereClause)) ? '' : ' AND ';
+            $this->ajoutFrequenceP($whereClause,$bindParamArray,$filtre['frequenceProcesseur']);
+        }
+        if (empty($whereClause)){
+            $dbResult = $this->_bdd->query(self::SELECT_ALL_PROCESSEUR)->fetchAll();
+        }else {
+            $query = $this->_bdd->prepare(self::SELECT_ALL_PROCESSEUR." WHERE ". $whereClause);
+            $query->execute($bindParamArray);
+            $dbResult = $query->fetchAll();         
+        }
         
+        return $dbResult;
+    }
+
+    public function getRamFiltree($filtre){
+        $bindParamArray = array();
+        $whereClause ='';
+        if(isset($filtre['choixFabricantRAM']) && $filtre['choixFabricantRAM'] != 'all')
+        {
+            $this->ajoutFabricantQuery($whereClause,$bindParamArray,$filtre['choixFabricantRAM']);
+        }
+        if(isset($filtre['nbBarretesRAM']) && $filtre['nbBarretesRAM'] != 'all')
+        {
+            $whereClause .= (empty($whereClause)) ? '' : ' AND ';
+            $this->ajoutminNbBarretesRAM($whereClause,$bindParamArray,$filtre['nbBarretesRAM']);
+        }
+        if(isset($filtre['frequenceRAM']) && $filtre['frequenceRAM'] != 'all')
+        {
+            $whereClause .= (empty($whereClause)) ? '' : ' AND ';
+            $this->ajoutFrequenceRAM($whereClause,$bindParamArray,$filtre['frequenceRAM']);
+        }
+        if(isset($filtre['typeMemoireRAM']) && $filtre['typeMemoireRAM'] != 'all')
+        {
+            $whereClause .= (empty($whereClause)) ? '' : ' AND ';
+            $this->ajoutTypeMemoire($whereClause,$bindParamArray,$filtre['typeMemoireRAM']);
+        }
+        if(isset($filtre['capaciteRAM']) && $filtre['capaciteRAM'] != 'all')
+        {
+            $whereClause .= (empty($whereClause)) ? '' : ' AND ';
+            $this->ajoutCapacite($whereClause,$bindParamArray,$filtre['capaciteRAM']);
+        }
+
+        if (empty($whereClause)){
+            $dbResult = $this->_bdd->query(self::SELECT_ALL_MEMOIREVIVE)->fetchAll();
+        }else {
+            $query = $this->_bdd->prepare(self::SELECT_ALL_MEMOIREVIVE." WHERE ". $whereClause);
+            $query->execute($bindParamArray);
+            $dbResult = $query->fetchAll();         
+        }
+        
+        return $dbResult;
+    }
+
+    public function getGpufiltree($filtre){
+        $bindParamArray = array();
+        $whereClause ='';
+        if(isset($filtre['choixFabricantGPU']) && $filtre['choixFabricantGPU'] != 'all')
+        {
+            $this->ajoutFabricantQuery($whereClause,$bindParamArray,$filtre['choixFabricantGPU']);
+        }
+        if(isset($filtre['baseClock']) && $filtre['baseClock'] != 'all')
+        {
+            $whereClause .= (empty($whereClause)) ? '' : ' AND ';
+            $this->ajoutBaseClock($whereClause,$bindParamArray,$filtre['baseClock']);
+        }
+        if(isset($filtre['typeMemoireGpu']) && $filtre['typeMemoireGpu'] != 'all')
+        {
+            $whereClause .= (empty($whereClause)) ? '' : ' AND ';
+            $this->ajoutTypeMemoire($whereClause,$bindParamArray,$filtre['typeMemoireGpu']);
+        }
+        if(isset($filtre['chipsetGPU']) && $filtre['chipsetGPU'] != 'all')
+        {
+            $whereClause .= (empty($whereClause)) ? '' : ' AND ';
+            $this->ajoutChipset($whereClause,$bindParamArray,$filtre['chipsetGPU']);
+        }
+        if(isset($filtre['capaciteVRAM']) && $filtre['capaciteVRAM'] != 'all')
+        {
+            $whereClause .= (empty($whereClause)) ? '' : ' AND ';
+            $this->ajoutCapaciteVram($whereClause,$bindParamArray,$filtre['capaciteVRAM']);
+        }
+
+
+        if (empty($whereClause)){
+            $dbResult = $this->_bdd->query(self::SELECT_ALL_CARTEGRAPHIQUE)->fetchAll();
+        }else {
+            $query = $this->_bdd->prepare(self::SELECT_ALL_CARTEGRAPHIQUE." WHERE ". $whereClause);
+            $query->execute($bindParamArray);
+            $dbResult = $query->fetchAll();         
+        }
+        return $dbResult;
+    }
+
+    public function getCoolFiltree($filtre){
+        $bindParamArray = array();
+        $whereClause ='';
+        if(isset($filtre['choixFabricantCooler']) && $filtre['choixFabricantCooler'] != 'all')
+        {
+            $this->ajoutFabricantQuery($whereClause,$bindParamArray,$filtre['choixFabricantCooler']);
+        }
+        if(isset($filtre['dimensionCooler']) && $filtre['dimensionCooler'] != 'all')
+        {
+            $whereClause .= (empty($whereClause)) ? '' : ' AND ';
+            $this->ajoutDimension($whereClause,$bindParamArray,$filtre['dimensionCooler']);
+        }
+
+        if (empty($whereClause)){
+            $dbResult = $this->_bdd->query(self::SELECT_ALL_COOLER)->fetchAll();
+        }else {
+            $query = $this->_bdd->prepare(self::SELECT_ALL_COOLER." WHERE ". $whereClause);
+            $query->execute($bindParamArray);
+            $dbResult = $query->fetchAll();         
+        }
+        return $dbResult;
+    }
+    public function getStockageFiltree($filtre){
+        $bindParamArray = array();
+        $whereClause ='';
+        if(isset($filtre['choixFabricantStockage']) && $filtre['choixFabricantStockage'] != 'all')
+        {
+            $this->ajoutFabricantQuery($whereClause,$bindParamArray,$filtre['choixFabricantStockage']);
+        }
+        if(isset($filtre['choixTypeStockage']) && $filtre['choixTypeStockage'] != 'all')
+        {
+            $whereClause .= (empty($whereClause)) ? '' : ' AND ';
+            $this->ajoutTypeStockage($whereClause,$bindParamArray,$filtre['choixTypeStockage']);
+        }
+        if(isset($filtre['connecterStockage']) && $filtre['connecterStockage'] != 'all')
+        {
+            $whereClause .= (empty($whereClause)) ? '' : ' AND ';
+            $this->ajoutConnecteur($whereClause,$bindParamArray,$filtre['connecterStockage']);
+        }
+        if(isset($filtre['choixRMPStockage']) && $filtre['choixRMPStockage'] != 'all')
+        {
+            $whereClause .= (empty($whereClause)) ? '' : ' AND ';
+            $this->ajoutRpm($whereClause,$bindParamArray,$filtre['choixRMPStockage']);
+        }
+        if(isset($filtre['choixCapaciteStockage']) && $filtre['choixCapaciteStockage'] != 'all')
+        {
+            $whereClause .= (empty($whereClause)) ? '' : ' AND ';
+            $this->ajoutCapaciteStockage($whereClause,$bindParamArray,$filtre['choixCapaciteStockage']);
+        }
+        if(isset($filtre['choixTransferStockage']) && $filtre['choixTransferStockage'] != 'all')
+        {
+            $whereClause .= (empty($whereClause)) ? '' : ' AND ';
+            $this->ajoutTauxTransfer($whereClause,$bindParamArray,$filtre['choixTransferStockage']);
+        }
+        
+
+        if (empty($whereClause)){
+            $dbResult = $this->_bdd->query(self::SELECT_ALL_STOCKAGE)->fetchAll();
+        }else {
+            $query = $this->_bdd->prepare(self::SELECT_ALL_STOCKAGE." WHERE ". $whereClause);
+            $query->execute($bindParamArray);
+            $dbResult = $query->fetchAll();         
+        }
+        return $dbResult;
+    }
+    public function getBoitierFiltree($filtre){
+        $bindParamArray = array();
+        $whereClause ='';
+        if(isset($filtre['choixFabricantBoitier']) && $filtre['choixFabricantBoitier'] != 'all')
+        {
+            $this->ajoutFabricantQuery($whereClause,$bindParamArray,$filtre['choixFabricantBoitier']);
+        }
+        if(isset($filtre['choixTypeBoitier']) && $filtre['choixTypeBoitier'] != 'all')
+        {
+            $whereClause .= (empty($whereClause)) ? '' : ' AND ';
+            $this->ajoutForme($whereClause,$bindParamArray,$filtre['choixTypeBoitier']);
+        }
+        if(isset($filtre['choixFenetreBoitier']) && $filtre['choixFenetreBoitier'] != 'all')
+        {
+            $whereClause .= (empty($whereClause)) ? '' : ' AND ';
+            $this->ajoutFenetre($whereClause,$bindParamArray,$filtre['choixFenetreBoitier']);
+        }
+        if (empty($whereClause)){
+            $dbResult = $this->_bdd->query(self::SELECT_ALL_BOITIER)->fetchAll();
+        }else {
+            $query = $this->_bdd->prepare(self::SELECT_ALL_BOITIER." WHERE ". $whereClause);
+            $query->execute($bindParamArray);
+            $dbResult = $query->fetchAll();         
+        }
+        return $dbResult;
+
+    }
+    public function ajoutFenetre(string& $whereClause, array& $bindArray, string $Fenetre){
+        $whereClause .= 'b.typeFenetre=:Fenetre';
+        $bindArray[':Fenetre'] = $Fenetre;
+    }
+
+    public function ajoutForme(string& $whereClause, array& $bindArray, string $forme){
+        $whereClause .= 'fo.nom=:forme';
+        $bindArray[':forme'] = $forme;
+    }
+    public function ajoutTauxTransfer(string& $whereClause, array& $bindArray, string $capacite){
+        $whereClause .= 'ss.tauxTransfert>=:capacite';
+        $bindArray[':capacite'] = $capacite;
+    }
+    public function ajoutCapaciteStockage(string& $whereClause, array& $bindArray, string $capacite){
+        $whereClause .= 'ss.capacite>=:capacite';
+        $bindArray[':capacite'] = $capacite;
+    }
+    public function ajoutRpm(string& $whereClause, array& $bindArray, string $rpm){
+
+        $whereClause .= 'ss.rpm=:rpm';
+        $bindArray[':rpm'] = $rpm;
+    }
+    public function ajoutConnecteur(string& $whereClause, array& $bindArray, string $cnom){
+
+        $whereClause .= 'c.nom=:cnom';
+        $bindArray[':cnom'] = $cnom;
+    }
+    public function ajoutTypeStockage(string& $whereClause, array& $bindArray, string $type){
+
+        $whereClause .= 'ss.typeStockage=:type';
+        $bindArray[':type'] = $type;
+    }
+
+    public function ajoutDimension(string& $whereClause, array& $bindArray, string $dimension){
+
+        $whereClause .= 's.dimension=:dimension';
+        $bindArray[':dimension'] = $dimension;
+    }
+    public function ajoutChipset(string& $whereClause, array& $bindArray, string $Chipset){
+
+        $whereClause .= 'cg.chipset=:chipset';
+        $bindArray[':chipset'] = $Chipset;
+    }
+    public function ajoutBaseClock(string& $whereClause, array& $bindArray, string $frequence){
+        $whereClause .= 'cg.frequence=:frequence';
+        $bindArray[':frequence'] = $frequence;
+    }
+    public function ajoutCapacite(string& $whereClause, array& $bindArray, string $capacite){
+        $whereClause .= 'mv.capacite>=:nbCapaciteRAM';
+        $bindArray[':nbCapaciteRAM'] = $capacite;
+    }
+    public function ajoutTypeMemoire(string& $whereClause, array& $bindArray, string $nomtypeMemoire){
+        $whereClause .= 'tm.nom=:nomtypeMemoire' ;
+        $bindArray[':nomtypeMemoire'] = $nomtypeMemoire;
+    }
+    public function ajoutFabricantQuery(string& $whereClause, array& $bindArray, string $fabricant){
+  
         $whereClause .= 'f.nom=:fabricant' ;
         $bindArray[':fabricant'] = $fabricant;
     }
-   
+
+    public function ajoutSocketQuery(string& $whereClause, array& $bindArray, string $socket){   
+        $whereClause .= 's.nom=:socket' ;
+        $bindArray[':socket'] = $socket;
+    }
+
+    public function ajoutNbConnecteurs(string& $whereClause, array& $bindArray, string $C){
+        $whereClause .= 'c.nbConnecteurRam=:nbConnecteruRAM' ;
+        $bindArray[':nbConnecteruRAM'] = $C;
+    }
+    public function ajoutWifiOui(string& $whereClause, array& $bindArray, string $wifi){
+        $whereClause .= 'c.wifi!=:Non' ;
+        $bindArray[':Non'] = $wifi;
+    }
+    public function ajoutWifiNon(string& $whereClause, array& $bindArray, string $wifi){
+        $whereClause .= 'c.wifi=:Non';
+        $bindArray[':Non'] = $wifi;
+    }
+    public function ajoutminRAM(string& $whereClause, array& $bindArray, string $wifi){
+        $whereClause .= 'c.capaciteRam>=:nbCapaciteRAM';
+        $bindArray[':nbCapaciteRAM'] = $wifi;
+    }
+    public function ajoutminNbBarretesRAM(string& $whereClause, array& $bindArray, string $nbBarretes){
+        $whereClause .= 'mv.nbBarrettes=:nbBarretesRAM' ;
+        $bindArray[':nbBarretesRAM'] = $nbBarretes;
+    }
+    public function ajoutFrequenceRAM(string& $whereClause, array& $bindArray, string $frequenceRAM){
+        $whereClause .= 'mv.frequence=:frequenceRAM' ;
+        $bindArray[':frequenceRAM'] = $frequenceRAM;
+    }
+    public function ajoutCoeurs(string& $whereClause, array& $bindArray, string $nbCoeurs){
+        $whereClause .= 'nbCoeurs=:nbCoeurs' ;
+        $bindArray[':nbCoeurs'] = $nbCoeurs;
+    }
+    public function ajoutFrequenceP(string& $whereClause, array& $bindArray, string $frequence){
+        $whereClause .= 'frequence>=:frequence' ;
+        $bindArray[':frequence'] = $frequence;
+    }
+    public function ajoutCapaciteVram(string& $whereClause, array& $bindArray, string $capacite){
+        $whereClause .= 'cg.capacite>=:capacite' ;
+        $bindArray[':capacite'] = $capacite;
+    }
 };
 ?>
