@@ -1,6 +1,7 @@
 <?php 
     if (session_status() === PHP_SESSION_NONE) session_start();
     require_once './inc/header.php';
+    require_once './class/PDOFactory.php';
 ?>
 
 <h1>Pour une configuration sans trop de réflexion.</h1>
@@ -9,5 +10,8 @@
 <h2>Qu'attendez-vous? Commencez à configurer <em>maintenant</em>!</h2>
 
 <?php
+
+    $cm  = new ConfigurationManager(PDOFactory::getMySQLConnection());
+    $cm->choixDuChef(); 
     require_once './inc/footer.php';
 ?>
