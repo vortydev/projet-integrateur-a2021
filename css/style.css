@@ -183,11 +183,16 @@ footer {
     background-color: var(--bleu);
 }
 
+/* POINTERS */
+button {
+    cursor: pointer;
+}
+
 /*Page de creation de configuration*/
 
 .hidden {
     display: none;
-}
+}   
 
 /* Formulaire inscription/connexion */
 .inscription, .connexion {
@@ -199,7 +204,6 @@ footer {
     background-color: var(--rouge_accent);
     padding: 10px;
 }
-
 
 .btn_inscription, .btn_connexion  {
     height: 50px;
