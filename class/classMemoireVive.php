@@ -12,6 +12,7 @@ class MemoireVive {
     private $_nbBarrettes;  // nombre de barrettes dans le kit
     private $_frequence;    // fréquence du processeur
     private $_idConnecteur; // id du connecteur du composant
+    private $_nomConnecteur;// nom connecteur
     private $_typeMemoire;  // type de mémoire du kit
 
     // constructeur
@@ -56,8 +57,29 @@ class MemoireVive {
     public function get_idConnecteur() : int { return $this->_idConnecteur; }
     public function set_idConnecteur(int $idConnecteur) { $this->_idConnecteur = $idConnecteur; }
 
+    // nom connecteur
+    public function get_nomConnecteur() : string { return $this->_nomConnecteur; }
+    public function set_nomConnecteur(string $nomConnecteur) { $this->_nomConnecteur = $nomConnecteur; }
+
     // type de mémoire
     public function get_typeMemoire() : int { return $this->_typeMemoire; }
     public function set_typeMemoire(int $_typeMemoire) { $this->_typeMemoire = $_typeMemoire; }
+
+    public function print_Info() {
+        echo '<h3> Memoire vive </h3></br>';
+        echo '<p>Le modele : ' . $this->get_modele() . '</p>';
+        echo '<p>Capacite : ' . $this->get_capacite() . 'Go</p>';
+        echo '<p>Nombre de barrettes : ' . $this->get_nbBarrettes() . '</p>';
+        echo '<p>Frequence : ' . $this->get_frequence() . 'MHz</p>';
+        echo '<p>Type memoire : ' . $this->get_typeMemoire() . '</p>';
+        echo '<p>Connecteur : ' . $this->get_nomConnecteur() . '</p>';
+    }
+
+    public function print_Button() {
+        echo '<div class"text_button_CDC">';
+        echo    '<p class="text_CDC"><strong> Memoire vive : </strong>' . $this->get_modele() . '</p>';
+        echo    '<button class="memoirevive btn_CDC"type="button">Voir la description</button>';
+        echo '</div>';
+    }
 };
 ?>

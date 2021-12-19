@@ -14,6 +14,7 @@ class Boitier {
     private $_psuInclus;        // PSU inclus
     private $_idSupportUSB;     // id de la configuration de USB supporté
     private $_idFormeCarteMere; // id de la forme de la carte mère supportée
+    private $_formeCarteMere;   // forme carte mere 
 
     // constructeur
     public function __construct($params = array()) {
@@ -42,8 +43,8 @@ class Boitier {
     public function set_modele(string $modele) { $this->_modele = $modele; }
 
     // type de boitier
-    public function get_typeBoitier() : int { return $this->_typeBoitier; }
-    public function set_typeBoitier(int $typeBoitier) { $this->_typeBoitier = $typeBoitier; }
+    public function get_typeBoitier() : string { return $this->_typeBoitier; }
+    public function set_typeBoitier(string $typeBoitier) { $this->_typeBoitier = $typeBoitier; }
 
     // type de fenêtre latérale
     public function get_typeFenetre() : string { return $this->_typeFenetre; }
@@ -64,5 +65,23 @@ class Boitier {
     // id forme carte mère
     public function get_idFormeCarteMere() : int { return $this->_idFormeCarteMere; }
     public function set_idFormeCarteMere(int $_idFormeCarteMere) { $this->_idFormeCarteMere = $_idFormeCarteMere; }
+
+    // forme carte mere 
+    public function get_formeCarteMere() : string { return $this->_formeCarteMere; }
+    public function set_formeCarteMere(int $_formeCarteMere) { $this->_formeCarteMere = $_formeCarteMere; }
+
+    public function print_Info() {
+        echo '<h3> Boitier </h3></br>';
+        echo '<p>Le modele : ' . $this->get_modele() . '</p>';
+        echo '<p>Type de boitier ' . $this->get_typeBoitier() . '</p>';
+        echo '<p>La forme de la carte mere : ' . $this->get_formeCarteMere() . '</p>';
+    }
+
+    public function print_Button() {
+        echo '<div class"text_button_CDC">';
+        echo    '<p class="text_CDC"><strong> Boitier : </strong>' . $this->get_modele() . '</p>';
+        echo    '<button class="boitier btn_CDC"type="button">Voir la description</button>';
+        echo '</div>';
+    }
 };
 ?>

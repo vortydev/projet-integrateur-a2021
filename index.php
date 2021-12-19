@@ -12,6 +12,43 @@
 <?php
 
     $cm  = new ConfigurationManager(PDOFactory::getMySQLConnection());
-    $cm->choixDuChef(); 
+    $arrayOfId = $cm->choixDuChef(); 
+    $config = new Configuration($arrayOfId);
+
+    $processeur = $cm->get_ProcesseurById($arrayOfId['idProcesseur']);
+    $config->set_processeur($processeur);
+
+    $boitier = $cm->get_BoitierById($arrayOfId['idBoitier']);
+    $config->set_boitier($boitier);
+
+    $memoireVive = $cm->get_MemoireViveById($arrayOfId['idMemoireVive']);
+    $config->set_memoireVive($memoireVive);
+
+    $cooler = $cm->get_CoolerById($arrayOfId['idCooler']);
+    $config->set_cooler($cooler);
+
+    $GPU = $cm->get_GPUById($arrayOfId['idGPU']);
+    $config->set_carteGraphique($GPU);
+
+    $carteMere = $cm->get_CarteMereById($arrayOfId['idCarteMere']);
+    $config->set_carteMere($carteMere);
+
+    if (isset($arrayOfId['idSupportStockage'])) {
+       $supportStockage = $cm->get_SupportStockageById($arrayOfId['idSupportStockage']);
+        $config->set_supportStockage($supportStockage);
+    }
+    else {
+        $supportStockage1 = $cm->get_SupportStockageById($arrayOfId['idSupportStockage1']);
+        $supportStockage2 = $cm->get_SupportStockageById($arrayOfId['idSupportStockage2']);
+        
+        $arrayObjectSupport = array();
+        array_push($arrayObjectSupport, $supportStockage1);
+        array_push($arrayObjectSupport, $supportStockage2);
+        $config->set_multipleSupportStockage($arrayObjectSupport);
+    }
+
+    $config->print_All();
+
+
     require_once './inc/footer.php';
 ?>

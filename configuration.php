@@ -3,7 +3,6 @@
     require_once './inc/header.php';
     // loadClass("Configuration");
     require_once './class/PDOFactory.php';
-
     $bdd = PDOFactory::getMySQLConnection();
     $configManager = new ConfigurationManager($bdd);
 
@@ -18,7 +17,7 @@
     echo '<h1>Configuration de votre machine</h1>';
 
     if (!isset($_SESSION['idClient'])) {
-        echo '<h2>Veuillez vous <a href="./connexion.php">connecter</a> afin de consulter vos configurations</h2>';
+        echo '<h2>Veuillez vous <a href="./connexion.php">connecter</a> afin de pouvoir créer des configurations</h2>';
     } 
     else {
         if(isset($_POST['choixCarteMere']))
