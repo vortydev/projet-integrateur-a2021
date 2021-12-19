@@ -48,6 +48,8 @@ class ConfigurationManager {
 
     const SELECT_CONFIG_WITH_DATE = 'SELECT * FROM config WHERE dateCreation = CURRENT_DATE()';
 
+    const INSERT_CONFIG_WITHSTOCKAGE = 'INSERT INTO Config (idClient, idCarteMere, idProcesseur, idCooler, idMemoireVive, idCarteGraphique, idBoitier, dateCreation)
+                            VALUES (:idClient, :idCarteMere, :idProcesseur, :idCooler, :idMemoireVive, :idCarteGraphique, :idBoitier, :dateCreation)';
     const SELECT_ALL_CARTEMERE = 'SELECT c.id,f.nom as fabricant, c.modele,c.chipset,  fo.nom as forme, c.nbConnecteurRam, s.nom as socket, c.capaciteRam, c.wifi, tm.nom as typememoire, su.nom as supportusb
     FROM cartemere c
     INNER JOIN fabricant f ON f.id = c.idFabricant
@@ -136,6 +138,25 @@ class ConfigurationManager {
 
             assert($query->execute($bindParamArray), "L'insertion du support de stockage a échouée.");
         }
+    }
+    public function addConfigwithID($idClient,$idCarteMere,$idProcesseur,$idCooler,$idMemoireVive,$idCarteGraphique,$idStockage,$idBoitier) {
+        $query = $this->_bdd->prepare(self::INSERT_CONFIG_WITHSTOCKAGE);
+        $dateCreation = date("Y-m-d");
+
+        $bindParamArray = array(
+            ':idClient' => $idClient,
+            ':idCarteMere' => $idCarteMere,
+            ':idProcesseur' => $idProcesseur,
+            ':idCooler' => $idCooler,
+            ':idMemoireVive' => $idMemoireVive,
+            ':idStockage'
+            ':idCarteGraphique' => $idCarteGraphique,
+            ':idBoitier' => $idBoitier,
+            ':dateCreation' => $dateCreation
+        );
+
+        assert($query->execute($bindParamArray), "L'insertion de la configuration a échouée.");
+        
     }
 
     public function deleteConfig(int $id) {
@@ -506,6 +527,20 @@ class ConfigurationManager {
         return $dbResult;
 
     }
+
+    public function verificationCompatibilite($comp1,$comp2){
+        if($comp1 == $comp2)
+            return true;
+        else
+        return false;
+    }
+    public function verificationNbCompatibilite($comp1,$comp2){
+        if($comp1 >= $comp2)
+            return true;
+        else
+        return false;
+    }
+
     public function ajoutFenetre(string& $whereClause, array& $bindArray, string $Fenetre){
         $whereClause .= 'b.typeFenetre=:Fenetre';
         $bindArray[':Fenetre'] = $Fenetre;
@@ -632,8 +667,8 @@ class ConfigurationManager {
     }
     public function getCarteMereChoisi($id){
         $dbResult = $this->_bdd->query(self::SELECT_ALL_CARTEMERE. ' WHERE c.id ='. $id)->fetchAll();
-        
         return $dbResult;
+   
     }
     public function getProcesseurChoisi($id){
         $dbResult = $this->_bdd->query(self::SELECT_ALL_PROCESSEUR. ' WHERE p.id ='. $id)->fetchAll();
