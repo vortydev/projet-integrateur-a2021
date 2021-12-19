@@ -16,12 +16,6 @@
     padding: 0;
 }
 
-#tblProduits ,tr,th,td{
-    border:2px solid black;
-    
-}
-
-
 /* RESPONSIVE */
 [class*="flex"] {
     display: flex;
@@ -141,19 +135,19 @@ footer {
 }
 
 /* CHANGEMENT DE THÈME */
-.blue_theme .flexnav a, .blue_theme main, .blue_theme .config .pale, .blue_theme button {
+.blue_theme .flexnav a, .blue_theme main, .blue_theme .pale, .blue_theme button {
     background-color: var(--bleu);
 }
 
-.blue_theme .flexnav a:hover, .blue_theme .config {
+.blue_theme .flexnav a:hover, .blue_theme [class*="config"], .blue_theme .btn_change {
     background-color: var(--bleu_accent);
 }
 
-.green_theme .flexnav a, .green_theme main, .green_theme .config .pale, .green_theme button {
+.green_theme .flexnav a, .green_theme main, .green_theme .pale, .green_theme button {
     background-color: var(--vert);
 }
 
-.green_theme .flexnav a:hover, .green_theme .config {
+.green_theme .flexnav a:hover, .green_theme [class*="config"], .green_theme .btn_change {
     background-color: var(--vert_accent);
 }
 
@@ -187,12 +181,6 @@ footer {
 button {
     cursor: pointer;
 }
-
-/*Page de creation de configuration*/
-
-.hidden {
-    display: none;
-}   
 
 /* Formulaire inscription/connexion */
 .inscription, .connexion {
@@ -251,6 +239,95 @@ button {
     color: red;
 }
 
+/* SETUP PAR DÉFAULT DE TABLES */
+table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: 0;
+}
+
+tr.pale {
+    background-color: var(--rouge);
+}
+
+td.table_top {
+    width: 100%;
+}
+
+table h2 {
+    margin: 0;
+}
+
+table h3 {
+    color: var(--gris);
+}
+
+/*Page de creation de configuration*/
+.hidden {
+    display: none;
+}
+
+.config_filtre {
+    width: 50%;
+    margin: auto;
+    margin-top: 25px;
+    padding: 10px;
+    text-align: center;
+    border: black 2px solid;
+    border-radius: 5px;
+    background-color: var(--rouge_accent);
+}
+
+.config_filtre h2, .config_result h2 {
+    margin-bottom: 10px;
+}
+
+.config_filtre td {
+    width: 50%;
+    padding: 5px;
+}
+
+.btn_filtre, .btn_confirm, .btn_change {
+    color: white;
+    background-color: var(--rouge);
+    border-radius: 5px;
+    border: 2px black solid;
+    padding: 5px;
+    margin-top: 10px;   
+    transition: all 0.1s ease-in-out;
+}
+
+.btn_change {
+    margin: 0;
+    background-color: var(--rouge_accent);
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.btn_filtre:hover, .btn_confirm:hover, .btn_change:hover {
+    color: var(--gris);
+}
+
+.config_result {
+    width: 95%;
+    margin: auto;
+    margin-top: 15px;
+    margin-bottom: 50px;
+    padding: 10px;
+    text-align: center;
+    border: black 2px solid;
+    border-radius: 5px;
+    background-color: var(--rouge_accent);
+}
+
+.config_result th, .config_filtre th {
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 1.1rem;
+    padding-bottom: 5px;
+    color: var(--gris);
+}
+
 /* MES CONFIGURATIONS */
 .config {
     width: 50%;
@@ -263,30 +340,12 @@ button {
     background-color: var(--rouge_accent);
 }
 
-.config table {
-    border-spacing: 0;
-    border-collapse: 0;
-}
-
-.config tr.pale {
-    background-color: var(--rouge);
-}
-
 .config td {
     width: 50%;
     padding: 5px;
 }
 
-.config td.config_top {
-    width: 100%;
-}
-
-.config h2 {
-    margin: 0;
-}
-
 .config h3 {
-    color: var(--gris);
     margin-bottom: 10px;
 }
 

@@ -169,8 +169,8 @@ class ConfigurationManager {
 
         echo '<article class="config">
                 <table>
-                <tr><td colspan=2 class="config_top"><h2>Configuration #' . sprintf("%04d", $configObj->get_id()) . '</h2></td></tr>
-                <tr><td colspan=2 class="config_top"><h2><h3 class="config_date">Créée le '. strftime("%d/%m/%Y", strtotime( $configObj->get_dateCreation() )) . '</h3></td></tr>
+                <tr><td colspan=2 class="table_top"><h2>Configuration #' . sprintf("%04d", $configObj->get_id()) . '</h2></td></tr>
+                <tr><td colspan=2 class="table_top"><h2><h3 class="config_date">Créée le '. strftime("%d/%m/%Y", strtotime( $configObj->get_dateCreation() )) . '</h3></td></tr>
                 <tr class="pale">
                     <td>Carte mère</td>
                     <td>'. $this->selectComposant($configObj->get_idCarteMere(), self::SELECT_CARTEMERE) .'</td>
