@@ -9,7 +9,9 @@ class CarteMere {
     private $_idFabricant;      // id du fabricant
     private $_modele;           // nom du modèle
     private $_idForme;          // id de la forme de la carte mère (ATX, EATX, etc.)
+    private $_nomForme;         // nom de la forme 
     private $_idSocket;         // id du socket
+    private $_nomSocket;        // nom du socket
     private $_chipset;          // nom du chipset
     private $_capaciteRam;      // capacité de mémoire vive supportée (en GB)
     private $_typeMemoire;      // id du type de mémoire compatible
@@ -47,9 +49,17 @@ class CarteMere {
     public function get_idSocket() : int { return $this->_idSocket; }
     public function set_idSocket(int $idSocket) { $this->_idSocket = $idSocket; }
 
+    // nom socket
+    public function get_nomSocket() : string { return $this->_nomSocket; }
+    public function set_nomSocket(string $nomSocket) { $this->_nomSocket = $nomSocket; }
+
     // id forme
     public function get_idForme() : int { return $this->_idForme; }
     public function set_idForme(int $_idForme) { $this->_idForme = $_idForme; }
+
+    // nom forme
+    public function get_nomForme() : string { return $this->_nomForme; }
+    public function set_nomForme(string $nomForme) { $this->_nomForme = $nomForme; }
 
     // chipset
     public function get_chipset() : string { return $this->_chipset; }
@@ -73,6 +83,25 @@ class CarteMere {
 
     // id support usb
     public function get_idSupportUSB() : int { return $this->_idSupportUSB; }
-    public function set_idSupportUSB(int $_idSupportUSB) { $this->_idSupportUSB = $_idSupportUSB; }
+    public function set_idSupportUSB(int $_idSupportUSB) { $this->_idSupportUSB = $_idSupportUSB; } 
+
+    public function print_Info() {
+
+        echo '<h3> Carte mere </h3></br>';
+        echo '<p>Le modele : ' . $this->get_modele() . '</p>';
+        echo '<p>La forme : ' . $this->get_nomForme() . '</p>';
+        echo '<p>Nom socket : ' . $this->get_nomSocket() . '</p>';
+        echo '<p>Capacite RAM maximum : ' . $this->get_capaciteRam() . 'Go</p>';
+        echo '<p>Type de connecteur de RAM : ' . $this->get_typeMemoire() . '</p>';
+        echo '<p>Nombre de connecteur RAM : ' . $this->get_nbConnecteurRam() . '</p>';
+        
+    }
+
+    public function print_Button() {
+        echo '<div class"text_button_CDC">';
+        echo    '<p class="text_CDC"><strong> Carte Mere </strong>' . $this->get_modele() . '</p>';
+        echo    '<button class="cartemere btn_CDC"type="button">Voir la description</button>';
+        echo '</div>';
+    }
 };
 ?>

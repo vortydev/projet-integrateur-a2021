@@ -12,6 +12,7 @@ class SupportStockage {
     private $_capacite;         // capacité de mémoire (en GB)
     private $_rpm;              // vitesse de rotation du disque magnétique
     private $_idConnecteur;     // id du connecteur du composant
+    private $_nomConnecteur;    // nom connecteur 
     private $_tauxTransfert;    // taux de transfert de données
 
     // constructeur
@@ -56,8 +57,32 @@ class SupportStockage {
     public function get_idConnecteur() : int { return $this->_idConnecteur; }
     public function set_idConnecteur(int $idConnecteur) { $this->_idConnecteur = $idConnecteur; }
 
+    // nom connecteur
+    public function get_nomConnecteur() : string { return $this->_nomConnecteur; }
+    public function set_nomConnecteur(string $nomConnecteur) { $this->_nomConnecteur = $nomConnecteur; }
+
     // taux de transfert
     public function get_tauxTransfert() : int { return $this->_tauxTransfert; }
     public function set_tauxTransfert(int $tauxTransfert) { $this->_tauxTransfert = $tauxTransfert; }
+
+    public function print_Info() {
+        
+        echo '<h3> Support stockage </h3></br>';
+        echo '<p>Le modele : ' . $this->get_modele() . '</p>';
+        echo '<p>Type de stockage : ' . $this->get_typeStockage() . '</p>';
+        echo '<p>Capacite : ' . $this->get_capacite() . 'Go</p>';
+        echo '<p>Connecteur ' . $this->get_nomConnecteur() . '</p>';
+        if ($this->get_rpm() != 0) 
+            echo '<p>Rotation par minute : ' . $this->get_rpm() . '</p>';
+        echo '<p>Taux de transfert : ' . $this->get_tauxTransfert() . 'Mo/s</p>';
+
+    }
+
+    public function print_Button($key) {
+        echo '<div class"text_button_CDC">';
+        echo    '<p class="text_CDC"><strong> Support stockage : </strong>' . $this->get_modele() . '</p>';
+        echo    '<button class="supportstockage' . $key . ' btn_CDC"type="button">Voir la description</button>';
+        echo '</div>';
+    }
 };
 ?>

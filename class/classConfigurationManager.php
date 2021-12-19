@@ -33,18 +33,54 @@ class ConfigurationManager {
     const SELECT_STOCKAGE = 'SELECT CONCAT(f.nom, " ", s.modele) FROM supportstockage s INNER JOIN fabricant f ON f.id = s.idFabricant WHERE s.id = :id';
     const SELECT_CARTEGRAPHIQUE = 'SELECT CONCAT(f.nom, " ", c.modele) FROM cartegraphique c INNER JOIN fabricant f ON f.id = c.idFabricant WHERE c.id = :id';
     const SELECT_BOITIER = 'SELECT CONCAT(f.nom, " ", b.modele) FROM boitier b INNER JOIN fabricant f ON f.id = b.idFabricant WHERE b.id = :id';
-
-    const SELECT_NB_CARTEMERE = 'SELECT COUNT(*) FROM cartemere';
     
-    const SELECT_INFO_CARTEMERE = 'SELECT CONCAT(f.nom, " ", c.modele) AS modele, c.idForme, fo.nom, c.idSocket, s.nom, c.capaciteRam, c.typeMemoire, c.nbConnecteurRam FROM cartemere c 
-                                    INNER JOIN fabricant f ON f.id = c.idFabricant 
-                                    INNER JOIN formecartemere fo ON fo.id = c.idForme 
-                                    INNER JOIN socket s ON s.id = c.idSocket 
-                                    INNER JOIN typeMemoire t ON t.id = c.typeMemoire 
-                                    WHERE c.id = :id';
+    const SELECT_INFO_MEMOIREVIVE = 'SELECT CONCAT(f.nom, " ", m.modele) as modele , m.capacite, m.nbBarrettes, m.frequence, c.nom as nomConnecteur FROM memoirevive m
+    INNER JOIN connecteur c ON c.id = m.idConnecteur
+    INNER JOIN fabricant f ON f.id = m.idFabricant
+    WHERE m.id = :id';
+    
+    const SELECT_INFO_BOITIER = 'SELECT CONCAT(f.nom, " ", b.modele) as modele, b.typeFenetre, t.nom AS typeBoitier FROM boitier b
+    INNER JOIN typeBoitier t ON t.id = b.typeBoitier
+    INNER JOIN Fabricant f ON f.id = b.idFabricant
+    INNER JOIN formeCarteMere fcm ON b.idFormeCarteMere = fcm.id
+    WHERE b.id = :id;';
+
+    const SELECT_INFO_GPU = 'SELECT CONCAT(f.nom, " ", c.modele) AS modele , t.nom as typeMemoire, c.chipset, c.frequence, c.capacite, c.frameSync FROM cartegraphique c
+    INNER JOIN typeMemoire t ON t.id = c.typeMemoire
+    INNER JOIN fabricant f ON f.id = c. idFabricant 
+    WHERE c.id = :id';
+
+    const SELECT_INFO_CARTEMERE = 'SELECT c.id ,CONCAT(f.nom, " ", c.modele) AS modele, c.idForme, fo.nom as nomForme , c.idSocket, s.nom as nomSocket, c.capaciteRam, c.typeMemoire, c.nbConnecteurRam FROM cartemere c 
+    INNER JOIN fabricant f ON f.id = c.idFabricant 
+    INNER JOIN formecartemere fo ON fo.id = c.idForme 
+    INNER JOIN socket s ON s.id = c.idSocket 
+    INNER JOIN typeMemoire t ON t.id = c.typeMemoire 
+    WHERE c.id = :id';
+
+    const SELECT_INFO_PROCESSEUR = 'SELECT CONCAT(f.nom, " ", p.modele) AS modele, p.nbCoeurs as nbCore, p.frequence, s.nom as nomSocket FROM processeur p 
+    INNER JOIN fabricant f ON p.idFabricant = f.id 
+    INNER JOIN socket s ON p.idSocket = s.id 
+    WHERE p.id = :id';
+
+    const SELECT_INFO_COOLER = 'SELECT CONCAT(f.nom, " ", s.modele) AS modele, s.dimension FROM systemerefroidissement s
+    INNER JOIN Fabricant f ON f.id = s.idFabricant
+    WHERE s.id = :id';
+
+    const SELECT_INFO_SUPPORTSTOCKAGE = 'SELECT CONCAT(f.nom, " ", s.modele) AS modele, s.typeStockage, s.capacite,  s.rpm, c.nom as nomConnecteur, s.tauxTransfert  
+    FROM supportstockage s
+    INNER JOIN fabricant f ON f.id = s.idFabricant
+    INNER JOIN connecteur c ON c.id = s.idConnecteur
+    WHERE s.id = :id;';
+
+    const SELECT_IDGPU = 'SELECT id FROM cartegraphique';
+    const SELECT_IDCARTEMERE = 'SELECT id FROM carteMere';
+    const SELECT_IDSTOCKAGE = 'SELECT id FROM supportstockage';
+    const SELECT_IDCOOLER = 'SELECT id FROM systemerefroidissement';
     const SELECT_IDPROCESSEUR_WITH_SOCKET = 'SELECT id FROM processeur WHERE idSocket = :idSocket';
 
     const SELECT_IDMEMOIRE_VIVE_WITH_CONSTRAINT = 'SELECT id FROM memoirevive WHERE typeMemoire = :typeMemoire AND nbBarrettes <= :nbBarrettes AND capacite <= :capaciteMax;';
+
+    const SELECT_IDBOITIER_WITH_CONSTRAINT = 'SELECT id FROM Boitier WHERE idFormeCarteMere = :id';
 
     const SELECT_CONFIG_WITH_DATE = 'SELECT * FROM config WHERE dateCreation = CURRENT_DATE()';
 
@@ -631,20 +667,73 @@ class ConfigurationManager {
             return new Configuration($queryResults);
         }
         else {
-            $queryResults = $this->_bdd->query(self::SELECT_NB_CARTEMERE)->fetch();
-            
-            $randCarteMere = rand(0,$queryResults['0']);
+            $returnValue = array();
 
 
-            $bindParams = array(":id" => $randCarteMere);
+            // carte mere
+            $queryResults = $this->_bdd->query(self::SELECT_IDCARTEMERE)->fetchAll();
+            $rand = rand(0,count($queryResults) - 1);
+            $randCarteMere = $queryResults[$rand]['id'];
+
+
+            $bindParamsCarteMere = array (':id' => $randCarteMere);
             $queryResults = $this->_bdd->prepare(self::SELECT_INFO_CARTEMERE);
-            $queryResults->execute($bindParams);
+            $queryResults->execute($bindParamsCarteMere);
 
             $carteMere = $queryResults->fetch();
-            print_r($carteMere);
+            $returnValue['idCarteMere'] = $carteMere['id'];
+            // print_r($carteMere);
+            
+            //processeur
+            $bindParamsProcesseur = array(":idSocket" => $carteMere['idSocket']);
+            $queryResults = $this->_bdd->prepare(self::SELECT_IDPROCESSEUR_WITH_SOCKET);
+            $queryResults->execute($bindParamsProcesseur);
+
+        	$processeur = $queryResults->fetch();
+            $returnValue['idProcesseur'] = $processeur['id'];
+
+            //boitier 
+            $bindParamsBoitier = array(':id' => $carteMere['idForme']);
+            $queryResults = $this->_bdd->prepare(self::SELECT_IDBOITIER_WITH_CONSTRAINT);
+            $queryResults->execute($bindParamsBoitier);
+
+            $boitier = $queryResults->fetch();
+            $returnValue['idBoitier'] = $boitier['id'];
+            
+            //memoire vive
+            $bindParamsMemoireVive  = array(':typeMemoire' => $carteMere['typeMemoire'],
+                                            ':nbBarrettes' => $carteMere['nbConnecteurRam'],
+                                            ':capaciteMax' => $carteMere['capaciteRam']);
+            $queryResults = $this->_bdd->prepare(self::SELECT_IDMEMOIRE_VIVE_WITH_CONSTRAINT);
+            $queryResults->execute($bindParamsMemoireVive);
+
+            $memoireVive = $queryResults->fetch();
+            $returnValue['idMemoireVive'] = $memoireVive['id'];
+
+            //support stockage 
+            $nbSupport = rand(1,2);
+            $queryResults = $this->_bdd->query(self::SELECT_IDSTOCKAGE)->fetchAll();
+
+            if ($nbSupport == 1){
+                $returnValue['idSupportStockage'] = $queryResults[rand(0,count($queryResults) - 1)]['id'];
+            } 
+            else if($nbSupport == 2) {
+                $returnValue['idSupportStockage1'] = $queryResults[rand(0,count($queryResults) - 1)]['id'];
+                $returnValue['idSupportStockage2'] = $queryResults[rand(0,count($queryResults) - 1)]['id'];
+            }
+
+            //gpu 
+            $queryResults = $this->_bdd->query(self::SELECT_IDGPU)->fetchAll();
+            $returnValue['idGPU'] = $queryResults[rand(0,count($queryResults) - 1)]['id'];
+
+            //cooler 
+            $queryResults = $this->_bdd->query(self::SELECT_IDCOOLER)->fetchAll();
+            $returnValue['idCooler'] = $queryResults[rand(0,count($queryResults) - 1)]['id'];
+            return $returnValue;
             
         }
     }
+
     public function getCarteMereChoisi($id){
         $dbResult = $this->_bdd->query(self::SELECT_ALL_CARTEMERE. ' WHERE c.id ='. $id)->fetchAll();
         return $dbResult;
@@ -674,6 +763,71 @@ class ConfigurationManager {
         $dbResult = $this->_bdd->query(self::SELECT_ALL_BOITIER. ' WHERE b.id ='. $id)->fetchAll();
         return $dbResult;
     }
+
+
+    public function get_CarteMereById(int $id) {
+
+        $queryResults = $this->_bdd->prepare(self::SELECT_INFO_CARTEMERE);
+        $bindParams = array(':id' => $id);
+        $queryResults->execute($bindParams);
+        $carteMere = $queryResults->fetch();
+        return new CarteMere($carteMere);
+    }
+
+    public function get_GPUById(int $id) {
+
+        $queryResults = $this->_bdd->prepare(self::SELECT_INFO_GPU);
+        $bindParams = array(':id' => $id);
+        $queryResults->execute($bindParams);
+        $GPU = $queryResults->fetch();
+        return new CarteGraphique($GPU);
+    }
+
+    public function get_MemoireViveById(int $id) {
+
+        $queryResults = $this->_bdd->prepare(self::SELECT_INFO_MEMOIREVIVE);
+        $bindParams = array(":id" => $id);
+        $queryResults->execute($bindParams);
+        $MemoireVive = $queryResults->fetch();
+        return new MemoireVive($MemoireVive);
+    }
+
+    public function get_BoitierById(int $id) {
+        
+        $bindParams = array(':id' => $id);
+        $queryResults = $this->_bdd->prepare(self::SELECT_INFO_BOITIER);
+        $queryResults->execute($bindParams);
+        $boitier = $queryResults->fetch();
+        return new Boitier($boitier);
+    }
+
+    public function get_ProcesseurById(int $id) {
+        
+        $bindParams = array(':id' => $id);
+        $queryResults = $this->_bdd->prepare(self::SELECT_INFO_PROCESSEUR);
+        $queryResults->execute($bindParams);
+        $processeur = $queryResults->fetch();
+        return new Processeur($processeur);
+    }
+
+    public function get_CoolerById(int $id) {
+        
+        $bindParams = array(':id' => $id);
+        $queryResults = $this->_bdd->prepare(self::SELECT_INFO_COOLER);
+        $queryResults->execute($bindParams);
+        $cooler = $queryResults->fetch();
+        return new Cooler($cooler);
+    }
+
+    public function get_SupportStockageById(int $id) {
+        
+        $bindParams = array(":id" => $id);
+        $queryResults = $this->_bdd->prepare(self::SELECT_INFO_SUPPORTSTOCKAGE);
+        $queryResults->execute($bindParams);
+        $supportStockage = $queryResults->fetch();
+        return new SupportStockage($supportStockage);
+    }
+
    
 };
 ?>

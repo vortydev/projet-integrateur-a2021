@@ -11,6 +11,7 @@ class Processeur {
     private $_nbCore;       // nombre de coeurs
     private $_frequence;    // fréquence du processeur
     private $_idSocket;     // id du socket
+    private $_nomSocket;    // nom du socket 
 
     // constructeur
     public function __construct($params = array()) {
@@ -49,5 +50,27 @@ class Processeur {
     // id socket
     public function get_idSocket() : int { return $this->_idSocket; }
     public function set_idSocket(int $idSocket) { $this->_idSocket = $idSocket; }
+
+     // nom socket
+     public function get_nomSocket() : string { return $this->_nomSocket; }
+     public function set_nomSocket(string $nomSocket) { $this->_nomSocket = $nomSocket; }
+
+     public function print_Info() {
+
+        echo '<h3> Processeur </h3></br>';
+        echo '<p>Le modele : ' . $this->get_modele() . '</p>';
+        echo '<p>Nombre de coeurs : ' . $this->get_nbCore() . '</p>';
+        echo '<p>Frequence : ' . $this->get_frequence() . 'GHz</p>';
+        echo '<p>Nom socket : ' . $this->get_nomSocket() . '</p>';
+
+        
+    }
+
+    public function print_Button() {
+        echo '<div class"text_button_CDC">';
+        echo    '<p class="text_CDC"><strong> Processeur : </strong>' . $this->get_modele() . '</p>';
+        echo    '<button class="processeur btn_CDC"type="button">Voir la description</button>';
+        echo '</div>';
+    }
 };
 ?>

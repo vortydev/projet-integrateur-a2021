@@ -39,5 +39,18 @@ class Cooler {
     // dimension
     public function get_dimension() : string { return $this->_dimension; }
     public function set_dimension(string $dimension) { $this->_dimension = $dimension; }
+
+    public function print_Info() {
+        echo '<h3> Systeme Refroidissement </h3></br>';
+        echo '<p>Le modele : ' . $this->get_modele() . '</p>';
+        echo '<p>La dimension : ' . $this->get_dimension() . '</p>';
+    }
+
+    public function print_Button() {
+        echo '<div class"text_button_CDC">';
+        echo    '<p class="text_CDC"><strong> Systeme de refroidissement : </strong>' . $this->get_modele() . '</p>';
+        echo    '<button class="cooler btn_CDC"type="button">Voir la description</button>';
+        echo '</div>';
+    }
 };
 ?>
