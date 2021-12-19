@@ -181,7 +181,6 @@ VALUES ((SELECT id FROM Fabricant WHERE nom = 'Seagate'),'BarraCuda ST 2000DM008
 ((SELECT id FROM Fabricant WHERE nom = 'Western Digital'),'WD Blue','SSD',500,0,(SELECT id FROM Connecteur WHERE nom = 'SATA'), 525),
 ((SELECT id FROM Fabricant WHERE nom = 'Seagate'),'Fire Cuda 530','SSD',4096,0,(SELECT id FROM Connecteur WHERE nom = 'M.2'), 7300),
 ((SELECT id FROM Fabricant WHERE nom = 'Seagate'),'ST3500312CS','HDD',500,5900,(SELECT id FROM Connecteur WHERE nom = 'SATA'), 300),
-((SELECT id FROM Fabricant WHERE nom = 'DELL'),' 342-5358 Dell','HDD',2048,7200,(SELECT id FROM Connecteur WHERE nom = 'SAS2'), 750),
 ((SELECT id FROM Fabricant WHERE nom = 'Kingston Technologies'),'SA400S37','SSD',250,0,(SELECT id FROM Connecteur WHERE nom = 'SATA'), 500),
 ((SELECT id FROM Fabricant WHERE nom = 'HP'),'461203-B21 HP','SSD',64,0,(SELECT id FROM Connecteur WHERE nom = 'SATA'), 1500),
 ((SELECT id FROM Fabricant WHERE nom = 'Western Digital'),'SSN 550','SSD',1024,0,(SELECT id FROM Connecteur WHERE nom = 'M.2'), 2400);

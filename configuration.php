@@ -1,14 +1,7 @@
 <?php 
     if (session_status() === PHP_SESSION_NONE) session_start();
     require_once './inc/header.php';
-    loadClass("Boitier");
-    loadClass("CarteGraphique");
-    loadClass("CarteMere");
     loadClass("Configuration");
-    loadClass("Cooler");
-    loadClass("MemoireVive");
-    loadClass("Processeur");
-    loadClass("SupportStockage");
     require_once './class/PDOFactory.php';
     $bdd = PDOFactory::getMySQLConnection();
     $configManager = new ConfigurationManager($bdd);
@@ -20,73 +13,73 @@
     $tblStockage = $configManager-> getStockageFiltree($_POST);
     $tblBoitier = $configManager->getBoitierFiltree($_POST);
    
-    if(isset($_POST['ChoixCM']) )
+    if(isset($_POST['choixCarteMere']) )
     {
-        if($_POST['ChoixCM'] == 'changer')
+        if($_POST['choixCarteMere'] == 'Changer')
         {
-            unset($_SESSION['ChoixCM']);
+            unset($_SESSION['choixCarteMere']);
         }else {
-            $_SESSION['ChoixCM'] = $_POST['ChoixCM'];
+            $_SESSION['choixCarteMere'] = $_POST['choixCarteMere'];
         }
     }
     
-    if(isset($_POST['ChoixP']) )
+    if(isset($_POST['choixProcesseur']) )
     {
-        if($_POST['ChoixP'] == 'changer')
+        if($_POST['choixProcesseur'] == 'Changer')
         {
-            unset($_SESSION['ChoixP']);
+            unset($_SESSION['choixProcesseur']);
         }else {
-            $_SESSION['ChoixP'] = $_POST['ChoixP'];
+            $_SESSION['choixProcesseur'] = $_POST['choixProcesseur'];
         }
     }
 
-    if(isset($_POST['ChoixCo']) )
+    if(isset($_POST['choixCooler']) )
     {
-        if($_POST['ChoixCo'] == 'changer')
+        if($_POST['choixCooler'] == 'Changer')
         {
-            unset($_SESSION['ChoixCo']);
+            unset($_SESSION['choixCooler']);
         }else {
-            $_SESSION['ChoixCo'] = $_POST['ChoixCo'];
+            $_SESSION['choixCooler'] = $_POST['choixCooler'];
         }
     }
 
-    if(isset($_POST['ChoixMv']) )
+    if(isset($_POST['choixRam']) )
     {
-        if($_POST['ChoixMv'] == 'changer')
+        if($_POST['choixRam'] == 'Changer')
         {
-            unset($_SESSION['ChoixMv']);
+            unset($_SESSION['choixRam']);
         }else {
-            $_SESSION['ChoixMv'] = $_POST['ChoixMv'];
+            $_SESSION['choixRam'] = $_POST['choixRam'];
         }
     }
 
-    if(isset($_POST['ChoixCg']) )
+    if(isset($_POST['choixCarteGraphique']) )
     {
-        if($_POST['ChoixCg'] == 'changer')
+        if($_POST['choixCarteGraphique'] == 'Changer')
         {
-            unset($_SESSION['ChoixCg']);
+            unset($_SESSION['choixCarteGraphique']);
         }else {
-            $_SESSION['ChoixCg'] = $_POST['ChoixCg'];
+            $_SESSION['choixCarteGraphique'] = $_POST['choixCarteGraphique'];
         }
     }
 
-    if(isset($_POST['ChoixSt']) )
+    if(isset($_POST['choixStockage']) )
     {
-        if($_POST['ChoixSt'] == 'changer')
+        if($_POST['choixStockage'] == 'Changer')
         {
-            unset($_SESSION['ChoixSt']);
+            unset($_SESSION['choixStockage']);
         }else {
-            $_SESSION['ChoixSt'] = $_POST['ChoixSt'];
+            $_SESSION['choixStockage'] = $_POST['choixStockage'];
         }
     }
 
-    if(isset($_POST['ChoixB']) )
+    if(isset($_POST['choixBoitier']) )
     {
-        if($_POST['ChoixB'] == 'changer')
+        if($_POST['choixBoitier'] == 'Changer')
         {
-            unset($_SESSION['ChoixB']);
+            unset($_SESSION['choixBoitier']);
         }else {
-            $_SESSION['ChoixB'] = $_POST['ChoixB'];
+            $_SESSION['choixBoitier'] = $_POST['choixBoitier'];
         }
     }
     
@@ -96,12 +89,12 @@
         
         <h2>Carte mère :</h2>
         <button name='btnSelectionCarte'> Selectioner</button>
-        <form action='configuration.php' method='post' class='formChoixComposant'>
+        <form action='configuration.php' method='post' class='formchoixCoolermposant'>
             <h3>Filtrer </h3>
-            <p class='selectChoixComposants'> 
+            <p class='selectchoixCoolermposants'> 
                 <label for='choixFabricantCarte'>Fabricant : </label>
                 <select name='choixFabricantCarte'>
-                <option value='all' slected'>Tous/Toutes</option>";
+                <option value='all' selected'>Tous/Toutes</option>";
                 $temp = array();
                 foreach ($tblCarteMere as $choixFabricantCarte){
                     
@@ -116,7 +109,7 @@
                 </select>
                 <label for='choixSocketCarte'>Choix de Socket :</label>
                 <select name='choixSocketCarte' id=''>
-                <option value='all' slected'>Tous/Toutes</option>";
+                <option value='all' selected'>Tous/Toutes</option>";
                 $temp = array();
                 foreach ($tblCarteMere as $choixSocketCarte){
                     if(!trouverdoublon($choixSocketCarte['socket'], $temp)){
@@ -130,7 +123,7 @@
                 
                 <label for='nbConnecteruRAM'>Nombre de connecteurs RAM : </label>
                 <select name='nbConnecteruRAM' id=''>
-                <option value='all' slected'>Tous/Toutes</option>";
+                <option value='all' selected'>Tous/Toutes</option>";
                 $temp = array();
                 foreach ($tblCarteMere as $nbConnecteruRAM){
                     if(!trouverdoublon($nbConnecteruRAM['nbConnecteurRam'], $temp)){
@@ -151,8 +144,8 @@
             <label for='nbCapaciteRAM'>Capacité de RAM minimale en GB : </label>
             <input type='text' name='nbCapaciteRAM'>
             <p>
-                <input type='hidden' name='fCarte' value='filtrerCarte' >
-                <input type='submit' >
+    
+                <input type='submit' value='Filtrer'>
             </p>
             
         </form>
@@ -172,8 +165,8 @@
                 <th>selection</th>
             </tr>
             ";
-            if(isset($_SESSION['ChoixCM'])){
-                $Cartechoisie = $configManager->getCarteMereChoisi($_SESSION['ChoixCM']);
+            if(isset($_SESSION['choixCarteMere'])){
+                $Cartechoisie = $configManager->getCarteMereChoisi($_SESSION['choixCarteMere']);
                 echo 
                 "<h3>Composante choisie : </h3>
                 <tr class ='tblProduits'>
@@ -187,7 +180,7 @@
                     <td>".$Cartechoisie[0]['nbConnecteurRam']."</td>
                     <td>".$Cartechoisie[0]['wifi']."</td>
                     <td>".$Cartechoisie[0]['supportusb']."</td>
-                    <td><input name='ChoixCM' type='submit' value='changer'></td>
+                    <td><input name='choixCarteMere' type='submit' value='Changer'></td>
                 </tr>
                 </table>";
             }else {
@@ -204,12 +197,12 @@
                         <td>".$tblCarteMere[$i]['nbConnecteurRam']."</td>
                         <td>".$tblCarteMere[$i]['wifi']."</td>
                         <td>".$tblCarteMere[$i]['supportusb']."</td>
-                        <td><input name='ChoixCM' type='radio' value=".$tblCarteMere[$i]['id']."></td>
+                        <td><input name='choixCarteMere' type='radio' value=".$tblCarteMere[$i]['id']."></td>
                     </tr>";
                 
                 }
                 echo " </table>
-                <input type='submit' >";
+                <input type='submit' value='Confirmer Selection' >";
             }
             
         echo "</form>";
@@ -218,12 +211,12 @@
     <hr>
     <section>
         <h2>Processeur :</h2>
-        <form action='configuration.php' method='post' class='formChoixComposant' >
+        <form action='configuration.php' method='post' class='formchoixCoolermposant' >
             <h3>Filtrer</h3>
-            <p class='selectChoixComposants'> 
+            <p class='selectchoixCoolermposants'> 
                 <label for='choixFabricantProcesseur'>Fabricant : </label>
                 <select name='choixFabricantProcesseur' id=''>
-                <option value='all' slected'>Tous/Toutes</option>";
+                <option value='all' selected'>Tous/Toutes</option>";
                 $temp = array();
                 foreach ($tblProcesseur as $fabricants){
                     
@@ -237,7 +230,7 @@
                 echo " </select>
                 <label for='nbCoeurs'>Nombre de coeurs physique</label>
                 <select name='nbCoeurs' id=''>
-                <option value='all' slected'>Tous/Toutes</option>";
+                <option value='all' selected'>Tous/Toutes</option>";
                 $temp = array();
                 foreach ($tblProcesseur as $nbCoeurs){
                     
@@ -252,7 +245,7 @@
             
                 <label for='typeSocketProcessue'>Type de Socket</label>
                 <select name='typeSocketProcessue' id=''>
-                <option value='all' slected'>Tous/Toutes</option>";
+                <option value='all' selected'>Tous/Toutes</option>";
                 $temp = array();
                 foreach ($tblProcesseur as $socket){
                     if(!trouverdoublon($socket['socket'], $temp)){
@@ -267,8 +260,7 @@
             <label for='frequenceProcesseur'>Frequence minimale (GHz)</label>
                 <input name='frequenceProcesseur' type='text'>
             <p>
-                <input type='hidden' name='fProcesseur' value='filtrerProcesseur' >
-                <input type='submit'>
+                <input type='submit' value='Filtrer'>
             </p>
         </form>";
         echo "
@@ -283,8 +275,8 @@
                     <th>selection</th>
                 </tr>
                 ";
-                if(isset($_SESSION['ChoixP'])){
-                    $processeurChoisi = $configManager->getProcesseurChoisi($_SESSION['ChoixP']);
+                if(isset($_SESSION['choixProcesseur'])){
+                    $processeurChoisi = $configManager->getProcesseurChoisi($_SESSION['choixProcesseur']);
                     echo 
                     "<h3>Composante choisie : </h3>
                     <tr class ='tblProduits'>
@@ -293,7 +285,7 @@
                         <td>".$processeurChoisi[0]['nbCoeurs']."</td>
                         <td>".$processeurChoisi[0]['frequence']."</td>
                         <td>".$processeurChoisi[0]['socket']."</td>
-                        <td><input name='ChoixP' type='submit' value='changer'></td>
+                        <td><input name='choixProcesseur' type='submit' value='Changer'></td>
                     </tr>
                     </table>";
                 }else {
@@ -305,11 +297,11 @@
                         <td>".$tblProcesseur[$i]['nbCoeurs']."</td>
                         <td>".$tblProcesseur[$i]['frequence']."</td>
                         <td>".$tblProcesseur[$i]['socket']."</td>
-                        <td><input name='ChoixP' type='radio' value=".$tblProcesseur[$i]['id']."></td>
+                        <td><input name='choixProcesseur' type='radio' value=".$tblProcesseur[$i]['id']."></td>
                         </tr>";
                     }
                     echo " </table>
-                <input type='submit' >";
+                <input type='submit' value='Confirmer Selection'>";
                 }              
         echo "</form>";
         
@@ -318,12 +310,12 @@
     
     <section>
         <h2>Mémoire vive (RAM) :</h2>
-        <form action='configuration.php' method='post' class='formChoixComposant'>
+        <form action='configuration.php' method='post' class='formchoixCoolermposant'>
             <h3>Filtrer </h3>
-            <p class='selectChoixComposants'> 
+            <p class='selectchoixCoolermposants'> 
                 <label for='choixFabricantRAM'>Fabricant: </label>
                 <select name='choixFabricantRAM' id=''>
-                <option value='all' slected'>Tous/Toutes</option>";
+                <option value='all' selected'>Tous/Toutes</option>";
                 $temp = array();
                 foreach ($tblMemoireVive as $fabricant){
                     if(!trouverdoublon($fabricant['fabricant'], $temp)){
@@ -335,7 +327,7 @@
                 echo "</select>
                 <label for='nbBarretesRAM'>Nombre de barretes : </label>
                 <select name='nbBarretesRAM' id=''>
-                <option value='all' slected'>Tous/Toutes</option>";
+                <option value='all' selected'>Tous/Toutes</option>";
                 $temp = array();
                 foreach ($tblMemoireVive as $nbBarrettes){
                     if(!trouverdoublon($nbBarrettes['nbBarrettes'], $temp)){
@@ -348,7 +340,7 @@
                 echo "</select>
                 <label for='frequenceRAM'>Frequence(MHz): </label>
                 <select name='frequenceRAM' id=''>
-                <option value='all' slected'>Tous/Toutes</option>";
+                <option value='all' selected'>Tous/Toutes</option>";
                 $temp = array();
                 foreach ($tblMemoireVive as $frequence){
                     if(!trouverdoublon($frequence['frequence'], $temp)){
@@ -360,7 +352,7 @@
                 echo "</select>
                 <label for='typeMemoireRAM'>Type de Memoire: </label>
                 <select name='typeMemoireRAM' id=''>
-                <option value='all' slected'>Tous/Toutes</option>";
+                <option value='all' selected'>Tous/Toutes</option>";
                 $temp = array();
                 foreach ($tblMemoireVive as $typememoire){
                     if(!trouverdoublon($typememoire['typememoire'], $temp)){
@@ -374,9 +366,8 @@
             <label for='capaciteRAM'>Capacite minimale RAM (GB): </label>
                 <input type='text' name='capaciteRAM'>
 
- 
             <p>
-                <input type='submit'>
+                <input type='submit' value='Filtrer'>
             </p>
         </form>";
         echo "
@@ -392,8 +383,8 @@
                     <th>selection</th>
                 </tr>
                 ";
-                if(isset($_SESSION['ChoixMv'])){
-                    $MvChoisi = $configManager->getRamChoisi($_SESSION['ChoixMv']);
+                if(isset($_SESSION['choixRam'])){
+                    $MvChoisi = $configManager->getRamChoisi($_SESSION['choixRam']);
                     echo 
                     "<h3>Composante choisie : </h3>
                     <tr class ='tblProduits'>
@@ -404,7 +395,7 @@
                     <td>".$MvChoisi[0]['nbBarrettes']."</td>
                     <td>".$MvChoisi[0]['frequence']."</td>
                     <td>".$MvChoisi[0]['typememoire']."</td>
-                    <td><input name='ChoixMv' type='submit' value='changer'></td>
+                    <td><input name='choixRam' type='submit' value='Changer'></td>
                     </tr>
                     </table>";
                 }else {
@@ -417,11 +408,11 @@
                         <td>".$tblMemoireVive[$i]['nbBarrettes']."</td>
                         <td>".$tblMemoireVive[$i]['frequence']."</td>
                         <td>".$tblMemoireVive[$i]['typememoire']."</td>
-                        <td><input name='ChoixMv' type='radio' value=".$tblMemoireVive[$i]['id']."></td>
+                        <td><input name='choixRam' type='radio' value=".$tblMemoireVive[$i]['id']."></td>
                         </tr>";
                     }
                     echo " </table>
-                <input type='submit' >";
+                <input type='submit' value='Confirmer Selection'>";
                 }
         echo "</form>";
         
@@ -429,13 +420,13 @@
     <hr>
     <section>
         <h2>Carte graphique (GPU) :</h2>
-        <form action='configuration.php' method='post' class='formChoixComposant'>
+        <form action='configuration.php' method='post' class='formchoixCoolermposant'>
             <h3>Filtrer </h3>
 
-            <p class='selectChoixComposants'> 
+            <p class='selectchoixCoolermposants'> 
                 <label for='choixFabricantGPU'>Fabricant: </label>
                 <select name='choixFabricantGPU' id=''>
-                <option value='all' slected'>Tous/Toutes</option>";
+                <option value='all' selected'>Tous/Toutes</option>";
                 $temp = array();
                 foreach ($tblGpu as $fabricant){
                     if(!trouverdoublon($fabricant['fabricant'], $temp)){
@@ -447,7 +438,7 @@
                 echo "</select>
                 <label for='baseClock'>base Clock (MHz) : </label>
                 <select name='baseClock' id=''>
-                <option value='all' slected'>Tous/Toutes</option>";
+                <option value='all' selected'>Tous/Toutes</option>";
                 $temp = array();
                 foreach ($tblGpu as $frequence){
                     if(!trouverdoublon($frequence['frequence'], $temp)){
@@ -460,7 +451,7 @@
                 echo "</select>
                 <label for='chipsetGPU'>Chipset: </label>
                 <select name='chipsetGPU' id=''>
-                <option value='all' slected'>Tous/Toutes</option>";
+                <option value='all' selected'>Tous/Toutes</option>";
                 $temp = array();
                 foreach ($tblGpu as $chipset){
                     if(!trouverdoublon($chipset['chipset'], $temp)){
@@ -472,7 +463,7 @@
                 echo "</select>
                 <label for='typeMemoireGpu'>Type de Memoire (VRAM): </label>
                 <select name='typeMemoireGpu' id=''>
-                <option value='all' slected'>Tous/Toutes</option>";
+                <option value='all' selected'>Tous/Toutes</option>";
                 $temp = array();
                 foreach ($tblGpu as $typememoireGpu){
                     if(!trouverdoublon($typememoireGpu['typeMemoire'], $temp)){
@@ -487,7 +478,7 @@
             <label for='capaciteVRAM'>Capacite minimale VRAM (GB): </label>
             <input type='text' name='capaciteVRAM'>
             <p>
-                <input type='submit'>
+                <input type='submit' value='Filtrer'>
             </p>
         </form>";
         echo "
@@ -505,21 +496,21 @@
                     <th>selection</th>
                 </tr>
                 ";
-                if(isset($_SESSION['ChoixCg'])){
-                    $choixCg = $configManager->getCarteGraphiqueChoisi($_SESSION['ChoixCg']);
+                if(isset($_SESSION['choixCarteGraphique'])){
+                    $choixCarteGraphique = $configManager->getCarteGraphiqueChoisi($_SESSION['choixCarteGraphique']);
                     echo 
                     
                     "<h3>Composante choisie : </h3>
                     <tr class ='tblProduits'>
-                    <td>".$choixCg[0]['fabricant']."</td>
-                    <td>".$choixCg[0]['modele']."</td>
-                    <td>".$choixCg[0]['chipset']."</td>
-                    <td>".$choixCg[0]['capacite']."</td>
-                    <td>".$choixCg[0]['typeMemoire']."</td>
-                    <td>".$choixCg[0]['frequence']."</td>
-                    <td>".$choixCg[0]['frameSync']."</td>
-                    <td>".$choixCg[0]['connecteur']."</td>
-                        <td><input name='ChoixCg' type='submit' value='changer'></td>
+                    <td>".$choixCarteGraphique[0]['fabricant']."</td>
+                    <td>".$choixCarteGraphique[0]['modele']."</td>
+                    <td>".$choixCarteGraphique[0]['chipset']."</td>
+                    <td>".$choixCarteGraphique[0]['capacite']."</td>
+                    <td>".$choixCarteGraphique[0]['typeMemoire']."</td>
+                    <td>".$choixCarteGraphique[0]['frequence']."</td>
+                    <td>".$choixCarteGraphique[0]['frameSync']."</td>
+                    <td>".$choixCarteGraphique[0]['connecteur']."</td>
+                        <td><input name='choixCarteGraphique' type='submit' value='Changer'></td>
                     </tr>
                     </table>";
                 }else {
@@ -534,11 +525,11 @@
                         <td>".$tblGpu[$i]['frequence']."</td>
                         <td>".$tblGpu[$i]['frameSync']."</td>
                         <td>".$tblGpu[$i]['connecteur']."</td>
-                        <td><input name='ChoixCg' type='radio' value=".$tblGpu[$i]['id']."></td>
+                        <td><input name='choixCarteGraphique' type='radio' value=".$tblGpu[$i]['id']."></td>
                         </tr>";
                     }
                     echo " </table>
-                <input type='submit' >";
+                <input type='submit' value='Confirmer Selection'>";
                 }
                  
         echo "</form>";
@@ -547,12 +538,12 @@
     <hr>
     <section>
         <h2>Système de refroidissement du processeur :</h2>
-        <form action='configuration.php' method='post' class='formChoixComposant'>
+        <form action='configuration.php' method='post' class='formchoixCoolermposant'>
             <h3>Filtrer </h3>
-            <p class='selectChoixComposants'> 
+            <p class='selectchoixCoolermposants'> 
                 <label for='choixFabricantCooler'>Fabricant: </label>
                 <select name='choixFabricantCooler' id=''>
-                <option value='all' slected'>Tous/Toutes</option>";
+                <option value='all' selected'>Tous/Toutes</option>";
                 $temp = array();
                 foreach ($tblCooler as $fabricant){
                     if(!trouverdoublon($fabricant['fabricant'], $temp)){
@@ -565,7 +556,7 @@
 
                 <label for='dimensionCooler'>Dimension (mm): </label>
                 <select name='dimensionCooler' id=''>
-                <option value='all' slected'>Tous/Toutes</option>";
+                <option value='all' selected'>Tous/Toutes</option>";
                 $temp = array();
                 foreach ($tblCooler as $dimension){
                     if(!trouverdoublon($dimension['dimension'], $temp)){
@@ -577,10 +568,8 @@
                 echo "</select>
                  
             </p>
-
-
             <p>
-                <input type='submit'>
+                <input type='submit' value='Filtrer'>
             </p>
         </form>";
         echo "
@@ -593,15 +582,15 @@
                     <th>selection</th>
                 </tr>
                 ";
-                if(isset($_SESSION['ChoixCo'])){
-                    $CoolerrChoisi = $configManager->getCoolerChoisi($_SESSION['ChoixCo']);
+                if(isset($_SESSION['choixCooler'])){
+                    $CoolerrChoisi = $configManager->getCoolerChoisi($_SESSION['choixCooler']);
                     echo 
                     "<h3>Composante choisie : </h3>
                     <tr class ='tblProduits'>
                     <td>".$CoolerrChoisi[0]['fabricant']."</td>
                     <td>".$CoolerrChoisi[0]['modele']."</td>
                     <td>".$CoolerrChoisi[0]['dimension']."</td>
-                    <td><input name='ChoixCo' type='submit' value='changer'></td>
+                    <td><input name='choixCooler' type='submit' value='Changer'></td>
                     </tr>
                     </table>";
                 }else {
@@ -611,11 +600,11 @@
                         <td>".$tblCooler[$i]['fabricant']."</td>
                         <td>".$tblCooler[$i]['modele']."</td>
                         <td>".$tblCooler[$i]['dimension']."</td>
-                        <td><input name='ChoixCo' type='radio' value=".$tblCooler[$i]['id']."></td>
+                        <td><input name='choixCooler' type='radio' value=".$tblCooler[$i]['id']."></td>
                         </tr>";
                     }
                     echo " </table>
-                <input type='submit' >";
+                <input type='submit' value='Confirmer Selection'>";
                 }           
         echo "</form>";
         echo"
@@ -624,12 +613,12 @@
     
     <section>
     <h2>Support de stockage  :</h2>
-    <form action='configuration.php' method='post' class='formChoixComposant'>
+    <form action='configuration.php' method='post' class='formchoixCoolermposant'>
         <h3>Filtrer </h3>
-        <p class='selectChoixComposants'> 
+        <p class='selectchoixCoolermposants'> 
             <label for='choixFabricantStockage'>Fabricant: </label>
             <select name='choixFabricantStockage' id=''>
-            <option value='all' slected'>Tous/Toutes</option>";
+            <option value='all' selected'>Tous/Toutes</option>";
             $temp = array();
             foreach ($tblStockage as $fabricant){
                 if(!trouverdoublon($fabricant['fabricant'], $temp)){
@@ -642,7 +631,7 @@
 
             <label for='choixTypeStockage'> Type de stockage  : </label>
             <select name='choixTypeStockage' id=''>
-            <option value='all' slected'>Tous/Toutes</option>";
+            <option value='all' selected'>Tous/Toutes</option>";
             $temp = array();
             foreach ($tblStockage as $typeStockage){
                 if(!trouverdoublon($typeStockage['typeStockage'], $temp)){
@@ -666,7 +655,7 @@
             echo "</select>
             <label for='choixRMPStockage'> Vitesse de rotation (rpm): </label>
             <select name='choixRMPStockage' id=''>
-            <option value='all' slected'>Tous/Toutes</option>";
+            <option value='all' selected'>Tous/Toutes</option>";
             $temp = array();
             foreach ($tblStockage as $rpm){
                 if(!trouverdoublon($rpm['rpm'], $temp)){
@@ -684,7 +673,7 @@
         <label for='choixTransferStockage'>Taux de transfert minimal du lecteur (mo/s) : </label>
         <input type='text' name='choixTransferStockage'>
         <p>
-            <input type='submit'>
+            <input type='submit' value='Filtrer'>
         </p>
     </form>";
     echo "
@@ -701,20 +690,20 @@
             <th>selection</th>
         </tr>
         ";
-        if(isset($_SESSION['ChoixSt'])){
-            $choixStockage = $configManager->getStockageChoisi($_SESSION['ChoixSt']);
+        if(isset($_SESSION['choixStockage'])){
+            $choixStockageockage = $configManager->getStockageChoisi($_SESSION['choixStockage']);
             echo 
             
             "<h3>Composante choisie : </h3>
             <tr class ='tblProduits'>
-                <td>".$choixStockage[0]['fabricant']."</td>
-                <td>".$choixStockage[0]['modele']."</td>
-                <td>".$choixStockage[0]['typeStockage']."</td>
-                <td>".$choixStockage[0]['capacite']."</td>
-                <td>".$choixStockage[0]['rpm']."</td>
-                <td>".$choixStockage[0]['connecteur']."</td>
-                <td>".$choixStockage[0]['tauxTransfert']."</td>
-                <td><input name='ChoixSt' type='submit' value='changer'></td>
+                <td>".$choixStockageockage[0]['fabricant']."</td>
+                <td>".$choixStockageockage[0]['modele']."</td>
+                <td>".$choixStockageockage[0]['typeStockage']."</td>
+                <td>".$choixStockageockage[0]['capacite']."</td>
+                <td>".$choixStockageockage[0]['rpm']."</td>
+                <td>".$choixStockageockage[0]['connecteur']."</td>
+                <td>".$choixStockageockage[0]['tauxTransfert']."</td>
+                <td><input name='choixStockage' type='submit' value='Changer'></td>
             </tr>
             </table>";
         }else {
@@ -728,11 +717,11 @@
                 <td>".$tblStockage[$i]['rpm']."</td>
                 <td>".$tblStockage[$i]['connecteur']."</td>
                 <td>".$tblStockage[$i]['tauxTransfert']."</td>
-                <td><input name='ChoixSt' type='radio' value=".$tblStockage[$i]['id']."></td>
+                <td><input name='choixStockage' type='radio' value=".$tblStockage[$i]['id']."></td>
                 </tr>";
             }
             echo " </table>
-            <input type='submit' >";  
+            <input type='submit' value='Confirmer Selection'>";  
         }
 echo "</form>";
     
@@ -741,12 +730,12 @@ echo "</section>
 <section>
         <h2>Boitier :</h2>
 
-        <form action='configuration.php' method='post' class='formChoixComposant'>
+        <form action='configuration.php' method='post' class='formchoixCoolermposant'>
             <h3>Filtrer </h3>
-            <p class='selectChoixComposants'> 
+            <p class='selectchoixCoolermposants'> 
                 <label for='choixFabricantBoitier'>Fabricant: </label>
                 <select name='choixFabricantBoitier' id=''>
-                <option value='all' slected'>Tous/Toutes</option>";
+                <option value='all' selected'>Tous/Toutes</option>";
                 $temp = array();
                 foreach ($tblBoitier as $fabricant){
                     if(!trouverdoublon($fabricant['fabricant'], $temp)){
@@ -759,7 +748,7 @@ echo "</section>
 
                 <label for='choixTypeBoitier'>Type de Boitier (forme): </label>
                 <select name='choixTypeBoitier' id=''>
-                <option value='all' slected'>Tous/Toutes</option>";
+                <option value='all' selected'>Tous/Toutes</option>";
                 $temp = array();
                 foreach ($tblBoitier as $typeboitier){
                     if(!trouverdoublon($typeboitier['forme'], $temp)){
@@ -772,7 +761,7 @@ echo "</section>
 
                 <label for='choixFenetreBoitier'>Type de Fenêtre  : </label>
                 <select name='choixFenetreBoitier' id=''>
-                <option value='all' slected'>Tous/Toutes</option>";
+                <option value='all' selected'>Tous/Toutes</option>";
                 $temp = array();
                 foreach ($tblBoitier as $typeFenetre){
                     if(!trouverdoublon($typeFenetre['typeFenetre'], $temp)){
@@ -785,7 +774,7 @@ echo "</section>
                 echo "</select>
             </p>
             <p>
-                <input type='submit'>
+                <input type='submit' value='Filtrer'>
             </p>
             
         </form>";
@@ -801,17 +790,17 @@ echo "</section>
                 <th>selection</th>
             </tr>
             ";
-            if(isset($_SESSION['ChoixB'])){
-                $choixB = $configManager->getBoitierChoisi($_SESSION['ChoixB']);
+            if(isset($_SESSION['choixBoitier'])){
+                $choixBoitier = $configManager->getBoitierChoisi($_SESSION['choixBoitier']);
                 echo 
                 "<h3>Composante choisie : </h3>
                 <tr class ='tblProduits'>
-                    <td>".$choixB[0]['fabricant']."</td>
-                    <td>".$choixB[0]['modele']."</td>
-                    <td>".$choixB[0]['forme']."</td>
-                    <td>".$choixB[0]['typeFenetre']."</td>
-                    <td>".$choixB[0]['supportusb']."</td>
-                    <td><input name='ChoixB' type='submit' value='changer'></td>
+                    <td>".$choixBoitier[0]['fabricant']."</td>
+                    <td>".$choixBoitier[0]['modele']."</td>
+                    <td>".$choixBoitier[0]['forme']."</td>
+                    <td>".$choixBoitier[0]['typeFenetre']."</td>
+                    <td>".$choixBoitier[0]['supportusb']."</td>
+                    <td><input name='choixBoitier' type='submit' value='Changer'></td>
                 </tr>
                 </table>";
             }else {
@@ -823,11 +812,11 @@ echo "</section>
                         <td>".$tblBoitier[$i]['forme']."</td>
                         <td>".$tblBoitier[$i]['typeFenetre']."</td>
                         <td>".$tblBoitier[$i]['supportusb']."</td>
-                        <td><input name='ChoixB' type='radio' value=".$tblBoitier[$i]['id']."></td>
+                        <td><input name='choixBoitier' type='radio' value=".$tblBoitier[$i]['id']."></td>
                     </tr>";
                 }
                 echo " </table>
-                <input type='submit' >";
+                <input type='submit' value='Confirmer Selection' >";
             }    
         echo "</form>";
         
