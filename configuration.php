@@ -20,6 +20,76 @@
     $tblStockage = $configManager-> getStockageFiltree($_POST);
     $tblBoitier = $configManager->getBoitierFiltree($_POST);
    
+    if(isset($_POST['ChoixCM']) )
+    {
+        if($_POST['ChoixCM'] == 'changer')
+        {
+            unset($_SESSION['ChoixCM']);
+        }else {
+            $_SESSION['ChoixCM'] = $_POST['ChoixCM'];
+        }
+    }
+    
+    if(isset($_POST['ChoixP']) )
+    {
+        if($_POST['ChoixP'] == 'changer')
+        {
+            unset($_SESSION['ChoixP']);
+        }else {
+            $_SESSION['ChoixP'] = $_POST['ChoixP'];
+        }
+    }
+
+    if(isset($_POST['ChoixCo']) )
+    {
+        if($_POST['ChoixCo'] == 'changer')
+        {
+            unset($_SESSION['ChoixCo']);
+        }else {
+            $_SESSION['ChoixCo'] = $_POST['ChoixCo'];
+        }
+    }
+
+    if(isset($_POST['ChoixMv']) )
+    {
+        if($_POST['ChoixMv'] == 'changer')
+        {
+            unset($_SESSION['ChoixMv']);
+        }else {
+            $_SESSION['ChoixMv'] = $_POST['ChoixMv'];
+        }
+    }
+
+    if(isset($_POST['ChoixCg']) )
+    {
+        if($_POST['ChoixCg'] == 'changer')
+        {
+            unset($_SESSION['ChoixCg']);
+        }else {
+            $_SESSION['ChoixCg'] = $_POST['ChoixCg'];
+        }
+    }
+
+    if(isset($_POST['ChoixSt']) )
+    {
+        if($_POST['ChoixSt'] == 'changer')
+        {
+            unset($_SESSION['ChoixSt']);
+        }else {
+            $_SESSION['ChoixSt'] = $_POST['ChoixSt'];
+        }
+    }
+
+    if(isset($_POST['ChoixB']) )
+    {
+        if($_POST['ChoixB'] == 'changer')
+        {
+            unset($_SESSION['ChoixB']);
+        }else {
+            $_SESSION['ChoixB'] = $_POST['ChoixB'];
+        }
+    }
+    
     echo " 
     <section id='creationConfig'>
         <h1>Choisir les composantes!</h1>
@@ -86,8 +156,8 @@
             </p>
             
         </form>
-
-        <table class='tblProduits'>Cartes disponibles :
+        <form method ='post'>
+        <table class='tblProduits'>
             <tr class ='tblProduits'>
                 <th>Fabricant</th>
                 <th>Modele</th>
@@ -102,23 +172,47 @@
                 <th>selection</th>
             </tr>
             ";
-            $tblenght = sizeof($tblCarteMere);
-            for ($i =0; $i < $tblenght; $i++){
-                echo "<tr class ='tblProduits'>
-                <td>".$tblCarteMere[$i]['fabricant']."</td>
-                <td>".$tblCarteMere[$i]['modele']."</td>
-                <td>".$tblCarteMere[$i]['forme']."</td>
-                <td>".$tblCarteMere[$i]['socket']."</td>
-                <td>".$tblCarteMere[$i]['chipset']."</td>
-                <td>".$tblCarteMere[$i]['capaciteRam']."</td>
-                <td>".$tblCarteMere[$i]['typememoire']."</td>
-                <td>".$tblCarteMere[$i]['nbConnecteurRam']."</td>
-                <td>".$tblCarteMere[$i]['wifi']."</td>
-                <td>".$tblCarteMere[$i]['supportusb']."</td>
-                <td><button>choisir</button></td>
-                </tr>";
+            if(isset($_SESSION['ChoixCM'])){
+                $Cartechoisie = $configManager->getCarteMereChoisi($_SESSION['ChoixCM']);
+                echo 
+                "<h3>Composante choisie : </h3>
+                <tr class ='tblProduits'>
+                    <td>".$Cartechoisie[0]['fabricant']."</td>
+                    <td>".$Cartechoisie[0]['modele']."</td>
+                    <td>".$Cartechoisie[0]['forme']."</td>
+                    <td>".$Cartechoisie[0]['socket']."</td>
+                    <td>".$Cartechoisie[0]['chipset']."</td>
+                    <td>".$Cartechoisie[0]['capaciteRam']."</td>
+                    <td>".$Cartechoisie[0]['typememoire']."</td>
+                    <td>".$Cartechoisie[0]['nbConnecteurRam']."</td>
+                    <td>".$Cartechoisie[0]['wifi']."</td>
+                    <td>".$Cartechoisie[0]['supportusb']."</td>
+                    <td><input name='ChoixCM' type='submit' value='changer'></td>
+                </tr>
+                </table>";
+            }else {
+                $tblenght = sizeof($tblCarteMere);
+                for ($i =0; $i < $tblenght; $i++){
+                    echo "<tr class ='tblProduits'>
+                        <td>".$tblCarteMere[$i]['fabricant']."</td>
+                        <td>".$tblCarteMere[$i]['modele']."</td>
+                        <td>".$tblCarteMere[$i]['forme']."</td>
+                        <td>".$tblCarteMere[$i]['socket']."</td>
+                        <td>".$tblCarteMere[$i]['chipset']."</td>
+                        <td>".$tblCarteMere[$i]['capaciteRam']."</td>
+                        <td>".$tblCarteMere[$i]['typememoire']."</td>
+                        <td>".$tblCarteMere[$i]['nbConnecteurRam']."</td>
+                        <td>".$tblCarteMere[$i]['wifi']."</td>
+                        <td>".$tblCarteMere[$i]['supportusb']."</td>
+                        <td><input name='ChoixCM' type='radio' value=".$tblCarteMere[$i]['id']."></td>
+                    </tr>";
+                
+                }
+                echo " </table>
+                <input type='submit' >";
             }
-        echo "</table>";
+            
+        echo "</form>";
         
     echo "</section>
     <hr>
@@ -178,8 +272,8 @@
             </p>
         </form>";
         echo "
-
-        <table class='tblProduits'>Processeurs disponibles : 
+        <form method ='post'>
+        <table class='tblProduits'>
                 <tr class ='tblProduits'>
                     <th>Fabricant</th>
                     <th>Modele</th>
@@ -189,18 +283,35 @@
                     <th>selection</th>
                 </tr>
                 ";
+                if(isset($_SESSION['ChoixP'])){
+                    $processeurChoisi = $configManager->getProcesseurChoisi($_SESSION['ChoixP']);
+                    echo 
+                    "<h3>Composante choisie : </h3>
+                    <tr class ='tblProduits'>
+                        <td>".$processeurChoisi[0]['fabricant']."</td>
+                        <td>".$processeurChoisi[0]['modele']."</td>
+                        <td>".$processeurChoisi[0]['nbCoeurs']."</td>
+                        <td>".$processeurChoisi[0]['frequence']."</td>
+                        <td>".$processeurChoisi[0]['socket']."</td>
+                        <td><input name='ChoixP' type='submit' value='changer'></td>
+                    </tr>
+                    </table>";
+                }else {
                 $tblenght = count($tblProcesseur);
-                for ($i =0; $i < $tblenght; $i++){
-                    echo "<tr class ='tblProduits'>
-                    <td>".$tblProcesseur[$i]['fabricant']."</td>
-                    <td>".$tblProcesseur[$i]['modele']."</td>
-                    <td>".$tblProcesseur[$i]['nbCoeurs']."</td>
-                    <td>".$tblProcesseur[$i]['frequence']."</td>
-                    <td>".$tblProcesseur[$i]['socket']."</td>
-                    <td><button>choisir</button></td>
-                    </tr>";
+                    for ($i =0; $i < $tblenght; $i++){
+                        echo "<tr class ='tblProduits'>
+                        <td>".$tblProcesseur[$i]['fabricant']."</td>
+                        <td>".$tblProcesseur[$i]['modele']."</td>
+                        <td>".$tblProcesseur[$i]['nbCoeurs']."</td>
+                        <td>".$tblProcesseur[$i]['frequence']."</td>
+                        <td>".$tblProcesseur[$i]['socket']."</td>
+                        <td><input name='ChoixP' type='radio' value=".$tblProcesseur[$i]['id']."></td>
+                        </tr>";
+                    }
+                    echo " </table>
+                <input type='submit' >";
                 }              
-        echo "</table>";
+        echo "</form>";
         
     echo "</section> 
     <hr>
@@ -269,8 +380,8 @@
             </p>
         </form>";
         echo "
-
-        <table class='tblProduits'>Memoire RAM disponibles
+        <form method ='post'>
+        <table class='tblProduits'>
                 <tr class ='tblProduits'>
                     <th>Fabricant</th>
                     <th>Modele</th>
@@ -281,19 +392,38 @@
                     <th>selection</th>
                 </tr>
                 ";
-                $tblenght = count($tblMemoireVive);
-                for ($i =0; $i < $tblenght; $i++){
-                    echo "<tr class ='tblProduits'>
-                    <td>".$tblMemoireVive[$i]['fabricant']."</td>
-                    <td>".$tblMemoireVive[$i]['modele']."</td>
-                    <td>".$tblMemoireVive[$i]['capacite']."</td>
-                    <td>".$tblMemoireVive[$i]['nbBarrettes']."</td>
-                    <td>".$tblMemoireVive[$i]['frequence']."</td>
-                    <td>".$tblMemoireVive[$i]['typememoire']."</td>
-                    <td><button>choisir</button></td>
-                    </tr>";
+                if(isset($_SESSION['ChoixMv'])){
+                    $MvChoisi = $configManager->getRamChoisi($_SESSION['ChoixMv']);
+                    echo 
+                    "<h3>Composante choisie : </h3>
+                    <tr class ='tblProduits'>
+                    
+                    <td>".$MvChoisi[0]['fabricant']."</td>
+                    <td>".$MvChoisi[0]['modele']."</td>
+                    <td>".$MvChoisi[0]['capacite']."</td>
+                    <td>".$MvChoisi[0]['nbBarrettes']."</td>
+                    <td>".$MvChoisi[0]['frequence']."</td>
+                    <td>".$MvChoisi[0]['typememoire']."</td>
+                    <td><input name='ChoixMv' type='submit' value='changer'></td>
+                    </tr>
+                    </table>";
+                }else {
+                    $tblenght = count($tblMemoireVive);
+                    for ($i =0; $i < $tblenght; $i++){
+                        echo "<tr class ='tblProduits'>
+                        <td>".$tblMemoireVive[$i]['fabricant']."</td>
+                        <td>".$tblMemoireVive[$i]['modele']."</td>
+                        <td>".$tblMemoireVive[$i]['capacite']."</td>
+                        <td>".$tblMemoireVive[$i]['nbBarrettes']."</td>
+                        <td>".$tblMemoireVive[$i]['frequence']."</td>
+                        <td>".$tblMemoireVive[$i]['typememoire']."</td>
+                        <td><input name='ChoixMv' type='radio' value=".$tblMemoireVive[$i]['id']."></td>
+                        </tr>";
+                    }
+                    echo " </table>
+                <input type='submit' >";
                 }
-        echo "</table>";
+        echo "</form>";
         
     echo "</section>
     <hr>
@@ -361,8 +491,8 @@
             </p>
         </form>";
         echo "
-
-        <table class='tblProduits'>Cartes Disponibles
+        <form method ='post'>
+        <table class='tblProduits'>
                 <tr class ='tblProduits'>
                     <th>Fabricant</th>
                     <th>Modele</th>
@@ -375,22 +505,43 @@
                     <th>selection</th>
                 </tr>
                 ";
-                $tblenght = count($tblGpu);
-                for ($i =0; $i < $tblenght; $i++){
-                    echo "<tr class ='tblProduits'>
-                    <td>".$tblGpu[$i]['fabricant']."</td>
-                    <td>".$tblGpu[$i]['modele']."</td>
-                    <td>".$tblGpu[$i]['chipset']."</td>
-                    <td>".$tblGpu[$i]['capacite']."</td>
-                    <td>".$tblGpu[$i]['typeMemoire']."</td>
-                    <td>".$tblGpu[$i]['frequence']."</td>
-                    <td>".$tblGpu[$i]['frameSync']."</td>
-                    <td>".$tblGpu[$i]['connecteur']."</td>
-                    <td><button>choisir</button></td>
-                    </tr>";
+                if(isset($_SESSION['ChoixCg'])){
+                    $choixCg = $configManager->getCarteGraphiqueChoisi($_SESSION['ChoixCg']);
+                    echo 
+                    
+                    "<h3>Composante choisie : </h3>
+                    <tr class ='tblProduits'>
+                    <td>".$choixCg[0]['fabricant']."</td>
+                    <td>".$choixCg[0]['modele']."</td>
+                    <td>".$choixCg[0]['chipset']."</td>
+                    <td>".$choixCg[0]['capacite']."</td>
+                    <td>".$choixCg[0]['typeMemoire']."</td>
+                    <td>".$choixCg[0]['frequence']."</td>
+                    <td>".$choixCg[0]['frameSync']."</td>
+                    <td>".$choixCg[0]['connecteur']."</td>
+                        <td><input name='ChoixCg' type='submit' value='changer'></td>
+                    </tr>
+                    </table>";
+                }else {
+                    $tblenght = count($tblGpu);
+                    for ($i =0; $i < $tblenght; $i++){
+                        echo "<tr class ='tblProduits'>
+                        <td>".$tblGpu[$i]['fabricant']."</td>
+                        <td>".$tblGpu[$i]['modele']."</td>
+                        <td>".$tblGpu[$i]['chipset']."</td>
+                        <td>".$tblGpu[$i]['capacite']."</td>
+                        <td>".$tblGpu[$i]['typeMemoire']."</td>
+                        <td>".$tblGpu[$i]['frequence']."</td>
+                        <td>".$tblGpu[$i]['frameSync']."</td>
+                        <td>".$tblGpu[$i]['connecteur']."</td>
+                        <td><input name='ChoixCg' type='radio' value=".$tblGpu[$i]['id']."></td>
+                        </tr>";
+                    }
+                    echo " </table>
+                <input type='submit' >";
                 }
                  
-        echo "</table>";
+        echo "</form>";
         
     echo "</section>
     <hr>
@@ -433,8 +584,8 @@
             </p>
         </form>";
         echo "
-
-        <table class='tblProduits'>Coolers Disponibles : 
+        <form method ='post'>
+        <table class='tblProduits'>
                 <tr class ='tblProduits'>
                     <th>Fabricant</th>
                     <th>Modele</th>
@@ -442,16 +593,31 @@
                     <th>selection</th>
                 </tr>
                 ";
-                $tblenght = count($tblCooler);
-                for ($i =0; $i < $tblenght; $i++){
-                    echo "<tr class ='tblProduits'>
-                    <td>".$tblCooler[$i]['fabricant']."</td>
-                    <td>".$tblCooler[$i]['modele']."</td>
-                    <td>".$tblCooler[$i]['dimension']."</td>
-                    <td><button>choisir</button></td>
-                    </tr>";
-                }              
-        echo "</table>";
+                if(isset($_SESSION['ChoixCo'])){
+                    $CoolerrChoisi = $configManager->getCoolerChoisi($_SESSION['ChoixCo']);
+                    echo 
+                    "<h3>Composante choisie : </h3>
+                    <tr class ='tblProduits'>
+                    <td>".$CoolerrChoisi[0]['fabricant']."</td>
+                    <td>".$CoolerrChoisi[0]['modele']."</td>
+                    <td>".$CoolerrChoisi[0]['dimension']."</td>
+                    <td><input name='ChoixCo' type='submit' value='changer'></td>
+                    </tr>
+                    </table>";
+                }else {
+                    $tblenght = count($tblCooler);
+                    for ($i =0; $i < $tblenght; $i++){
+                        echo "<tr class ='tblProduits'>
+                        <td>".$tblCooler[$i]['fabricant']."</td>
+                        <td>".$tblCooler[$i]['modele']."</td>
+                        <td>".$tblCooler[$i]['dimension']."</td>
+                        <td><input name='ChoixCo' type='radio' value=".$tblCooler[$i]['id']."></td>
+                        </tr>";
+                    }
+                    echo " </table>
+                <input type='submit' >";
+                }           
+        echo "</form>";
         echo"
     </section>
     <hr>
@@ -522,21 +688,37 @@
         </p>
     </form>";
     echo "
-
-    <table class='tblProduits'>Cartes Disponibles
+    <form method ='post'>
+    <table class='tblProduits'>
+        <tr class ='tblProduits'>
+            <th>Fabricant</th>
+            <th>Modele</th>
+            <th>Type Stockage</th>
+            <th>Capacité</th>
+            <th>Vitesse de rotation (rpm)</th>
+            <th>Connecteur</th>
+            <th>Taux de transfer (mo/s)</th>
+            <th>selection</th>
+        </tr>
+        ";
+        if(isset($_SESSION['ChoixSt'])){
+            $choixStockage = $configManager->getStockageChoisi($_SESSION['ChoixSt']);
+            echo 
+            
+            "<h3>Composante choisie : </h3>
             <tr class ='tblProduits'>
-                <th>Fabricant</th>
-                <th>Modele</th>
-                <th>Type Stockage</th>
-                <th>Capacité</th>
-                <th>Vitesse de rotation (rpm)</th>
-                <th>Connecteur</th>
-                <th>Taux de transfer (mo/s)</th>
-
-                <th>selection</th>
+                <td>".$choixStockage[0]['fabricant']."</td>
+                <td>".$choixStockage[0]['modele']."</td>
+                <td>".$choixStockage[0]['typeStockage']."</td>
+                <td>".$choixStockage[0]['capacite']."</td>
+                <td>".$choixStockage[0]['rpm']."</td>
+                <td>".$choixStockage[0]['connecteur']."</td>
+                <td>".$choixStockage[0]['tauxTransfert']."</td>
+                <td><input name='ChoixSt' type='submit' value='changer'></td>
             </tr>
-            ";
-            $tblenght = count($tblStockage);
+            </table>";
+        }else {
+        $tblenght = count($tblStockage);
             for ($i =0; $i < $tblenght; $i++){
                 echo "<tr class ='tblProduits'>
                 <td>".$tblStockage[$i]['fabricant']."</td>
@@ -546,10 +728,13 @@
                 <td>".$tblStockage[$i]['rpm']."</td>
                 <td>".$tblStockage[$i]['connecteur']."</td>
                 <td>".$tblStockage[$i]['tauxTransfert']."</td>
-                <td><button>choisir</button></td>
+                <td><input name='ChoixSt' type='radio' value=".$tblStockage[$i]['id']."></td>
                 </tr>";
-            }  
-    echo "</table>";
+            }
+            echo " </table>
+            <input type='submit' >";  
+        }
+echo "</form>";
     
 echo "</section>
 <hr>
@@ -605,28 +790,46 @@ echo "</section>
             
         </form>";
         echo "
-        <table class='tblProduits'>Cartes Disponibles
+        <form method ='post'>
+        <table class='tblProduits'>
+            <tr class ='tblProduits'>
+                <th>Fabricant</th>
+                <th>Modele</th>
+                <th>Type de boitier (forme)</th>
+                <th>Type fênetre</th>
+                <th>Paneaux USB</th>
+                <th>selection</th>
+            </tr>
+            ";
+            if(isset($_SESSION['ChoixB'])){
+                $choixB = $configManager->getBoitierChoisi($_SESSION['ChoixB']);
+                echo 
+                "<h3>Composante choisie : </h3>
                 <tr class ='tblProduits'>
-                    <th>Fabricant</th>
-                    <th>Modele</th>
-                    <th>Type de boitier (forme)</th>
-                    <th>Type fênetre</th>
-                    <th>Paneaux USB</th>
-                    <th>selection</th>
+                    <td>".$choixB[0]['fabricant']."</td>
+                    <td>".$choixB[0]['modele']."</td>
+                    <td>".$choixB[0]['forme']."</td>
+                    <td>".$choixB[0]['typeFenetre']."</td>
+                    <td>".$choixB[0]['supportusb']."</td>
+                    <td><input name='ChoixB' type='submit' value='changer'></td>
                 </tr>
-                ";
+                </table>";
+            }else {
                 $tblenght = count($tblBoitier);
                 for ($i =0; $i < $tblenght; $i++){
                     echo "<tr class ='tblProduits'>
-                    <td>".$tblBoitier[$i]['fabricant']."</td>
-                    <td>".$tblBoitier[$i]['modele']."</td>
-                    <td>".$tblBoitier[$i]['typeboitier']."</td>
-                    <td>".$tblBoitier[$i]['typeFenetre']."</td>
-                    <td>".$tblBoitier[$i]['supportusb']."</td>
-                    <td><button>choisir</button></td>
+                        <td>".$tblBoitier[$i]['fabricant']."</td>
+                        <td>".$tblBoitier[$i]['modele']."</td>
+                        <td>".$tblBoitier[$i]['forme']."</td>
+                        <td>".$tblBoitier[$i]['typeFenetre']."</td>
+                        <td>".$tblBoitier[$i]['supportusb']."</td>
+                        <td><input name='ChoixB' type='radio' value=".$tblBoitier[$i]['id']."></td>
                     </tr>";
-                }      
-        echo "</table>";
+                }
+                echo " </table>
+                <input type='submit' >";
+            }    
+        echo "</form>";
         
     echo "</section>
     <hr>";

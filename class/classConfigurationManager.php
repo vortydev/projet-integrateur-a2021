@@ -48,6 +48,42 @@ class ConfigurationManager {
 
     const SELECT_CONFIG_WITH_DATE = 'SELECT * FROM config WHERE dateCreation = CURRENT_DATE()';
 
+    const SELECT_ALL_CARTEMERE = 'SELECT c.id,f.nom as fabricant, c.modele,c.chipset,  fo.nom as forme, c.nbConnecteurRam, s.nom as socket, c.capaciteRam, c.wifi, tm.nom as typememoire, su.nom as supportusb
+    FROM cartemere c
+    INNER JOIN fabricant f ON f.id = c.idFabricant
+    INNER JOIN formecartemere fo ON fo.id = c.idForme
+    INNER JOIN socket s ON s.id = c.idSocket
+    INNER JOIN typememoire tm ON tm.id = c.typeMemoire
+    INNER JOIN supportusb su ON su.id = c.idSupportUSB';
+
+    const SELECT_ALL_PROCESSEUR = 'SELECT p.id, f.nom as fabricant, modele, nbCoeurs,frequence, s.nom as socket
+    FROM processeur p
+    INNER JOIN fabricant f ON f.id = p.idFabricant
+    INNER JOIN socket s ON s.id = p.idSocket';
+    const SELECT_ALL_COOLER = 'SELECT s.id, f.nom as fabricant, s.modele, s.dimension
+    FROM systemerefroidissement s
+    INNER JOIN fabricant f ON f.id = idFabricant';
+    const SELECT_ALL_MEMOIREVIVE = 'SELECT mv.id, f.nom as fabricant, mv.modele,mv.capacite, mv.nbBarrettes, mv.frequence, c.nom as connecteur, tm.nom as typememoire
+    FROM memoirevive as mv
+    INNER JOIN fabricant f ON f.id = mv.idFabricant
+    INNER JOIN connecteur c ON c.id = mv.idConnecteur
+    INNER JOIN typememoire tm ON tm.id = mv.typeMemoire';
+    const SELECT_ALL_STOCKAGE = 'SELECT ss.id, f.nom as fabricant, ss.modele,ss.typeStockage,ss.capacite,ss.rpm,c.nom as connecteur,ss.tauxTransfert
+    FROM supportstockage ss
+    INNER JOIN fabricant f on f.id = ss.idFabricant
+    INNER JOIN connecteur c ON c.id = ss.idConnecteur';
+    const SELECT_ALL_CARTEGRAPHIQUE = 'SELECT cg.id, f.nom as fabricant, cg.modele, cg.chipset,cg.capacite, tm.nom as typeMemoire, cg.frequence, cg.frameSync, c.nom as connecteur
+    FROM cartegraphique cg
+    INNER JOIN fabricant f ON f.id = cg.idFabricant
+    INNER JOIN typeMemoire tm ON tm.id = cg.typeMemoire
+    INNER JOIN connecteur c ON c.id = cg.idConnecteur';
+    const SELECT_ALL_BOITIER = 'SELECT b.id, f.nom as fabricant,b.modele, tb.nom as typeboitier, b.typeFenetre, b.psuShroud, b.psuInclus,su.nom as supportusb, fo.nom as forme
+    FROM boitier b
+    INNER JOIN fabricant f ON f.id = b.idFabricant
+    INNER JOIN typeboitier tb ON tb.id = b.typeBoitier
+    INNER JOIN supportusb su ON su.id = b.idSupportUSB
+    INNER JOIN formecartemere fo ON fo.id = b.idFormeCarteMere';
+
     private $_bdd;
     public function __construct(PDO $bdd) { $this->_bdd = $bdd; }
     public function __destruct() { $this->_bdd = null; }
@@ -183,41 +219,7 @@ class ConfigurationManager {
         return $query->fetchColumn();
     }
 
-    const SELECT_ALL_CARTEMERE = 'SELECT c.id,f.nom as fabricant, c.modele,c.chipset,  fo.nom as forme, c.nbConnecteurRam, s.nom as socket, c.capaciteRam, c.wifi, tm.nom as typememoire, su.nom as supportusb
-    FROM cartemere c
-    INNER JOIN fabricant f ON f.id = c.idFabricant
-    INNER JOIN formecartemere fo ON fo.id = c.idForme
-    INNER JOIN socket s ON s.id = c.idSocket
-    INNER JOIN typememoire tm ON tm.id = c.typeMemoire
-    INNER JOIN supportusb su ON su.id = c.idSupportUSB';
 
-    const SELECT_ALL_PROCESSEUR = 'SELECT p.id, f.nom as fabricant, modele, nbCoeurs,frequence, s.nom as socket
-    FROM processeur p
-    INNER JOIN fabricant f ON f.id = p.idFabricant
-    INNER JOIN socket s ON s.id = p.idSocket';
-    const SELECT_ALL_COOLER = 'SELECT s.id, f.nom as fabricant, s.modele, s.dimension
-    FROM systemerefroidissement s
-    INNER JOIN fabricant f ON f.id = idFabricant';
-    const SELECT_ALL_MEMOIREVIVE = 'SELECT mv.id, f.nom as fabricant, mv.modele,mv.capacite, mv.nbBarrettes, mv.frequence, c.nom as connecteur, tm.nom as typememoire
-    FROM memoirevive as mv
-    INNER JOIN fabricant f ON f.id = mv.idFabricant
-    INNER JOIN connecteur c ON c.id = mv.idConnecteur
-    INNER JOIN typememoire tm ON tm.id = mv.typeMemoire';
-    const SELECT_ALL_STOCKAGE = 'SELECT ss.id, f.nom as fabricant, ss.modele,ss.typeStockage,ss.capacite,ss.rpm,c.nom as connecteur,ss.tauxTransfert
-    FROM supportstockage ss
-    INNER JOIN fabricant f on f.id = ss.idFabricant
-    INNER JOIN connecteur c ON c.id = ss.idConnecteur';
-    const SELECT_ALL_CARTEGRAPHIQUE = 'SELECT cg.id, f.nom as fabricant, cg.modele, cg.chipset,cg.capacite, tm.nom as typeMemoire, cg.frequence, cg.frameSync, c.nom as connecteur
-    FROM cartegraphique cg
-    INNER JOIN fabricant f ON f.id = cg.idFabricant
-    INNER JOIN typeMemoire tm ON tm.id = cg.typeMemoire
-    INNER JOIN connecteur c ON c.id = cg.idConnecteur';
-    const SELECT_ALL_BOITIER = 'SELECT b.id, f.nom as fabricant,b.modele, tb.nom as typeboitier, b.typeFenetre, b.psuShroud, b.psuInclus,su.nom as supportusb, fo.nom as forme
-    FROM boitier b
-    INNER JOIN fabricant f ON f.id = b.idFabricant
-    INNER JOIN typeboitier tb ON tb.id = b.typeBoitier
-    INNER JOIN supportusb su ON su.id = b.idSupportUSB
-    INNER JOIN formecartemere fo ON fo.id = b.idFormeCarteMere';
     public function getAllCarteMere(PDO $bdd){
         $query = $this->_bdd->prepare(self::SELECT_ALL_CARTEMERE);
         $query->execute();
@@ -615,7 +617,7 @@ class ConfigurationManager {
         }
         else {
             $queryResults = $this->_bdd->query(self::SELECT_NB_CARTEMERE)->fetch();
-            //print_r($queryResults);
+            
             $randCarteMere = rand(0,$queryResults['0']);
 
 
@@ -627,6 +629,35 @@ class ConfigurationManager {
             print_r($carteMere);
             
         }
+    }
+    public function getCarteMereChoisi($id){
+        $dbResult = $this->_bdd->query(self::SELECT_ALL_CARTEMERE. ' WHERE c.id ='. $id)->fetchAll();
+        
+        return $dbResult;
+    }
+    public function getProcesseurChoisi($id){
+        $dbResult = $this->_bdd->query(self::SELECT_ALL_PROCESSEUR. ' WHERE p.id ='. $id)->fetchAll();
+        return $dbResult;
+    }
+    public function getCoolerChoisi($id){
+        $dbResult = $this->_bdd->query(self::SELECT_ALL_COOLER. ' WHERE s.id ='. $id)->fetchAll();
+        return $dbResult;
+    }
+    public function getRamChoisi($id){
+        $dbResult = $this->_bdd->query(self::SELECT_ALL_MEMOIREVIVE. ' WHERE mv.id ='. $id)->fetchAll();
+        return $dbResult;
+    }
+    public function getStockageChoisi($id){
+        $dbResult = $this->_bdd->query(self::SELECT_ALL_STOCKAGE. ' WHERE ss.id ='. $id)->fetchAll();
+        return $dbResult;
+    }
+    public function getCarteGraphiqueChoisi($id){
+        $dbResult = $this->_bdd->query(self::SELECT_ALL_CARTEGRAPHIQUE. ' WHERE cg.id ='. $id)->fetchAll();
+        return $dbResult;
+    }
+    public function getBoitierChoisi($id){
+        $dbResult = $this->_bdd->query(self::SELECT_ALL_BOITIER. ' WHERE b.id ='. $id)->fetchAll();
+        return $dbResult;
     }
    
 };
