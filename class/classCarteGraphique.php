@@ -66,18 +66,19 @@ class CarteGraphique {
     public function set_idConnecteur(int $idConnecteur) { $this->_idConnecteur = $idConnecteur; }
 
     public function print_Info() {
-    
+        echo '<div class="cartegraphique hidden">';
         echo '<h3> Carte graphique </h3></br>';
         echo '<p>Le modele : ' . $this->get_modele() . '</p>';
         echo '<p>Capacite : ' . $this->get_capacite() . 'Go</p>';
         echo '<p>Frequence : ' . $this->get_frequence() . 'MHz</p>';
         echo '<p>Type memoire : ' . $this->get_typeMemoire() . '</p>';    
+        echo '</div>';
     }
 
     public function print_Button() {
         echo '<div class"text_button_CDC">';
         echo    '<p class="text_CDC"><strong> Carte Graphique </strong>' . $this->get_modele() . '</p>';
-        echo    '<button class="cartegraphique btn_CDC"type="button">Voir la description</button>';
+        echo    '<button class="btn_cartegraphique btn_CDC"type="button">Voir la description</button>';
         echo '</div>';
     }
 };

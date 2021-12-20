@@ -15,6 +15,7 @@ class ConfigurationManager {
     // insert une nouvelle configuration
     const INSERT_CONFIG = 'INSERT INTO Config (idClient, idCarteMere, idProcesseur, idCooler, idMemoireVive, idCarteGraphique, idBoitier, dateCreation)
                             VALUES (:idClient, :idCarteMere, :idProcesseur, :idCooler, :idMemoireVive, :idCarteGraphique, :idBoitier, :dateCreation)';
+
     const INSERT_CONFIG_STOCKAGE = 'INSERT INTO JointureConfigStockage (idConfig, idStockage)
                                     VALUES (:idConfig, :idStockage)';
     
@@ -33,13 +34,14 @@ class ConfigurationManager {
     const SELECT_STOCKAGE = 'SELECT CONCAT(f.nom, " ", s.modele) FROM supportstockage s INNER JOIN fabricant f ON f.id = s.idFabricant WHERE s.id = :id';
     const SELECT_CARTEGRAPHIQUE = 'SELECT CONCAT(f.nom, " ", c.modele) FROM cartegraphique c INNER JOIN fabricant f ON f.id = c.idFabricant WHERE c.id = :id';
     const SELECT_BOITIER = 'SELECT CONCAT(f.nom, " ", b.modele) FROM boitier b INNER JOIN fabricant f ON f.id = b.idFabricant WHERE b.id = :id';
-    
-    const SELECT_INFO_MEMOIREVIVE = 'SELECT CONCAT(f.nom, " ", m.modele) as modele , m.capacite, m.nbBarrettes, m.frequence, c.nom as nomConnecteur FROM memoirevive m
+
+    const SELECT_INFO_MEMOIREVIVE = 'SELECT CONCAT(f.nom, " ", m.modele) as modele , m.capacite, m.nbBarrettes, m.frequence, c.nom as nomConnecteur, t.nom as typeMemoire FROM memoirevive m
     INNER JOIN connecteur c ON c.id = m.idConnecteur
     INNER JOIN fabricant f ON f.id = m.idFabricant
+    INNER JOIN typememoire t ON t.id = m.typeMemoire
     WHERE m.id = :id';
     
-    const SELECT_INFO_BOITIER = 'SELECT CONCAT(f.nom, " ", b.modele) as modele, b.typeFenetre, t.nom AS typeBoitier FROM boitier b
+    const SELECT_INFO_BOITIER = 'SELECT CONCAT(f.nom, " ", b.modele) as modele, b.typeFenetre, t.nom AS typeBoitier, fcm.nom as formeCarteMere FROM boitier b
     INNER JOIN typeBoitier t ON t.id = b.typeBoitier
     INNER JOIN Fabricant f ON f.id = b.idFabricant
     INNER JOIN formeCarteMere fcm ON b.idFormeCarteMere = fcm.id
@@ -82,7 +84,7 @@ class ConfigurationManager {
 
     const SELECT_IDBOITIER_WITH_CONSTRAINT = 'SELECT id FROM Boitier WHERE idFormeCarteMere = :id';
 
-    const SELECT_CONFIG_WITH_DATE = 'SELECT * FROM config WHERE dateCreation = CURRENT_DATE()';
+    const SELECT_CONFIG_WITH_DATE = 'SELECT * FROM config WHERE dateCreation = :dateAjd AND idClient = :id';
 
     const SELECT_ALL_CARTEMERE = 'SELECT c.id,f.nom as fabricant, c.modele,c.chipset,  fo.nom as forme, c.nbConnecteurRam, s.nom as socket, c.capaciteRam, c.wifi, tm.nom as typememoire, su.nom as supportusb
     FROM cartemere c
@@ -661,15 +663,32 @@ class ConfigurationManager {
     }
     public function choixDuChef() {
         //verifie si existe deja choix du chef
-        $queryResults = $this->_bdd->query(self::SELECT_CONFIG_WITH_DATE)->fetch();
+        date_default_timezone_set('America/New_York');
+        $dateCreation = date("Y-m-d");
+        $bindParams = array(':dateAjd' => $dateCreation,
+                            ':id' => 3);
+        $queryResults = $this->_bdd->prepare(self::SELECT_CONFIG_WITH_DATE);
+        $queryResults->execute($bindParams);
+        $results = $queryResults->fetch();
+        
+        if(is_array($results))
+        {
+            $bindParams2 = array (':idConfig' => $results['id']);
+            $queryResults = $this->_bdd->prepare(self::SELECT_CONFIG_STOCKAGE);
+            $queryResults->execute($bindParams2);
+            $stockage = $queryResults->fetchAll();
 
-        if (is_array($queryResults)){
-            return new Configuration($queryResults);
-        }
+            if(count($stockage) == 1)
+                $results['idSupportStockage'] = $stockage[0]['idStockage'];
+            else {
+                $results['idSupportStockage1'] = $stockage[0]['idStockage'];
+                $results['idSupportStockage2'] = $stockage[1]['idStockage'];
+            }
+            return $results;
+            
+        } 
         else {
-            $returnValue = array();
-
-
+           $returnValue = array();
             // carte mere
             $queryResults = $this->_bdd->query(self::SELECT_IDCARTEMERE)->fetchAll();
             $rand = rand(0,count($queryResults) - 1);
@@ -689,16 +708,18 @@ class ConfigurationManager {
             $queryResults = $this->_bdd->prepare(self::SELECT_IDPROCESSEUR_WITH_SOCKET);
             $queryResults->execute($bindParamsProcesseur);
 
-        	$processeur = $queryResults->fetch();
-            $returnValue['idProcesseur'] = $processeur['id'];
+        	$processeur = $queryResults->fetchAll();
+            $rand = rand(0,count($processeur) - 1);
+            $returnValue['idProcesseur'] = $processeur[$rand]['id'];
 
             //boitier 
             $bindParamsBoitier = array(':id' => $carteMere['idForme']);
             $queryResults = $this->_bdd->prepare(self::SELECT_IDBOITIER_WITH_CONSTRAINT);
             $queryResults->execute($bindParamsBoitier);
 
-            $boitier = $queryResults->fetch();
-            $returnValue['idBoitier'] = $boitier['id'];
+            $boitier = $queryResults->fetchAll();
+            $rand = rand(0,count($boitier) - 1);
+            $returnValue['idBoitier'] = $boitier[$rand]['id'];
             
             //memoire vive
             $bindParamsMemoireVive  = array(':typeMemoire' => $carteMere['typeMemoire'],
@@ -707,8 +728,9 @@ class ConfigurationManager {
             $queryResults = $this->_bdd->prepare(self::SELECT_IDMEMOIRE_VIVE_WITH_CONSTRAINT);
             $queryResults->execute($bindParamsMemoireVive);
 
-            $memoireVive = $queryResults->fetch();
-            $returnValue['idMemoireVive'] = $memoireVive['id'];
+            $memoireVive = $queryResults->fetchAll();
+            $rand = rand(0,count($memoireVive) - 1);
+            $returnValue['idMemoireVive'] = $memoireVive[$rand]['id'];
 
             //support stockage 
             $nbSupport = rand(1,2);
@@ -724,14 +746,27 @@ class ConfigurationManager {
 
             //gpu 
             $queryResults = $this->_bdd->query(self::SELECT_IDGPU)->fetchAll();
-            $returnValue['idGPU'] = $queryResults[rand(0,count($queryResults) - 1)]['id'];
+            $returnValue['idCarteGraphique'] = $queryResults[rand(0,count($queryResults) - 1)]['id'];
 
             //cooler 
             $queryResults = $this->_bdd->query(self::SELECT_IDCOOLER)->fetchAll();
             $returnValue['idCooler'] = $queryResults[rand(0,count($queryResults) - 1)]['id'];
-            return $returnValue;
+            $returnValue['idClient'] = 3;
             
-        }
+            $config = new Configuration($returnValue);
+            if ($nbSupport == 1){
+                $config->add_idStockage($returnValue['idSupportStockage']);
+            } 
+            else if($nbSupport == 2) {
+                $config->add_idStockage($returnValue['idSupportStockage1']);
+                $config->add_idStockage($returnValue['idSupportStockage2']);
+            }
+            
+            $this->addConfig($config);
+            return $returnValue;
+        }  
+ 
+        
     }
 
     public function getCarteMereChoisi($id){

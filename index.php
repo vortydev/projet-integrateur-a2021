@@ -27,7 +27,7 @@
     $cooler = $cm->get_CoolerById($arrayOfId['idCooler']);
     $config->set_cooler($cooler);
 
-    $GPU = $cm->get_GPUById($arrayOfId['idGPU']);
+    $GPU = $cm->get_GPUById($arrayOfId['idCarteGraphique']);
     $config->set_carteGraphique($GPU);
 
     $carteMere = $cm->get_CarteMereById($arrayOfId['idCarteMere']);
@@ -45,9 +45,17 @@
         array_push($arrayObjectSupport, $supportStockage1);
         array_push($arrayObjectSupport, $supportStockage2);
         $config->set_multipleSupportStockage($arrayObjectSupport);
-    }
+    }  
+    echo '<h1><em>Le choix du chef</em></h1>';
+    echo '<h4><em>Le choix du chef est une configuration fait par nos experts et que vous pouvez ajouter à vos configurations. </em></h4>';
+    echo '<section class="CDC">';
+  
+    $config->print_All();    
+    echo '</section>';
+    if(isset($_SESSION['idClient']))
+        echo'<a class="ajoutCDC" href="./traitement.php?action=ajoutCDC">Ajouter la configuration</a>';
+    
 
-    $config->print_All();
 
 
     require_once './inc/footer.php';

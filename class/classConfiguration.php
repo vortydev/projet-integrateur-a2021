@@ -229,7 +229,6 @@ class Configuration {
     public function print_All() {
         echo
         '
-        <section>
         <article>
             <div class="split">';
             
@@ -259,28 +258,33 @@ class Configuration {
                 $key++;
             }
             echo '</div>';
-            if (isset($_SESSION['idClient'])) {
-                echo '<div>';
-                    echo '<a class="ajoutCDC"href="./traitement.php?action=ajoutCDC">Ajouter la configuration</a>';
-                echo '</div>';
-            }
         } 
         else 
         {
             echo '<div class="split">';
             $this->get_supportStockage()->print_Button(1);
 
-            if (isset($_SESSION['idClient']))
-                echo '<a class="ajoutCDC"href="./traitement.php?action=ajoutCDC">Ajouter la configuration</a>';
             echo '</div>';
         }
-
-
         
         echo '</article>
-        <aside>
-        
-        </aside>
+        <aside>';
+            $this->get_boitier()->print_Info();
+            $this->get_processeur()->print_Info();
+            $this->get_memoireVive()->print_Info();
+            $this->get_carteGraphique()->print_Info();
+            $this->get_carteMere()->print_Info();
+            $this->get_cooler()->print_Info();
+            if (is_array($this->get_supportStockage())) {
+                $key = 1;
+                foreach ($arraySupport as $value) {
+                    $value->print_Info($key);
+                    $key++;
+                }
+            }
+            else 
+            $this->get_supportStockage()->print_Info(1);
+        echo'</aside>
         ';
     }
 };

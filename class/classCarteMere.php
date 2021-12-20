@@ -86,7 +86,7 @@ class CarteMere {
     public function set_idSupportUSB(int $_idSupportUSB) { $this->_idSupportUSB = $_idSupportUSB; } 
 
     public function print_Info() {
-
+        echo '<div class="cartemere hidden">';
         echo '<h3> Carte mere </h3></br>';
         echo '<p>Le modele : ' . $this->get_modele() . '</p>';
         echo '<p>La forme : ' . $this->get_nomForme() . '</p>';
@@ -94,13 +94,13 @@ class CarteMere {
         echo '<p>Capacite RAM maximum : ' . $this->get_capaciteRam() . 'Go</p>';
         echo '<p>Type de connecteur de RAM : ' . $this->get_typeMemoire() . '</p>';
         echo '<p>Nombre de connecteur RAM : ' . $this->get_nbConnecteurRam() . '</p>';
-        
+        echo '</div>';
     }
 
     public function print_Button() {
         echo '<div class"text_button_CDC">';
         echo    '<p class="text_CDC"><strong> Carte Mere </strong>' . $this->get_modele() . '</p>';
-        echo    '<button class="cartemere btn_CDC"type="button">Voir la description</button>';
+        echo    '<button class="btn_cartemere btn_CDC"type="button">Voir la description</button>';
         echo '</div>';
     }
 };

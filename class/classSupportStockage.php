@@ -65,8 +65,9 @@ class SupportStockage {
     public function get_tauxTransfert() : int { return $this->_tauxTransfert; }
     public function set_tauxTransfert(int $tauxTransfert) { $this->_tauxTransfert = $tauxTransfert; }
 
-    public function print_Info() {
+    public function print_Info($key) {
         
+        echo '<div class="support' . $key . ' hidden">';
         echo '<h3> Support stockage </h3></br>';
         echo '<p>Le modele : ' . $this->get_modele() . '</p>';
         echo '<p>Type de stockage : ' . $this->get_typeStockage() . '</p>';
@@ -75,13 +76,14 @@ class SupportStockage {
         if ($this->get_rpm() != 0) 
             echo '<p>Rotation par minute : ' . $this->get_rpm() . '</p>';
         echo '<p>Taux de transfert : ' . $this->get_tauxTransfert() . 'Mo/s</p>';
+        echo '</div>';
 
     }
 
     public function print_Button($key) {
         echo '<div class"text_button_CDC">';
         echo    '<p class="text_CDC"><strong> Support stockage : </strong>' . $this->get_modele() . '</p>';
-        echo    '<button class="supportstockage' . $key . ' btn_CDC"type="button">Voir la description</button>';
+        echo    '<button class="btn_supportstockage' . $key . ' btn_CDC"type="button">Voir la description</button>';
         echo '</div>';
     }
 };

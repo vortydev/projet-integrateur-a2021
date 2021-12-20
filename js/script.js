@@ -245,3 +245,45 @@ function appearRes(r, i) {
     r.classList.remove("disappear");
     r.classList.add("appear");
 }
+
+/*fonction et event listener relie a au choix du chef */
+
+/*fonction et event listener relie a au choix du chef */
+
+let btn_CDC = document.getElementsByClassName("btn_CDC");
+for (let i = 0;i < btn_CDC.length;i++) {
+    btn_CDC[i].addEventListener('click', changementDescription);
+}
+
+function changementDescription(e) {
+    let divAside = document.getElementsByClassName('CDC')[0].getElementsByTagName('aside')[0].getElementsByTagName('div');
+    for (let i = 0 ; i < divAside.length;i++) {
+        if(!divAside[i].classList.contains('hidden'))
+            divAside[i].classList.add('hidden');
+    }
+
+    if(e.target.classList.contains("btn_cooler")) {
+        document.getElementsByClassName('cooler')[0].classList.remove('hidden');
+    }
+    else if(e.target.classList.contains("btn_memoirevive")) {
+        document.getElementsByClassName('memoirevive')[0].classList.remove('hidden');
+    }
+    else if(e.target.classList.contains("btn_processeur")) {
+        document.getElementsByClassName('processeur')[0].classList.remove('hidden');
+    }
+    else if(e.target.classList.contains("btn_supportstockage1")) {
+        document.getElementsByClassName('support1')[0].classList.remove('hidden');
+    }
+    else if(e.target.classList.contains("btn_supportstockage2")) {
+        document.getElementsByClassName('support2')[0].classList.remove('hidden');
+    }
+    else if(e.target.classList.contains("btn_boitier")) {
+        document.getElementsByClassName('boitier')[0].classList.remove('hidden');
+    }
+    else if(e.target.classList.contains("btn_cartegraphique")) {
+        document.getElementsByClassName('cartegraphique')[0].classList.remove('hidden');
+    }
+    else if(e.target.classList.contains("btn_cartemere")) {
+        document.getElementsByClassName('cartemere')[0].classList.remove('hidden');
+    }
+}

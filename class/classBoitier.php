@@ -68,19 +68,21 @@ class Boitier {
 
     // forme carte mere 
     public function get_formeCarteMere() : string { return $this->_formeCarteMere; }
-    public function set_formeCarteMere(int $_formeCarteMere) { $this->_formeCarteMere = $_formeCarteMere; }
+    public function set_formeCarteMere(string $_formeCarteMere) { $this->_formeCarteMere = $_formeCarteMere; }
 
     public function print_Info() {
+        echo '<div class="boitier hidden">';
         echo '<h3> Boitier </h3></br>';
         echo '<p>Le modele : ' . $this->get_modele() . '</p>';
         echo '<p>Type de boitier ' . $this->get_typeBoitier() . '</p>';
         echo '<p>La forme de la carte mere : ' . $this->get_formeCarteMere() . '</p>';
+        echo '</div>';
     }
 
     public function print_Button() {
         echo '<div class"text_button_CDC">';
         echo    '<p class="text_CDC"><strong> Boitier : </strong>' . $this->get_modele() . '</p>';
-        echo    '<button class="boitier btn_CDC"type="button">Voir la description</button>';
+        echo    '<button class="btn_boitier btn_CDC"type="button">Voir la description</button>';
         echo '</div>';
     }
 };

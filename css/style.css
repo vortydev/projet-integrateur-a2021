@@ -205,17 +205,17 @@ button {
     padding: 10px;
 }
 
-.btn_inscription, .btn_connexion  {
-    height: 50px;
+.btn_inscription, .btn_connexion, .btn_CDC{
+    height: 50px; 
     width: 300px;
-    margin: auto;
+    margin: auto; 
     margin-top: 20px;
     margin-bottom: 5px;
     color: white;
     background-color: var(--rouge);
     border-radius: 5px;
     border: 2px black solid;
-    transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out; 
 }
 
 .btn_inscription:hover, .btn_connexion:hover {
@@ -250,6 +250,57 @@ button {
 {
     color: red;
 }
+
+/*Page Choix du chef */
+h4 {
+    text-align: center;
+    margin: auto;
+}
+.split 
+{  
+   display:flex;
+   margin-top: 20px;
+}
+.split div:first-of-type {
+    width: 43%;
+}
+
+.CDC article 
+{
+    width:75%;
+}
+.CDC aside
+{
+    width: 25%;    
+    border: 1px;
+    border-style: solid;
+    border-color: white;
+    text-align: center;
+}
+.CDC aside div p 
+{
+    margin-top: 10px;
+}
+
+.CDC {
+    margin-top: 30px;
+    display: flex;
+    height: 300px;
+}
+
+.btn_CDC {
+    height: auto;
+    width: 200px;
+    background-color: var(--rouge_accent);
+    bottom: 0px;
+    margin: auto;
+}
+
+
+
+
+
+
 
 /* MES CONFIGURATIONS */
 .config {
@@ -336,6 +387,8 @@ button {
       opacity: 0; 
     } 
 } 
+
+
 
 /* MEDIA QUERY */
 @media only screen and (max-width: 980px) {

@@ -56,20 +56,20 @@ class Processeur {
      public function set_nomSocket(string $nomSocket) { $this->_nomSocket = $nomSocket; }
 
      public function print_Info() {
-
+        echo '<div class="processeur">';
         echo '<h3> Processeur </h3></br>';
         echo '<p>Le modele : ' . $this->get_modele() . '</p>';
         echo '<p>Nombre de coeurs : ' . $this->get_nbCore() . '</p>';
         echo '<p>Frequence : ' . $this->get_frequence() . 'GHz</p>';
         echo '<p>Nom socket : ' . $this->get_nomSocket() . '</p>';
-
+        echo '</div>';
         
     }
 
     public function print_Button() {
         echo '<div class"text_button_CDC">';
         echo    '<p class="text_CDC"><strong> Processeur : </strong>' . $this->get_modele() . '</p>';
-        echo    '<button class="processeur btn_CDC"type="button">Voir la description</button>';
+        echo    '<button class="btn_processeur btn_CDC"type="button">Voir la description</button>';
         echo '</div>';
     }
 };
