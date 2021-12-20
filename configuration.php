@@ -240,12 +240,13 @@
                     <td><input type="number" name="nbCapaciteRAM"></td>
                 </tr>
                 <tr class="pale">
-                    <td><label for="wifiInclus">Wifi inclus</label></td>
+                    <td><label for="wifiInclus">WiFi inclus</label></td>
                     <td>
                         <label for="wifiInclus">Oui</label>
                         <input name="wifiInclus" type="radio" value ="Oui">
                         <label for="wifiInclus">Non</label>
                         <input name="wifiInclus" type="radio" value="Non">
+                    </td>
                 </tr>
             </table>
             <button class="btn_filtre" type="submit" value="Filtrer">Filtrer</button>
@@ -409,499 +410,535 @@
                 echo '</table><button class="btn_confirm" type="submit" value="Confirmer">Confirmer la sélection</button></form>';
             }
     echo '</article></section>';
-///////
-echo "
-        <section>
-            <h2>Mémoire vive (RAM) :</h2>
-            <form action='configuration.php' method='post' class='formchoixCoolermposant'>
-                <h3>Filtrer </h3>
-                <p class='selectchoixCoolermposants'> 
-                    <label for='choixFabricantRAM'>Fabricant: </label>
-                    <select name='choixFabricantRAM' id=''>
-                        <option value='all' selected'>Tous/Toutes</option>";
-                        $temp = array();
-                        foreach ($tblMemoireVive as $fabricant){
-                            if(!trouverdoublon($fabricant['fabricant'], $temp)){
-                            echo"<option value='" . $fabricant['fabricant'] . "'>" . $fabricant['fabricant'] . "</option>";
-                            array_push($temp, $fabricant['fabricant']);
-                            }
-                        }
-                        unset($temp);
-                echo"</select>
-                    <label for='nbBarretesRAM'>Nombre de barretes : </label>
-                    <select name='nbBarretesRAM' id=''>
-                        <option value='all' selected'>Tous/Toutes</option>";
-                        $temp = array();
-                        foreach ($tblMemoireVive as $nbBarrettes){
-                            if(!trouverdoublon($nbBarrettes['nbBarrettes'], $temp)){
-                            echo"<option value='" . $nbBarrettes['nbBarrettes'] . "'>" . $nbBarrettes['nbBarrettes'] . "</option>";
-                            array_push($temp, $nbBarrettes['nbBarrettes']);
-                            }
-                        }
-                        unset($temp);
-                echo"</select>
-                    <label for='frequenceRAM'>Frequence(MHz): </label>
-                    <select name='frequenceRAM' id=''>
-                        <option value='all' selected'>Tous/Toutes</option>";
-                        $temp = array();
-                        foreach ($tblMemoireVive as $frequence){
-                            if(!trouverdoublon($frequence['frequence'], $temp)){
-                            echo"<option value='" . $frequence['frequence'] . "'>" . $frequence['frequence'] . "</option>";
-                            array_push($temp, $frequence['frequence']);
-                            }
-                        }
-                        unset($temp);
-                echo"</select>
-                    <label for='typeMemoireRAM'>Type de Memoire: </label>
-                    <select name='typeMemoireRAM' id=''>
-                        <option value='all' selected'>Tous/Toutes</option>";
-                        $temp = array();
-                        foreach ($tblMemoireVive as $typememoire){
-                            if(!trouverdoublon($typememoire['typememoire'], $temp)){
-                            echo"<option value='" . $typememoire['typememoire'] . "'>" . $typememoire['typememoire'] . "</option>";
-                            array_push($temp, $typememoire['typememoire']);
-                            }
-                        }
-                        unset($temp);
-                echo"</select>   
-                <p>
-                    <label for='capaciteRAM'>Capacite minimale RAM (GB): </label>
-                    <input type='text' name='capaciteRAM'>
-                <p>
-                    <input type='submit' value='Filtrer'>
-                </p>
-            </form>";
-        echo"<form method ='post'>
-            <table class='tblProduits'>
-                <tr class ='tblProduits'>
-                    <th>Fabricant</th>
-                    <th>Modele</th>
-                    <th>Capacité (GB)</th>
-                    <th>Nombre de Barrettes</th>
-                    <th>Frequence (Mhz)</th>
-                    <th>Type de memoire</th>
-                    <th>selection</th>
-                </tr>
-                ";
-                if(isset($_SESSION['choixRam'])){
-                    
-                    echo 
-                    "<h3>Composante choisie : </h3>
-                    <tr class ='tblProduits'>
-                        <td>".$MvChoisi[0]['fabricant']."</td>
-                        <td>".$MvChoisi[0]['modele']."</td>
-                        <td>".$MvChoisi[0]['capacite']."</td>
-                        <td>".$MvChoisi[0]['nbBarrettes']."</td>
-                        <td>".$MvChoisi[0]['frequence']."</td>
-                        <td>".$MvChoisi[0]['typememoire']."</td>
-                        <td><input name='choixRam' type='submit' value='Changer'></td>
-                    </tr>
-            </table>";
-                }else {
-                    $tblenght = count($tblMemoireVive);
-                    for ($i =0; $i < $tblenght; $i++){
-                        echo"<tr class ='tblProduits'>
-                        <td>".$tblMemoireVive[$i]['fabricant']."</td>
-                        <td>".$tblMemoireVive[$i]['modele']."</td>
-                        <td>".$tblMemoireVive[$i]['capacite']."</td>
-                        <td>".$tblMemoireVive[$i]['nbBarrettes']."</td>
-                        <td>".$tblMemoireVive[$i]['frequence']."</td>
-                        <td>".$tblMemoireVive[$i]['typememoire']."</td>
-                        <td><input name='choixRam' type='radio' value=".$tblMemoireVive[$i]['id']."></td>
-                        </tr>";
-                    }
-                    echo"</table>
-                <input type='submit' value='Confirmer Selection'>";
-                }
-            echo"</form>";
-            
-        echo"</section>
-        <hr>
-        <section>
-            <h2>Carte graphique (GPU) :</h2>
-            <form action='configuration.php' method='post' class='formchoixCoolermposant'>
-                <h3>Filtrer </h3>
 
-                <p class='selectchoixCoolermposants'> 
-                    <label for='choixFabricantGPU'>Fabricant: </label>
-                    <select name='choixFabricantGPU' id=''>
-                        <option value='all' selected'>Tous/Toutes</option>";
-                        $temp = array();
-                        foreach ($tblGpu as $fabricant){
-                            if(!trouverdoublon($fabricant['fabricant'], $temp)){
-                            echo"<option value='" . $fabricant['fabricant'] . "'>" . $fabricant['fabricant'] . "</option>";
-                            array_push($temp, $fabricant['fabricant']);
-                            }
-                        }
-                        unset($temp);
-                echo"</select>
-                    <label for='baseClock'>base Clock (MHz) : </label>
-                    <select name='baseClock' id=''>
-                        <option value='all' selected'>Tous/Toutes</option>";
-                        $temp = array();
-                        foreach ($tblGpu as $frequence){
-                            if(!trouverdoublon($frequence['frequence'], $temp)){
-                            echo"<option value='" . $frequence['frequence'] . "'>" . $frequence['frequence'] . "</option>";
-                            array_push($temp, $frequence['frequence']);
-                            }
-                        }
-                        unset($temp);
-                echo"</select>
-                    <label for='chipsetGPU'>Chipset: </label>
-                    <select name='chipsetGPU' id=''>
-                        <option value='all' selected'>Tous/Toutes</option>";
-                        $temp = array();
-                        foreach ($tblGpu as $chipset){
-                            if(!trouverdoublon($chipset['chipset'], $temp)){
-                            echo"<option value='" . $chipset['chipset'] . "'>" . $chipset['chipset'] . "</option>";
-                            array_push($temp, $chipset['chipset']);
-                            }
-                        }
-                        unset($temp);
-                echo"</select>
-                    <label for='typeMemoireGpu'>Type de Memoire (VRAM): </label>
-                    <select name='typeMemoireGpu' id=''>
-                        <option value='all' selected'>Tous/Toutes</option>";
-                        $temp = array();
-                        foreach ($tblGpu as $typememoireGpu){
-                            if(!trouverdoublon($typememoireGpu['typeMemoire'], $temp)){
-                            echo"<option value='" . $typememoireGpu['typeMemoire'] . "'>" . $typememoireGpu['typeMemoire'] . "</option>";
-                            array_push($temp, $typememoireGpu['typeMemoire']);
-                            }
-                        }
-                        unset($temp);
-                echo"</select>
-                </p>
-                    <label for='capaciteVRAM'>Capacite minimale VRAM (GB): </label>
-                    <input type='text' name='capaciteVRAM'>
-                <p>
-                    <input type='submit' value='Filtrer'>
-                </p>
-            </form>";
-        echo"<form method ='post'>
-            <table class='tblProduits'>
-            <tr class ='tblProduits'>
-                <th>Fabricant</th>
-                <th>Modele</th>
-                <th>Chipset</th>
-                <th>Capacite VRAM (GB)</th>
-                <th>Type de memoire</th>
-                <th>Frequence (Mhz)</th>
-                <th>Technologie FrameSync</th>
-                <th>Connecteur</th>
-                <th>selection</th>
-            </tr>
-            ";
-            if(isset($_SESSION['choixCarteGraphique'])){
-                
-            echo"<h3>Composante choisie : </h3>
-                <tr class ='tblProduits'>
-                    <td>".$choixCarteGraphique[0]['fabricant']."</td>
-                    <td>".$choixCarteGraphique[0]['modele']."</td>
-                    <td>".$choixCarteGraphique[0]['chipset']."</td>
-                    <td>".$choixCarteGraphique[0]['capacite']."</td>
-                    <td>".$choixCarteGraphique[0]['typeMemoire']."</td>
-                    <td>".$choixCarteGraphique[0]['frequence']."</td>
-                    <td>".$choixCarteGraphique[0]['frameSync']."</td>
-                    <td>".$choixCarteGraphique[0]['connecteur']."</td>
-                    <td><input name='choixCarteGraphique' type='submit' value='Changer'></td>
-                </tr>
-            </table>";
-            }else {
-            $tblenght = count($tblGpu);
-            for ($i =0; $i < $tblenght; $i++){
-            echo"<tr class ='tblProduits'>
-                    <td>".$tblGpu[$i]['fabricant']."</td>
-                    <td>".$tblGpu[$i]['modele']."</td>
-                    <td>".$tblGpu[$i]['chipset']."</td>
-                    <td>".$tblGpu[$i]['capacite']."</td>
-                    <td>".$tblGpu[$i]['typeMemoire']."</td>
-                    <td>".$tblGpu[$i]['frequence']."</td>
-                    <td>".$tblGpu[$i]['frameSync']."</td>
-                    <td>".$tblGpu[$i]['connecteur']."</td>
-                    <td><input name='choixCarteGraphique' type='radio' value=".$tblGpu[$i]['id']."></td>
-                </tr>";
-            }
-        echo"</table>
-                <input type='submit' value='Confirmer Selection'>";
-                }
-        echo"</form>";
-            
-    echo"</section>
-        <hr>
-        <section>
-            <h2>Système de refroidissement du processeur :</h2>
-            <form action='configuration.php' method='post' class='formchoixCoolermposant'>
-                <h3>Filtrer </h3>
-                <p class='selectchoixCoolermposants'> 
-                    <label for='choixFabricantCooler'>Fabricant: </label>
-                    <select name='choixFabricantCooler' id=''>
-                        <option value='all' selected'>Tous/Toutes</option>";
+    // COOLER
+    echo '<section>
+        <article class="config_filtre">
+            <table>
+                <tr><td colspan=2 class="table_top"><h2>Système de refroidissement</h2></td></tr>
+                <form action="configuration.php" method="post">
+                <tr class="pale">
+                    <td><label for="choixFabricantCooler">Fabricant</label></td>
+                    <td><select name="choixFabricantCooler">
+                        <option value="all" selected>Tous / Toutes</option>';
                         $temp = array();
                         foreach ($tblCooler as $fabricant){
-                            if(!trouverdoublon($fabricant['fabricant'], $temp)){
-                            echo"<option value='" . $fabricant['fabricant'] . "'>" . $fabricant['fabricant'] . "</option>";
-                            array_push($temp, $fabricant['fabricant']);
+                            if (!trouverdoublon($fabricant['fabricant'], $temp)) {
+                                echo '<option value="' . $fabricant['fabricant'] . '">' . $fabricant['fabricant'] . '</option>';
+                                array_push($temp, $fabricant['fabricant']);
                             }
                         }
-                        unset($temp);
-                echo"</select>
-
-                    <label for='dimensionCooler'>Dimension (mm): </label>
-                    <select name='dimensionCooler' id=''>
-                        <option value='all' selected'>Tous/Toutes</option>";
+                        unset($temp); 
+                    echo '</select></td>
+                </tr>
+                <tr>
+                    <td><label for="dimensionCooler">Dimensions (mm)</label></td>
+                    <td><select name="dimensionCooler" id="">
+                        <option value="all" selected>Tous / Toutes</option>';
                         $temp = array();
                         foreach ($tblCooler as $dimension){
-                            if(!trouverdoublon($dimension['dimension'], $temp)){
-                            echo"<option value='" . $dimension['dimension'] . "'>" . $dimension['dimension'] . "</option>";
-                            array_push($temp, $dimension['dimension']);
+                            if (!trouverdoublon($dimension['dimension'], $temp)) {
+                                echo"<option value='" . $dimension['dimension'] . "'>" . $dimension['dimension'] . "</option>";
+                                array_push($temp, $dimension['dimension']);
                             }
                         }
                         unset($temp);
-                echo"</select>  
-                </p>
-                <p>
-                    <input type='submit' value='Filtrer'>
-                </p>
-            </form>";
-            echo"
-            <form method ='post'>
-            <table class='tblProduits'>
-                <tr class ='tblProduits'>
+                    echo '</select></td>
+                </tr>
+            </table>
+            <button class="btn_filtre" type="submit" value="Filtrer">Filtrer</button>
+            </form>
+        </article>';
+
+        // tableau des résultats des filtres
+        echo '<article class="config_result">
+            <table>';
+            if (isset($_SESSION['choixCooler'])) {
+                echo '<tr><td class="table_top" colspan=4><h2>Système de refroidissement choisi</h2></td></tr>';
+            }
+            echo '<tr>
                     <th>Fabricant</th>
-                    <th>Modele</th>
+                    <th>Modèle</th>
                     <th>Dimensions (mm)</th>
-                    <th>selection</th>
-                </tr>
-                ";
-                if(isset($_SESSION['choixCooler'])){
-                    
-                    echo 
-                    "<h3>Composante choisie : </h3>
-                    <tr class ='tblProduits'>
-                        <td>".$CoolerrChoisi[0]['fabricant']."</td>
-                        <td>".$CoolerrChoisi[0]['modele']."</td>
-                        <td>".$CoolerrChoisi[0]['dimension']."</td>
-                        <td><input name='choixCooler' type='submit' value='Changer'></td>
-                    </tr>
-            </table>";
-                }else {
-                    $tblenght = count($tblCooler);
-                    for ($i =0; $i < $tblenght; $i++){
-                echo"<tr class ='tblProduits'>
-                        <td>".$tblCooler[$i]['fabricant']."</td>
-                        <td>".$tblCooler[$i]['modele']."</td>
-                        <td>".$tblCooler[$i]['dimension']."</td>
-                        <td><input name='choixCooler' type='radio' value=".$tblCooler[$i]['id']."></td>
-                    </tr>";
+                    <th>Sélection</th>
+                </tr>';
+                if (isset($_SESSION['choixCooler'])) {
+                echo '<form method="post">
+                    <tr class="pale">
+                        <td>'.$CoolerrChoisi[0]['fabricant'].'</td>
+                        <td>'.$CoolerrChoisi[0]['modele'].'</td>
+                        <td>'.$CoolerrChoisi[0]['dimension'].'</td>
+                        <td><button class="btn_change" name="choixCooler" type="submit" value="Changer">Changer</button></td>
+                    </tr></form></table>';
+                }
+                else {
+                    $tblenght = sizeof($tblCooler);
+                    echo '<form method="post">';
+                    for ($i = 0; $i < $tblenght; $i++) {
+                        $pale = '';
+                        $i % 2 == 0 ? $pale = ' class="pale"':''; 
+                        echo '<tr'. $pale. '>
+                                <td>'.$tblCooler[$i]['fabricant'].'</td>
+                                <td>'.$tblCooler[$i]['modele'].'</td>
+                                <td>'.$tblCooler[$i]['dimension'].'</td>
+                                <td><input name="choixCooler" type="radio" value="'.$tblCooler[$i]['id'].'"></td>
+                            </tr>';
                     }
-            echo"</table>
-                <input type='submit' value='Confirmer Selection'>";
-                    }           
-        echo"</form>";
-    echo"</section>
-        <hr>
-        <section>
-        <h2>Support de stockage :</h2>
-        <form action='configuration.php' method='post' class='formchoixCoolermposant'>
-            <h3>Filtrer </h3>
-            <p class='selectchoixCoolermposants'> 
-                <label for='choixFabricantStockage'>Fabricant: </label>
-                <select name='choixFabricantStockage' id=''>
-                    <option value='all' selected'>Tous/Toutes</option>";
-                    $temp = array();
-                    foreach ($tblStockage as $fabricant){
-                        if(!trouverdoublon($fabricant['fabricant'], $temp)){
-                        echo"<option value='" . $fabricant['fabricant'] . "'>" . $fabricant['fabricant'] . "</option>";
-                        array_push($temp, $fabricant['fabricant']);
-                        }
-                    }
-                    unset($temp);
-            echo"</select>
+                    echo '</table><button class="btn_confirm" type="submit" value="Confirmer">Confirmer la sélection</button></form>';
+                }
+    echo '</article></section>';
 
-                <label for='choixTypeStockage'> Type de stockage  : </label>
-                <select name='choixTypeStockage' id=''>
-                    <option value='all' selected'>Tous/Toutes</option>";
-                    $temp = array();
-                    foreach ($tblStockage as $typeStockage){
-                        if(!trouverdoublon($typeStockage['typeStockage'], $temp)){
-                        echo"<option value='" . $typeStockage['typeStockage'] . "'>" . $typeStockage['typeStockage'] . "</option>";
-                        array_push($temp, $typeStockage['typeStockage']);
+    // MÉMOIRE VIVE
+    echo '<section>
+        <article class="config_filtre">
+            <table>
+                <tr><td colspan=2 class="table_top"><h2>Mémoire vive</h2></td></tr>
+                <form action="configuration.php" method="post">
+                <tr class="pale">
+                    <td><label for="choixFabricantRAM">Fabricant</label></td>
+                    <td><select name="choixFabricantRAM">
+                        <option value="all" selected>Tous / Toutes</option>';
+                        $temp = array();
+                        foreach ($tblMemoireVive as $fabricant){
+                            if (!trouverdoublon($fabricant['fabricant'], $temp)) {
+                                echo '<option value="' . $fabricant['fabricant'] . '">' . $fabricant['fabricant'] . '</option>';
+                                array_push($temp, $fabricant['fabricant']);
+                            }
                         }
-                    }
-                    unset($temp);
-            echo"</select>
-                <label for='connecterStockage'> Connecteur Stockage  : </label>
-                <select name='connecterStockage' id=''>
-                    <option value='all' selected'>Tous/Toutes</option>";
-                    $temp = array();
-                    foreach ($tblStockage as $connecteur){
-                        if(!trouverdoublon($connecteur['connecteur'], $temp)){
-                        echo"<option value='" . $connecteur['connecteur'] . "'>" . $connecteur['connecteur'] . "</option>";
-                        array_push($temp, $connecteur['connecteur']);
-                        }
-                    }
-                    unset($temp);
-            echo"</select>
-                <label for='choixRMPStockage'> Vitesse de rotation (rpm): </label>
-                <select name='choixRMPStockage' id=''>
-                    <option value='all' selected'>Tous/Toutes</option>";
-                    $temp = array();
-                    foreach ($tblStockage as $rpm){
-                        if(!trouverdoublon($rpm['rpm'], $temp)){
-                        echo"<option value='" . $rpm['rpm'] . "'>" . $rpm['rpm'] . "</option>";
-                        array_push($temp, $rpm['rpm']);
-                        }
-                    }
-                    unset($temp);
-            echo"</select>
-            </p>
-            <label for='choixCapaciteStockage'>Capacite minimale(GB): </label>
-                <input type='text' name='choixCapaciteStockage'>
-                <label for='choixTransferStockage'>Taux de transfert minimal du lecteur (mo/s) : </label>
-                <input type='text' name='choixTransferStockage'>
-            <p>
-                <input type='submit' value='Filtrer'>
-            </p>
-        </form>";
-        echo"
-        <form method ='post'>
-        <table class='tblProduits'>
-            <tr class ='tblProduits'>
-                <th>Fabricant</th>
-                <th>Modele</th>
-                <th>Type Stockage</th>
-                <th>Capacité</th>
-                <th>Vitesse de rotation (rpm)</th>
-                <th>Connecteur</th>
-                <th>Taux de transfer (mo/s)</th>
-                <th>selection</th>
-            </tr>
-            ";
-            if(isset($_SESSION['choixStockage'])){
-            echo"<h3>Composante choisie : </h3>
-                <tr class ='tblProduits'>
-                    <td>".$choixStockageockage[0]['fabricant']."</td>
-                    <td>".$choixStockageockage[0]['modele']."</td>
-                    <td>".$choixStockageockage[0]['typeStockage']."</td>
-                    <td>".$choixStockageockage[0]['capacite']."</td>
-                    <td>".$choixStockageockage[0]['rpm']."</td>
-                    <td>".$choixStockageockage[0]['connecteur']."</td>
-                    <td>".$choixStockageockage[0]['tauxTransfert']."</td>
-                    <td><input name='choixStockage' type='submit' value='Changer'></td>
+                        unset($temp); 
+                    echo '</select></td>
                 </tr>
-        </table>";
-            }else {
-            $tblenght = count($tblStockage);
-            for ($i =0; $i < $tblenght; $i++){
-            echo"<tr class ='tblProduits'>
-                    <td>".$tblStockage[$i]['fabricant']."</td>
-                    <td>".$tblStockage[$i]['modele']."</td>
-                    <td>".$tblStockage[$i]['typeStockage']."</td>
-                    <td>".$tblStockage[$i]['capacite']."</td>
-                    <td>".$tblStockage[$i]['rpm']."</td>
-                    <td>".$tblStockage[$i]['connecteur']."</td>
-                    <td>".$tblStockage[$i]['tauxTransfert']."</td>
-                    <td><input name='choixStockage' type='radio' value=".$tblStockage[$i]['id']."></td>
-                </tr>";
-            }
-    echo"</table>
-        <input type='submit' value='Confirmer Selection'>";  
-            }
-    echo"</form>";
-    echo"</section>
-    <hr>
-    <section>
-        <h2>Boitier :</h2>
-        <form action='configuration.php' method='post' class='formchoixCoolermposant'>
-            <h3>Filtrer </h3>
-            <p class='selectchoixCoolermposants'> 
-                <label for='choixFabricantBoitier'>Fabricant: </label>
-                <select name='choixFabricantBoitier' id=''>
-                    <option value='all' selected'>Tous/Toutes</option>";
-                    $temp = array();
-                    foreach ($tblBoitier as $fabricant){
-                        if(!trouverdoublon($fabricant['fabricant'], $temp)){
-                        echo"<option value='" . $fabricant['fabricant'] . "'>" . $fabricant['fabricant'] . "</option>";
-                        array_push($temp, $fabricant['fabricant']);
+                <tr>
+                    <td><label for="nbBarretesRAM">Nombre de barrettes</label></td>
+                    <td><select name="nbBarretesRAM" id="">
+                        <option value="all" selected>Tous / Toutes</option>';
+                        $temp = array();
+                        foreach ($tblMemoireVive as $nbBarrettes){
+                            if (!trouverdoublon($nbBarrettes['nbBarrettes'], $temp)) {
+                                echo"<option value='" . $nbBarrettes['nbBarrettes'] . "'>" . $nbBarrettes['nbBarrettes'] . "</option>";
+                                array_push($temp, $nbBarrettes['nbBarrettes']);
+                            }
                         }
-                    }
-                    unset($temp);
-            echo"</select>
+                        unset($temp);
+                    echo '</select></td>
+                </tr>
+                <tr class="pale">
+                    <td><label for="frequenceRAM">Fréquence (MHz)</label></td>
+                    <td><select name="frequenceRAM" id="">
+                        <option value="all" selected>Tous / Toutes</option>';
+                        $temp = array();
+                        foreach ($tblMemoireVive as $frequence){
+                            if (!trouverdoublon($frequence['frequence'], $temp)) {
+                                echo"<option value='" . $frequence['frequence'] . "'>" . $frequence['frequence'] . "</option>";
+                                array_push($temp, $frequence['frequence']);
+                            }
+                        }
+                        unset($temp);
+                    echo '</select></td>
+                </tr>
+                <tr>
+                    <td><label for="typeMemoireRAM">Type de mémoire</label></td>
+                    <td><select name="typeMemoireRAM" id="">
+                        <option value="all" selected>Tous / Toutes</option>';
+                        $temp = array();
+                        foreach ($tblMemoireVive as $typememoire){
+                            if (!trouverdoublon($typememoire['typememoire'], $temp)) {
+                                echo"<option value='" . $typememoire['typememoire'] . "'>" . $typememoire['typememoire'] . "</option>";
+                                array_push($temp, $typememoire['typememoire']);
+                            }
+                        }
+                        unset($temp);
+                    echo '</select></td>
+                </tr>
+                <tr class="pale">
+                    <td><label for="capaciteRAM">Capacité minimale (GB)</label></td>
+                    <td><input type="number" name="capaciteRAM"></tr>
+            </table>
+            <button class="btn_filtre" type="submit" value="Filtrer">Filtrer</button>
+            </form>
+        </article>';
 
-                <label for='choixTypeBoitier'>Type de Boitier (forme): </label>
-                <select name='choixTypeBoitier' id=''>
-                    <option value='all' selected'>Tous/Toutes</option>";
+        // tableau des résultats des filtres
+        echo '<article class="config_result">
+            <table>';
+            if (isset($_SESSION['choixRam'])) {
+                echo '<tr><td class="table_top" colspan=7><h2>Mémoire vive choisie</h2></td></tr>';
+            }
+            echo '<tr>
+                    <th>Fabricant</th>
+                    <th>Modèle</th>
+                    <th>Capacité (GB)</th>
+                    <th>Nombre de barrettes</th>
+                    <th>Fréquence (HMz)</th>
+                    <th>Type de mémoire</th>
+                    <th>Sélection</th>
+                </tr>';
+                if (isset($_SESSION['choixRam'])) {
+                echo '<form method="post">
+                    <tr class="pale">
+                        <td>'.$MvChoisi[0]['fabricant'].'</td>
+                        <td>'.$MvChoisi[0]['modele'].'</td>
+                        <td>'.$MvChoisi[0]['capacite'].'</td>
+                        <td>'.$MvChoisi[0]['nbBarrettes'].'</td>
+                        <td>'.$MvChoisi[0]['frequence'].'</td>
+                        <td>'.$MvChoisi[0]['typememoire'].'</td>
+                        <td><button class="btn_change" name="choixRam" type="submit" value="Changer">Changer</button></td>
+                    </tr></form></table>';
+                }
+                else {
+                    $tblenght = sizeof($tblMemoireVive);
+                    echo '<form method="post">';
+                    for ($i = 0; $i < $tblenght; $i++) {
+                        $pale = '';
+                        $i % 2 == 0 ? $pale = ' class="pale"':''; 
+                        echo '<tr'. $pale. '>
+                                <td>'.$tblMemoireVive[$i]['fabricant'].'</td>
+                                <td>'.$tblMemoireVive[$i]['modele'].'</td>
+                                <td>'.$tblMemoireVive[$i]['capacite'].'</td>
+                                <td>'.$tblMemoireVive[$i]['nbBarrettes'].'</td>
+                                <td>'.$tblMemoireVive[$i]['frequence'].'</td>
+                                <td>'.$tblMemoireVive[$i]['typememoire'].'</td>
+                                <td><input name="choixRam" type="radio" value="'.$tblMemoireVive[$i]['id'].'"></td>
+                            </tr>';
+                    }
+                    echo '</table><button class="btn_confirm" type="submit" value="Confirmer">Confirmer la sélection</button></form>';
+                }
+    echo '</article></section>';
+
+    // SUPPORT DE STOCKAGE
+    echo '<section>
+        <article class="config_filtre">
+            <table>
+                <tr><td colspan=2 class="table_top"><h2>Support de stockage</h2></td></tr>
+                <form action="configuration.php" method="post">
+                <tr class="pale">
+                    <td><label for="choixFabricantStockage">Fabricant</label></td>
+                    <td><select name="choixFabricantStockage">
+                        <option value="all" selected>Tous / Toutes</option>';
+                        $temp = array();
+                        foreach ($tblStockage as $fabricant){
+                            if (!trouverdoublon($fabricant['fabricant'], $temp)) {
+                                echo '<option value="' . $fabricant['fabricant'] . '">' . $fabricant['fabricant'] . '</option>';
+                                array_push($temp, $fabricant['fabricant']);
+                            }
+                        }
+                        unset($temp); 
+                    echo '</select></td>
+                </tr>
+                <tr>
+                    <td><label for="choixTypeStockage">Type de stockage</label></td>
+                    <td><select name="choixTypeStockage" id="">
+                        <option value="all" selected>Tous / Toutes</option>';
+                        $temp = array();
+                        foreach ($tblStockage as $typeStockage){
+                            if (!trouverdoublon($typeStockage['typeStockage'], $temp)) {
+                                echo"<option value='" . $typeStockage['typeStockage'] . "'>" . $typeStockage['typeStockage'] . "</option>";
+                                array_push($temp, $typeStockage['typeStockage']);
+                            }
+                        }
+                        unset($temp);
+                    echo '</select></td>
+                </tr>
+                <tr class="pale">
+                    <td><label for="connecterStockage">Connecteur du support</label></td>
+                    <td><select name="connecterStockage" id="">
+                        <option value="all" selected>Tous / Toutes</option>';
+                        $temp = array();
+                        foreach ($tblStockage as $connecteur){
+                            if (!trouverdoublon($connecteur['connecteur'], $temp)) {
+                                echo"<option value='" . $connecteur['connecteur'] . "'>" . $connecteur['connecteur'] . "</option>";
+                                array_push($temp, $connecteur['connecteur']);
+                            }
+                        }
+                        unset($temp);
+                    echo '</select></td>
+                </tr>
+                <tr>
+                    <td><label for="choixRMPStockage">Vitesse de rotation du disque</label></td>
+                    <td><select name="choixRMPStockage" id="">
+                        <option value="all" selected>Tous / Toutes</option>';
+                        $temp = array();
+                        foreach ($tblStockage as $rpm){
+                            if (!trouverdoublon($rpm['rpm'], $temp)) {
+                                echo"<option value='" . $rpm['rpm'] . "'>" . $rpm['rpm'] . "</option>";
+                                array_push($temp, $rpm['rpm']);
+                            }
+                        }
+                        unset($temp);
+                    echo '</select></td>
+                </tr>
+                <tr class="pale">
+                    <td><label for="choixCapaciteStockage">Capacité minimale (GB)</label></td>
+                    <td><input type="number" name="choixCapaciteStockage"></td>
+                </tr>
+                <tr>
+                    <td><label for="choixTransferStockage">Taux de transfert minimal (mo/s)</label></td>
+                    <td><input type="number" name="choixTransferStockage"></td>
+                </tr>
+            </table>
+            <button class="btn_filtre" type="submit" value="Filtrer">Filtrer</button>
+            </form>
+        </article>';
+
+        // tableau des résultats des filtres
+        echo '<article class="config_result">
+            <table>';
+            if (isset($_SESSION['choixStockage'])) {
+                echo '<tr><td class="table_top" colspan=8><h2>Support de stockage choisi</h2></td></tr>';
+            }
+            echo '<tr>
+                    <th>Fabricant</th>
+                    <th>Modèle</th>
+                    <th>Type de stockage</th>
+                    <th>Capacité</th>
+                    <th>Vitesse de rotation (rpm)</th>
+                    <th>Connecteur</th>
+                    <th>Taux de transfert (mo/s)</th>
+                    <th>Sélection</th>
+                </tr>';
+                if (isset($_SESSION['choixStockage'])) {
+                echo '<form method="post">
+                    <tr class="pale">
+                        <td>'.$choixStockageockage[0]['fabricant'].'</td>
+                        <td>'.$choixStockageockage[0]['modele'].'</td>
+                        <td>'.$choixStockageockage[0]['typeStockage'].'</td>
+                        <td>'.$choixStockageockage[0]['capacite'].'</td>
+                        <td>'.$choixStockageockage[0]['rpm'].'</td>
+                        <td>'.$choixStockageockage[0]['connecteur'].'</td>
+                        <td>'.$choixStockageockage[0]['tauxTransfert'].'</td>
+                        <td><button class="btn_change" name="choixStockage" type="submit" value="Changer">Changer</button></td>
+                    </tr></form></table>';
+                }
+                else {
+                    $tblenght = sizeof($tblStockage);
+                    echo '<form method="post">';
+                    for ($i = 0; $i < $tblenght; $i++) {
+                        $pale = '';
+                        $i % 2 == 0 ? $pale = ' class="pale"':''; 
+                        echo '<tr'. $pale. '>
+                                <td>'.$tblStockage[$i]['fabricant'].'</td>
+                                <td>'.$tblStockage[$i]['modele'].'</td>
+                                <td>'.$tblStockage[$i]['typeStockage'].'</td>
+                                <td>'.$tblStockage[$i]['capacite'].'</td>
+                                <td>'.$tblStockage[$i]['rpm'].'</td>
+                                <td>'.$tblStockage[$i]['connecteur'].'</td>
+                                <td>'.$tblStockage[$i]['tauxTransfert'].'</td>
+                                <td><input name="choixStockage" type="radio" value="'.$tblStockage[$i]['id'].'"></td>
+                            </tr>';
+                    }
+                    echo '</table><button class="btn_confirm" type="submit" value="Confirmer">Confirmer la sélection</button></form>';
+                }
+    echo '</article></section>';
+
+    // CARTE GRAPHIQUE
+    echo '<section>
+        <article class="config_filtre">
+            <table>
+                <tr><td colspan=2 class="table_top"><h2>Carte graphqiue</h2></td></tr>
+                <form action="configuration.php" method="post">
+                <tr class="pale">
+                    <td><label for="choixFabricantGPU">Fabricant</label></td>
+                    <td><select name="choixFabricantGPU">
+                        <option value="all" selected>Tous / Toutes</option>';
+                        $temp = array();
+                        foreach ($tblGpu as $fabricant){
+                            if (!trouverdoublon($fabricant['fabricant'], $temp)) {
+                                echo '<option value="' . $fabricant['fabricant'] . '">' . $fabricant['fabricant'] . '</option>';
+                                array_push($temp, $fabricant['fabricant']);
+                            }
+                        }
+                        unset($temp); 
+                    echo '</select></td>
+                </tr>
+                <tr>
+                    <td><label for="baseClock">Fréquence de base (MHz)</label></td>
+                    <td><select name="baseClock" id="">
+                        <option value="all" selected>Tous / Toutes</option>';
+                        $temp = array();
+                        foreach ($tblGpu as $frequence){
+                            if (!trouverdoublon($frequence['frequence'], $temp)) {
+                                echo"<option value='" . $frequence['frequence'] . "'>" . $frequence['frequence'] . "</option>";
+                                array_push($temp, $frequence['frequence']);
+                            }
+                        }
+                        unset($temp);
+                    echo '</select></td>
+                </tr>
+                <tr class="pale">
+                    <td><label for="chipsetGPU">Chipset</label></td>
+                    <td><select name="chipsetGPU" id="">
+                        <option value="all" selected>Tous / Toutes</option>';
+                        $temp = array();
+                        foreach ($tblGpu as $chipset){
+                            if (!trouverdoublon($chipset['chipset'], $temp)) {
+                                echo"<option value='" . $chipset['chipset'] . "'>" . $chipset['chipset'] . "</option>";
+                                array_push($temp, $chipset['chipset']);
+                            }
+                        }
+                        unset($temp);
+                    echo '</select></td>
+                </tr>
+                <tr>
+                    <td><label for="typeMemoireGpu">Type de mémoire</label></td>
+                    <td><select name="typeMemoireGpu" id="">
+                        <option value="all" selected>Tous / Toutes</option>';
+                        $temp = array();
+                        foreach ($tblGpu as $typememoireGpu){
+                            if (!trouverdoublon($typememoireGpu['typememoireGpu'], $temp)) {
+                                echo"<option value='" . $chipset['typememoireGpu'] . "'>" . $typememoireGpu['typememoireGpu'] . "</option>";
+                                array_push($temp, $typememoireGpu['typememoireGpu']);
+                            }
+                        }
+                        unset($temp);
+                    echo '</select></td>
+                </tr>
+                <tr class="pale">
+                    <td><label for="capaciteVRAM">Capacité minimale (GB)</label></td>
+                    <td><input name="capaciteVRAM" type="number"></td>
+                </tr>
+            </table>
+            <button class="btn_filtre" type="submit" value="Filtrer">Filtrer</button>
+            </form>
+        </article>';
+
+        // tableau des résultats des filtres
+        echo '<article class="config_result">
+            <table>';
+            if (isset($_SESSION['choixCarteGraphique'])) {
+                echo '<tr><td class="table_top" colspan=9><h2>Carte graphique choisie</h2></td></tr>';
+            }
+            echo '<tr>
+                    <th>Fabricant</th>
+                    <th>Modèle</th>
+                    <th>Chipset</th>
+                    <th>Capacité (GB)</th>
+                    <th>Type de mémoire</th>
+                    <th>Fréquence (MHz)</th>
+                    <th>Technologie FrameSync</th>
+                    <th>Connecteur</th>
+                    <th>Sélection</th>
+                </tr>';
+                if (isset($_SESSION['choixCarteGraphique'])) {
+                echo '<form method="post">
+                    <tr class="pale">
+                        <td>'.$choixCarteGraphique[0]['fabricant'].'</td>
+                        <td>'.$choixCarteGraphique[0]['modele'].'</td>
+                        <td>'.$choixCarteGraphique[0]['chipset'].'</td>
+                        <td>'.$choixCarteGraphique[0]['capacite'].'</td>
+                        <td>'.$choixCarteGraphique[0]['typeMemoire'].'</td>
+                        <td>'.$choixCarteGraphique[0]['frequence'].'</td>
+                        <td>'.$choixCarteGraphique[0]['frameSync'].'</td>
+                        <td>'.$choixCarteGraphique[0]['connecteur'].'</td>
+                        <td><button class="btn_change" name="choixCarteGraphique" type="submit" value="Changer">Changer</button></td>
+                    </tr></form></table>';
+                }
+                else {
+                    $tblenght = sizeof($tblGpu);
+                    echo '<form method="post">';
+                    for ($i = 0; $i < $tblenght; $i++) {
+                        $pale = '';
+                        $i % 2 == 0 ? $pale = ' class="pale"':''; 
+                        echo '<tr'. $pale. '>
+                                <td>'.$tblGpu[$i]['fabricant'].'</td>
+                                <td>'.$tblGpu[$i]['modele'].'</td>
+                                <td>'.$tblGpu[$i]['chipset'].'</td>
+                                <td>'.$tblGpu[$i]['capacite'].'</td>
+                                <td>'.$tblGpu[$i]['typeMemoire'].'</td>
+                                <td>'.$tblGpu[$i]['frequence'].'</td>
+                                <td>'.$tblGpu[$i]['frameSync'].'</td>
+                                <td>'.$tblGpu[$i]['connecteur'].'</td>
+                                <td><input name="choixCarteGraphique" type="radio" value="'.$tblGpu[$i]['id'].'"></td>
+                            </tr>';
+                    }
+                    echo '</table><button class="btn_confirm" type="submit" value="Confirmer">Confirmer la sélection</button></form>';
+                }
+    echo '</article></section>';
+            
+    // BOITIER
+    echo '<section>
+        <article class="config_filtre">
+            <table>
+            <tr><td colspan=2 class="table_top"><h2>Boitier</h2></td></tr>
+            <form action="configuration.php" method="post">
+            <tr class="pale">
+                <td><label for="choixTypeBoitier">Type de boitier (Forme)</label></td>
+                <td><select name="choixTypeBoitier">
+                    <option value="all" selected>Tous / Toutes</option>';
                     $temp = array();
                     foreach ($tblBoitier as $typeboitier){
-                        if(!trouverdoublon($typeboitier['forme'], $temp)){
-                        echo"<option value='" . $typeboitier['forme'] . "'>" . $typeboitier['typeboitier'] . "</option>";
-                        array_push($temp, $typeboitier['forme']);
+                        if(!trouverdoublon($typeboitier['typeboitier'], $temp)){
+                            echo '<option value="' . $typeboitier['typeboitier'] . '">' . $typeboitier['fabricant'] . '</option>';
+                            array_push($temp, $typeboitier['typeboitier']);
+                        }
+                    }
+                    unset($temp); 
+                echo '</select></td>
+            </tr>
+            <tr>
+                <td><label for="choixFenetreBoitier">type de fenêtre latérale</label></td>
+                <td><select name="choixFenetreBoitier" id="">
+                    <option value="all" selected>Tous / Toutes</option>';
+                    $temp = array();
+                    foreach ($tblBoitier as $typeFenetre){
+                        if (!trouverdoublon($typeFenetre['typeFenetre'], $temp)) {
+                            echo '<option value="' . $typeFenetre['typeFenetre'] . '">' . $typeFenetre['typeFenetre'] . '</option>';
+                            array_push($temp, $typeFenetre['typeFenetre']);
                         }
                     }
                     unset($temp);
-            echo"</select>
-                <label for='choixFenetreBoitier'>Type de Fenêtre  : </label>
-                <select name='choixFenetreBoitier' id=''>
-                <option value='all' selected'>Tous/Toutes</option>";
-                $temp = array();
-                foreach ($tblBoitier as $typeFenetre){
-                    if(!trouverdoublon($typeFenetre['typeFenetre'], $temp)){
-                    echo"<option value='" . $typeFenetre['typeFenetre'] . "'>" . $typeFenetre['typeFenetre'] . "</option>";
-                    array_push($temp, $typeFenetre['typeFenetre']);
-                    }
+                echo '</select></td>
+            </tr>
+            </table>
+            <button class="btn_filtre" type="submit" value="Filtrer">Filtrer</button>
+            </form>
+        </article>';
+
+        // tableau de résultats
+        echo '<article class="config_result">
+            <table>';
+            if (isset($_SESSION['choixBoitier'])) {
+                echo '<tr><td class="table_top" colspan=6><h2>Boitier choisi</h2></td></tr>';
+            }
+            echo '<tr>
+                <th>Fabricant</th>
+                <th>Modèle</th>
+                <th>Type de boitier (Forme)</th>
+                <th>Type de fenêtre latérale</th>
+                <th>Paneau USB</th>
+                <th>Sélection</th>
+            </tr>';
+            if (isset($_SESSION['choixBoitier'])){
+                echo '<form method="post">
+                    <tr class="pale">
+                        <td>'.$choixBoitier[0]['fabricant'].'</td>
+                        <td>'.$choixBoitier[0]['modele'].'</td>
+                        <td>'.$choixBoitier[0]['forme'].'</td>
+                        <td>'.$choixBoitier[0]['typeFenetre'].'</td>
+                        <td>'.$choixBoitier[0]['supportusb'].'</td>
+                        <td><button class="btn_change" name="choixBoitier" type="submit" value="Changer">Changer</button></td>
+                    </tr></form></table>';
+            }
+            else {
+                $tblenght = count($tblBoitier);
+                echo '<form method="post">';
+                for ($i = 0; $i < $tblenght; $i++) {
+                    $pale = '';
+                    $i % 2 == 0 ? $pale = ' class="pale"':''; 
+                    echo '<tr'. $pale. '>
+                        <td>'.$tblBoitier[$i]['fabricant'].'</td>
+                        <td>'.$tblBoitier[$i]['modele'].'</td>
+                        <td>'.$tblBoitier[$i]['forme'].'</td>
+                        <td>'.$tblBoitier[$i]['typeFenetre'].'</td>
+                        <td>'.$tblBoitier[$i]['supportusb'].'</td>
+                        <td><input name="choixBoitier" type="radio" value="'.$tblBoitier[$i]['id'].'"></td>
+                    </tr>';
                 }
-                unset($temp);
-                
-                echo"</select>
-            </p>
-            <p>
-                <input type='submit' value='Filtrer'>
-            </p>
-            
-        </form>";
-            echo"
-            <form method ='post'>
-            <table class='tblProduits'>
-                <tr class ='tblProduits'>
-                    <th>Fabricant</th>
-                    <th>Modele</th>
-                    <th>Type de boitier (forme)</th>
-                    <th>Type fênetre</th>
-                    <th>Paneaux USB</th>
-                    <th>selection</th>
-                </tr>
-                ";
-                if(isset($_SESSION['choixBoitier'])){
-                    echo 
-                    "<h3>Composante choisie : </h3>
-                    <tr class ='tblProduits'>
-                        <td>".$choixBoitier[0]['fabricant']."</td>
-                        <td>".$choixBoitier[0]['modele']."</td>
-                        <td>".$choixBoitier[0]['forme']."</td>
-                        <td>".$choixBoitier[0]['typeFenetre']."</td>
-                        <td>".$choixBoitier[0]['supportusb']."</td>
-                        <td><input name='choixBoitier' type='submit' value='Changer'></td>
-                    </tr>
-                    </table>";
-                }else {
-                    $tblenght = count($tblBoitier);
-                    for ($i =0; $i < $tblenght; $i++){
-                echo"<tr class ='tblProduits'>
-                            <td>".$tblBoitier[$i]['fabricant']."</td>
-                            <td>".$tblBoitier[$i]['modele']."</td>
-                            <td>".$tblBoitier[$i]['forme']."</td>
-                            <td>".$tblBoitier[$i]['typeFenetre']."</td>
-                            <td>".$tblBoitier[$i]['supportusb']."</td>
-                            <td><input name='choixBoitier' type='radio' value=".$tblBoitier[$i]['id']."></td>
-                        </tr>";
-                    }
-                echo"</table>
-                    <input type='submit' value='Confirmer Selection' >";
-                }    
-        echo"</form>";
-        echo"</section>
-        <hr>";
+                echo '</table><button class="btn_confirm" type="submit" value="Confirmer">Confirmer la sélection</button></form>';
+            }
+    echo '</article></section>';
+
+               
+    
         if(isset($_SESSION['choixCarteMere']) && $_SESSION['choixCarteMere'] != 'Changer' && isset($_SESSION['choixProcesseur']) && $_SESSION['choixProcesseur'] != 'Changer' && isset($_SESSION['choixRam']) && $_SESSION['choixRam'] != 'Changer' && isset($_SESSION['choixCarteGraphique']) && $_SESSION['choixCarteGraphique'] != 'Changer' && isset($_SESSION['choixCooler']) && $_SESSION['choixCooler'] != 'Changer' && isset($_SESSION['choixStockage']) && $_SESSION['choixStockage'] != 'Changer' &&  isset($_SESSION['choixBoitier']) && $_SESSION['choixBoitier'] != 'Changer' ){
             echo"
             <form action='configuration.php' method='post'>
@@ -923,6 +960,3 @@ echo "
 
     require_once './inc/footer.php';
 ?>
-
-
-
