@@ -1,9 +1,0 @@
-Forme carte mere - Forme boitier
-
-Socket carte mere  - Socket processeur 
-
-Type memoire carte mere - memoire vive type
-
-nbConnecteurRam carte mere >= nb barrette de ram  
-
-capacite de ram maximale carte mere > ram utiliser
