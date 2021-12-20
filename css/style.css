@@ -259,7 +259,7 @@ button {
     margin-top: 30px;
     margin-bottom: 30px;
     width: 95%;
-    border: 2px var(--gris) solid;
+    border: 1px var(--gris) solid;
 }
 
 .cdc_text {
