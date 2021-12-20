@@ -25,7 +25,7 @@ class ConfigurationManager {
                                     WHERE idConfig = :idConfig';
     
     // select les configurations d'un client (idClient)
-    const SELECT_CLIENT_CONFIGS = 'SELECT id FROM Config WHERE idClient = :idClient ORDER BY dateCreation DESC';
+    const SELECT_CLIENT_CONFIGS = 'SELECT id FROM Config WHERE idClient = :idClient ORDER BY id DESC';
 
     const SELECT_CARTEMERE = 'SELECT CONCAT(f.nom, " ", c.modele) FROM cartemere c INNER JOIN fabricant f ON f.id = c.idFabricant WHERE c.id = :id';
     const SELECT_PROCESSEUR = 'SELECT CONCAT(f.nom, " ", p.modele) FROM processeur p INNER JOIN fabricant f ON f.id = p.idFabricant WHERE p.id = :id';
