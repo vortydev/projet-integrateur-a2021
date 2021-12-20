@@ -191,12 +191,13 @@
     $hidden = isset($_SESSION['choixCarteMere'])? $hidden = ' hidden':'';
     echo '<section>
         <article class="config_filtre'. $hidden .'">
+            <form action="configuration.php" method="post">
             <table>
                 <tr><td colspan=2 class="table_top"><h2>Carte mère</h2></td></tr>
-                <form action="configuration.php" method="post">
+               
                 <tr class="pale">
                     <td><label for="choixFabricantCarte">Fabricant</label></td>
-                    <td><select name="choixFabricantCarte">
+                    <td><select id="choixFabricantCarte" name="choixFabricantCarte">
                         <option value="all" selected>Tous / Toutes</option>';
                         $temp = array();
                         foreach ($tblCarteMere as $choixFabricantCarte){
@@ -210,7 +211,7 @@
                 </tr>
                 <tr>
                     <td><label for="choixSocketCarte">Choix de socket</label></td>
-                    <td><select name="choixSocketCarte" id="">
+                    <td><select id="choixSocketCarte" name="choixSocketCarte" >
                         <option value="all" selected>Tous / Toutes</option>';
                         $temp = array();
                         foreach ($tblCarteMere as $choixSocketCarte){
@@ -224,7 +225,7 @@
                 </tr>
                 <tr class="pale">
                     <td><label for="nbConnecteruRAM">Nombre de connecteurs RAM</label></td>
-                    <td><select name="nbConnecteruRAM" id="">
+                    <td><select id="nbConnecteruRAM" name="nbConnecteruRAM" >
                         <option value="all" selected>Tous / Toutes</option>';
                         $temp = array();
                         foreach ($tblCarteMere as $nbConnecteruRAM){
@@ -238,15 +239,15 @@
                 </tr>
                 <tr>
                     <td><label for="nbCapaciteRAM">Capacité de RAM minimale</label></td>
-                    <td><input type="number" name="nbCapaciteRAM"></td>
+                    <td><input id="nbCapaciteRAM" type="number" name="nbCapaciteRAM"></td>
                 </tr>
                 <tr class="pale">
-                    <td><label for="wifiInclus">WiFi inclus</label></td>
+                    <td>WiFi inclus</td>
                     <td>
-                        <label for="wifiInclus">Oui</label>
-                        <input name="wifiInclus" type="radio" value ="Oui">
-                        <label for="wifiInclus">Non</label>
-                        <input name="wifiInclus" type="radio" value="Non">
+                        <label for="wifiInclusO">Oui</label>
+                        <input id="wifiInclusO" name="wifiInclus" type="radio" value ="Oui">
+                        <label for="wifiInclusN">Non</label>
+                        <input id="wifiInclusN" name="wifiInclus" type="radio" value="Non">
                     </td>
                 </tr>
             </table>
@@ -256,6 +257,7 @@
 
         // tableau des résultats des filtres
         echo '<article class="config_result">
+            <form method="post">
             <table>';
             if (isset($_SESSION['choixCarteMere'])) {
                 echo '<tr><td class="table_top" colspan=11><h2>Carte mère choisie</h2></td></tr>';
@@ -274,7 +276,7 @@
                     <th>Sélection</th>
                 </tr>';
                 if (isset($_SESSION['choixCarteMere'])) {
-                echo '<form method="post">
+                echo '
                     <tr class="pale">
                         <td>'.$Cartechoisie[0]['fabricant'].'</td>
                         <td>'.$Cartechoisie[0]['modele'].'</td>
@@ -287,11 +289,10 @@
                         <td>'.$Cartechoisie[0]['wifi'].'</td>
                         <td>'.$Cartechoisie[0]['supportusb'].'</td>
                         <td><button class="btn_change" name="choixCarteMere" type="submit" value="Changer">Changer</button></td>
-                    </tr></form></table>';
+                    </tr></table>';
                 }
                 else {
                     $tblenght = sizeof($tblCarteMere);
-                    echo '<form method="post">';
                     for ($i = 0; $i < $tblenght; $i++) {
                         $pale = '';
                         $i % 2 == 0 ? $pale = ' class="pale"':''; 
@@ -309,20 +310,20 @@
                                 <td><input name="choixCarteMere" type="radio" value="'.$tblCarteMere[$i]['id'].'"></td>
                             </tr>';
                     }
-                    echo '</table><button class="btn_confirm" type="submit" value="Confirmer">Confirmer la sélection</button></form>';
+                    echo '</table><button class="btn_confirm" type="submit" value="Confirmer">Confirmer la sélection</button>';
                 }
-    echo '</article></section>';
+    echo '</form></article></section>';
         
     // PROCESSEUR
     $hidden = isset($_SESSION['choixProcesseur'])? $hidden = ' hidden':'';
     echo '<section>
         <article class="config_filtre'. $hidden .'">
+            <form action="configuration.php" method="post">
             <table>
             <tr><td colspan=2 class="table_top"><h2>Processeur</h2></td></tr>
-            <form action="configuration.php" method="post">
             <tr class="pale">
                 <td><label for="choixFabricantProcesseur">Fabricant</label></td>
-                <td><select name="choixFabricantProcesseur">
+                <td><select id="choixFabricantProcesseur" name="choixFabricantProcesseur">
                     <option value="all" selected>Tous / Toutes</option>';
                     $temp = array();
                     foreach ($tblProcesseur as $fabricants){
@@ -336,7 +337,7 @@
             </tr>
             <tr>
                 <td><label for="nbCoeurs">Nombre de coeurs physique</label></td>
-                <td><select name="nbCoeurs" id="">
+                <td><select id="nbCoeurs" name="nbCoeurs" >
                     <option value="all" selected>Tous / Toutes</option>';
                     $temp = array();
                     foreach ($tblProcesseur as $nbCoeurs){
@@ -350,7 +351,7 @@
             </tr>
             <tr class="pale">
                 <td><label for="typeSocketProcessue">Type de socket</label></td>
-                <td><select name="typeSocketProcessue" id="">
+                <td><select id="typeSocketProcessue" name="typeSocketProcessue" >
                 <option value="all" selected>Tous / Toutes</option>';
                 $temp = array();
                 foreach ($tblProcesseur as $socket){
@@ -362,8 +363,10 @@
                 unset($temp);
                 echo '</select></td>
             </tr>
-            <td><label for="frequenceProcesseur">Fréquence minimale (GHz)</label></td>
-            <td><input name="frequenceProcesseur" type="number"></td>
+            <tr>
+                <td><label for="frequenceProcesseur">Fréquence minimale (GHz)</label></td>
+                <td><input id="frequenceProcesseur" name="frequenceProcesseur" type="number"></td>
+            </tr>
             </table>
             <button class="btn_filtre" type="submit" value="Filtrer">Filtrer</button>
             </form>
@@ -371,6 +374,7 @@
 
         // tableau de résultats
         echo '<article class="config_result">
+        <form method="post">
             <table>';
             if (isset($_SESSION['choixProcesseur'])) {
                 echo '<tr><td class="table_top" colspan=6><h2>Processeur choisi</h2></td></tr>';
@@ -384,7 +388,7 @@
                 <th>Sélection</th>
             </tr>';
             if (isset($_SESSION['choixProcesseur'])){
-                echo '<form method="post">
+                echo '
                     <tr class="pale">
                         <td>'.$processeurChoisi[0]['fabricant'].'</td>
                         <td>'.$processeurChoisi[0]['modele'].'</td>
@@ -392,11 +396,11 @@
                         <td>'.$processeurChoisi[0]['frequence'].'</td>
                         <td>'.$processeurChoisi[0]['socket'].'</td>
                         <td><button class="btn_change" name="choixProcesseur" type="submit" value="Changer">Changer</button></td>
-                    </tr></form></table>';
+                    </tr></table>';
             }
             else {
                 $tblenght = count($tblProcesseur);
-                echo '<form method="post">';
+               
                 for ($i = 0; $i < $tblenght; $i++) {
                     $pale = '';
                     $i % 2 == 0 ? $pale = ' class="pale"':''; 
@@ -409,20 +413,20 @@
                         <td><input name="choixProcesseur" type="radio" value="'.$tblProcesseur[$i]['id'].'"></td>
                     </tr>';
                 }
-                echo '</table><button class="btn_confirm" type="submit" value="Confirmer">Confirmer la sélection</button></form>';
+                echo '</table><button class="btn_confirm" type="submit" value="Confirmer">Confirmer la sélection</button>';
             }
-    echo '</article></section>';
+    echo '</form></article></section>';
 
     // COOLER
     $hidden = isset($_SESSION['choixCooler'])? $hidden = ' hidden':'';
     echo '<section>
+        <form action="configuration.php" method="post">
         <article class="config_filtre'.$hidden.'">
             <table>
                 <tr><td colspan=2 class="table_top"><h2>Système de refroidissement</h2></td></tr>
-                <form action="configuration.php" method="post">
                 <tr class="pale">
                     <td><label for="choixFabricantCooler">Fabricant</label></td>
-                    <td><select name="choixFabricantCooler">
+                    <td><select id="choixFabricantCooler" name="choixFabricantCooler">
                         <option value="all" selected>Tous / Toutes</option>';
                         $temp = array();
                         foreach ($tblCooler as $fabricant){
@@ -436,7 +440,7 @@
                 </tr>
                 <tr>
                     <td><label for="dimensionCooler">Dimensions (mm)</label></td>
-                    <td><select name="dimensionCooler" id="">
+                    <td><select id="dimensionCooler" name="dimensionCooler" >
                         <option value="all" selected>Tous / Toutes</option>';
                         $temp = array();
                         foreach ($tblCooler as $dimension){
@@ -450,11 +454,12 @@
                 </tr>
             </table>
             <button class="btn_filtre" type="submit" value="Filtrer">Filtrer</button>
-            </form>
-        </article>';
+            
+        </article></form>';
 
         // tableau des résultats des filtres
         echo '<article class="config_result">
+            <form method="post">
             <table>';
             if (isset($_SESSION['choixCooler'])) {
                 echo '<tr><td class="table_top" colspan=4><h2>Système de refroidissement choisi</h2></td></tr>';
@@ -466,17 +471,17 @@
                     <th>Sélection</th>
                 </tr>';
                 if (isset($_SESSION['choixCooler'])) {
-                echo '<form method="post">
+                echo '
                     <tr class="pale">
                         <td>'.$CoolerrChoisi[0]['fabricant'].'</td>
                         <td>'.$CoolerrChoisi[0]['modele'].'</td>
                         <td>'.$CoolerrChoisi[0]['dimension'].'</td>
                         <td><button class="btn_change" name="choixCooler" type="submit" value="Changer">Changer</button></td>
-                    </tr></form></table>';
+                    </tr></table>';
                 }
                 else {
                     $tblenght = sizeof($tblCooler);
-                    echo '<form method="post">';
+                    echo '';
                     for ($i = 0; $i < $tblenght; $i++) {
                         $pale = '';
                         $i % 2 == 0 ? $pale = ' class="pale"':''; 
@@ -487,20 +492,21 @@
                                 <td><input name="choixCooler" type="radio" value="'.$tblCooler[$i]['id'].'"></td>
                             </tr>';
                     }
-                    echo '</table><button class="btn_confirm" type="submit" value="Confirmer">Confirmer la sélection</button></form>';
+                    echo '</table><button class="btn_confirm" type="submit" value="Confirmer">Confirmer la sélection</button>';
                 }
-    echo '</article></section>';
+    echo '</article></form></section>';
 
     // MÉMOIRE VIVE
     $hidden = isset($_SESSION['choixRam'])? $hidden = ' hidden':'';
     echo '<section>
+        <form action="configuration.php" method="post">
         <article class="config_filtre'.$hidden.'">
             <table>
                 <tr><td colspan=2 class="table_top"><h2>Mémoire vive</h2></td></tr>
-                <form action="configuration.php" method="post">
+                
                 <tr class="pale">
                     <td><label for="choixFabricantRAM">Fabricant</label></td>
-                    <td><select name="choixFabricantRAM">
+                    <td><select id="choixFabricantRAM" name="choixFabricantRAM">
                         <option value="all" selected>Tous / Toutes</option>';
                         $temp = array();
                         foreach ($tblMemoireVive as $fabricant){
@@ -514,7 +520,7 @@
                 </tr>
                 <tr>
                     <td><label for="nbBarretesRAM">Nombre de barrettes</label></td>
-                    <td><select name="nbBarretesRAM" id="">
+                    <td><select id="nbBarretesRAM" name="nbBarretesRAM" >
                         <option value="all" selected>Tous / Toutes</option>';
                         $temp = array();
                         foreach ($tblMemoireVive as $nbBarrettes){
@@ -528,7 +534,7 @@
                 </tr>
                 <tr class="pale">
                     <td><label for="frequenceRAM">Fréquence (MHz)</label></td>
-                    <td><select name="frequenceRAM" id="">
+                    <td><select id="frequenceRAM" name="frequenceRAM" >
                         <option value="all" selected>Tous / Toutes</option>';
                         $temp = array();
                         foreach ($tblMemoireVive as $frequence){
@@ -542,7 +548,7 @@
                 </tr>
                 <tr>
                     <td><label for="typeMemoireRAM">Type de mémoire</label></td>
-                    <td><select name="typeMemoireRAM" id="">
+                    <td><select id="typeMemoireRAM" name="typeMemoireRAM" >
                         <option value="all" selected>Tous / Toutes</option>';
                         $temp = array();
                         foreach ($tblMemoireVive as $typememoire){
@@ -556,14 +562,15 @@
                 </tr>
                 <tr class="pale">
                     <td><label for="capaciteRAM">Capacité minimale (GB)</label></td>
-                    <td><input type="number" name="capaciteRAM"></tr>
+                    <td><input id="capaciteRAM" type="number" name="capaciteRAM"></tr>
             </table>
             <button class="btn_filtre" type="submit" value="Filtrer">Filtrer</button>
-            </form>
-        </article>';
+            
+        </article></form>';
 
         // tableau des résultats des filtres
         echo '<article class="config_result">
+         <form method="post">
             <table>';
             if (isset($_SESSION['choixRam'])) {
                 echo '<tr><td class="table_top" colspan=7><h2>Mémoire vive choisie</h2></td></tr>';
@@ -578,7 +585,7 @@
                     <th>Sélection</th>
                 </tr>';
                 if (isset($_SESSION['choixRam'])) {
-                echo '<form method="post">
+                echo '
                     <tr class="pale">
                         <td>'.$MvChoisi[0]['fabricant'].'</td>
                         <td>'.$MvChoisi[0]['modele'].'</td>
@@ -587,11 +594,11 @@
                         <td>'.$MvChoisi[0]['frequence'].'</td>
                         <td>'.$MvChoisi[0]['typememoire'].'</td>
                         <td><button class="btn_change" name="choixRam" type="submit" value="Changer">Changer</button></td>
-                    </tr></form></table>';
+                    </tr></table>';
                 }
                 else {
                     $tblenght = sizeof($tblMemoireVive);
-                    echo '<form method="post">';
+             
                     for ($i = 0; $i < $tblenght; $i++) {
                         $pale = '';
                         $i % 2 == 0 ? $pale = ' class="pale"':''; 
@@ -605,20 +612,21 @@
                                 <td><input name="choixRam" type="radio" value="'.$tblMemoireVive[$i]['id'].'"></td>
                             </tr>';
                     }
-                    echo '</table><button class="btn_confirm" type="submit" value="Confirmer">Confirmer la sélection</button></form>';
+                    echo '</table><button class="btn_confirm" type="submit" value="Confirmer">Confirmer la sélection</button>';
                 }
-    echo '</article></section>';
+    echo '</form></article></section>';
 
     // SUPPORT DE STOCKAGE
     $hidden = isset($_SESSION['choixStockage'])? $hidden = ' hidden':'';
     echo '<section>
         <article class="config_filtre'.$hidden.'">
+        <form action="configuration.php" method="post">
             <table>
                 <tr><td colspan=2 class="table_top"><h2>Support de stockage</h2></td></tr>
-                <form action="configuration.php" method="post">
+                
                 <tr class="pale">
                     <td><label for="choixFabricantStockage">Fabricant</label></td>
-                    <td><select name="choixFabricantStockage">
+                    <td><select id="choixFabricantStockage" name="choixFabricantStockage">
                         <option value="all" selected>Tous / Toutes</option>';
                         $temp = array();
                         foreach ($tblStockage as $fabricant){
@@ -632,7 +640,7 @@
                 </tr>
                 <tr>
                     <td><label for="choixTypeStockage">Type de stockage</label></td>
-                    <td><select name="choixTypeStockage" id="">
+                    <td><select id="choixTypeStockage" name="choixTypeStockage" >
                         <option value="all" selected>Tous / Toutes</option>';
                         $temp = array();
                         foreach ($tblStockage as $typeStockage){
@@ -646,7 +654,7 @@
                 </tr>
                 <tr class="pale">
                     <td><label for="connecterStockage">Connecteur du support</label></td>
-                    <td><select name="connecterStockage" id="">
+                    <td><select id="connecterStockage" name="connecterStockage" >
                         <option value="all" selected>Tous / Toutes</option>';
                         $temp = array();
                         foreach ($tblStockage as $connecteur){
@@ -660,7 +668,7 @@
                 </tr>
                 <tr>
                     <td><label for="choixRMPStockage">Vitesse de rotation du disque</label></td>
-                    <td><select name="choixRMPStockage" id="">
+                    <td><select id="choixRMPStockage" name="choixRMPStockage" >
                         <option value="all" selected>Tous / Toutes</option>';
                         $temp = array();
                         foreach ($tblStockage as $rpm){
@@ -674,19 +682,20 @@
                 </tr>
                 <tr class="pale">
                     <td><label for="choixCapaciteStockage">Capacité minimale (GB)</label></td>
-                    <td><input type="number" name="choixCapaciteStockage"></td>
+                    <td><input id="choixCapaciteStockage" type="number" id="choixCapaciteStockage" name="choixCapaciteStockage"></td>
                 </tr>
                 <tr>
                     <td><label for="choixTransferStockage">Taux de transfert minimal (mo/s)</label></td>
-                    <td><input type="number" name="choixTransferStockage"></td>
+                    <td><input id="choixTransferStockage" type="number" name="choixTransferStockage"></td>
                 </tr>
             </table>
             <button class="btn_filtre" type="submit" value="Filtrer">Filtrer</button>
-            </form>
-        </article>';
+            
+        </article></form>';
 
         // tableau des résultats des filtres
         echo '<article class="config_result">
+            <form method="post">
             <table>';
             if (isset($_SESSION['choixStockage'])) {
                 echo '<tr><td class="table_top" colspan=8><h2>Support de stockage choisi</h2></td></tr>';
@@ -702,7 +711,7 @@
                     <th>Sélection</th>
                 </tr>';
                 if (isset($_SESSION['choixStockage'])) {
-                echo '<form method="post">
+                echo '
                     <tr class="pale">
                         <td>'.$choixStockageockage[0]['fabricant'].'</td>
                         <td>'.$choixStockageockage[0]['modele'].'</td>
@@ -712,11 +721,11 @@
                         <td>'.$choixStockageockage[0]['connecteur'].'</td>
                         <td>'.$choixStockageockage[0]['tauxTransfert'].'</td>
                         <td><button class="btn_change" name="choixStockage" type="submit" value="Changer">Changer</button></td>
-                    </tr></form></table>';
+                    </tr></table>';
                 }
                 else {
                     $tblenght = sizeof($tblStockage);
-                    echo '<form method="post">';
+        
                     for ($i = 0; $i < $tblenght; $i++) {
                         $pale = '';
                         $i % 2 == 0 ? $pale = ' class="pale"':''; 
@@ -731,20 +740,20 @@
                                 <td><input name="choixStockage" type="radio" value="'.$tblStockage[$i]['id'].'"></td>
                             </tr>';
                     }
-                    echo '</table><button class="btn_confirm" type="submit" value="Confirmer">Confirmer la sélection</button></form>';
+                    echo '</table><button class="btn_confirm" type="submit" value="Confirmer">Confirmer la sélection</button>';
                 }
-    echo '</article></section>';
+    echo '</article></form></section>';
 
     // CARTE GRAPHIQUE
     $hidden = isset($_SESSION['choixCarteGraphique'])? $hidden = ' hidden':'';
     echo '<section>
+        <form action="configuration.php" method="post">
         <article class="config_filtre'.$hidden.'">
             <table>
                 <tr><td colspan=2 class="table_top"><h2>Carte graphqiue</h2></td></tr>
-                <form action="configuration.php" method="post">
                 <tr class="pale">
                     <td><label for="choixFabricantGPU">Fabricant</label></td>
-                    <td><select name="choixFabricantGPU">
+                    <td><select id="choixFabricantGPU" name="choixFabricantGPU">
                         <option value="all" selected>Tous / Toutes</option>';
                         $temp = array();
                         foreach ($tblGpu as $fabricant){
@@ -758,7 +767,7 @@
                 </tr>
                 <tr>
                     <td><label for="baseClock">Fréquence de base (MHz)</label></td>
-                    <td><select name="baseClock" id="">
+                    <td><select id ="baseClock" name="baseClock" >
                         <option value="all" selected>Tous / Toutes</option>';
                         $temp = array();
                         foreach ($tblGpu as $frequence){
@@ -772,7 +781,7 @@
                 </tr>
                 <tr class="pale">
                     <td><label for="chipsetGPU">Chipset</label></td>
-                    <td><select name="chipsetGPU" id="">
+                    <td><select id="chipsetGPU" name="chipsetGPU" >
                         <option value="all" selected>Tous / Toutes</option>';
                         $temp = array();
                         foreach ($tblGpu as $chipset){
@@ -786,13 +795,13 @@
                 </tr>
                 <tr>
                     <td><label for="typeMemoireGpu">Type de mémoire</label></td>
-                    <td><select name="typeMemoireGpu" id="">
+                    <td><select id="typeMemoireGpu" name="typeMemoireGpu" >
                         <option value="all" selected>Tous / Toutes</option>';
                         $temp = array();
                         foreach ($tblGpu as $typememoireGpu){
-                            if (!trouverdoublon($typememoireGpu['typememoireGpu'], $temp)) {
-                                echo"<option value='" . $chipset['typememoireGpu'] . "'>" . $typememoireGpu['typememoireGpu'] . "</option>";
-                                array_push($temp, $typememoireGpu['typememoireGpu']);
+                            if (!trouverdoublon($typememoireGpu['typeMemoire'], $temp)) {
+                                echo"<option value='" . $chipset['typeMemoire'] . "'>" . $typememoireGpu['typeMemoire'] . "</option>";
+                                array_push($temp, $typememoireGpu['typeMemoire']);
                             }
                         }
                         unset($temp);
@@ -800,15 +809,16 @@
                 </tr>
                 <tr class="pale">
                     <td><label for="capaciteVRAM">Capacité minimale (GB)</label></td>
-                    <td><input name="capaciteVRAM" type="number"></td>
+                    <td><input id="capaciteVRAM" name="capaciteVRAM" type="number"></td>
                 </tr>
             </table>
             <button class="btn_filtre" type="submit" value="Filtrer">Filtrer</button>
-            </form>
-        </article>';
+            
+        </article></form>';
 
         // tableau des résultats des filtres
         echo '<article class="config_result">
+        <form method="post">
             <table>';
             if (isset($_SESSION['choixCarteGraphique'])) {
                 echo '<tr><td class="table_top" colspan=9><h2>Carte graphique choisie</h2></td></tr>';
@@ -825,7 +835,7 @@
                     <th>Sélection</th>
                 </tr>';
                 if (isset($_SESSION['choixCarteGraphique'])) {
-                echo '<form method="post">
+                echo '
                     <tr class="pale">
                         <td>'.$choixCarteGraphique[0]['fabricant'].'</td>
                         <td>'.$choixCarteGraphique[0]['modele'].'</td>
@@ -836,11 +846,10 @@
                         <td>'.$choixCarteGraphique[0]['frameSync'].'</td>
                         <td>'.$choixCarteGraphique[0]['connecteur'].'</td>
                         <td><button class="btn_change" name="choixCarteGraphique" type="submit" value="Changer">Changer</button></td>
-                    </tr></form></table>';
+                    </tr></table>';
                 }
                 else {
                     $tblenght = sizeof($tblGpu);
-                    echo '<form method="post">';
                     for ($i = 0; $i < $tblenght; $i++) {
                         $pale = '';
                         $i % 2 == 0 ? $pale = ' class="pale"':''; 
@@ -856,20 +865,20 @@
                                 <td><input name="choixCarteGraphique" type="radio" value="'.$tblGpu[$i]['id'].'"></td>
                             </tr>';
                     }
-                    echo '</table><button class="btn_confirm" type="submit" value="Confirmer">Confirmer la sélection</button></form>';
+                    echo '</table><button class="btn_confirm" type="submit" value="Confirmer">Confirmer la sélection</button>';
                 }
-    echo '</article></section>';
+    echo '</article></form></section>';
             
     // BOITIER
     $hidden = isset($_SESSION['choixBoitier'])? $hidden = ' hidden':'';
     echo '<section>
+        <form action="configuration.php" method="post">
         <article class="config_filtre'.$hidden.'">
             <table>
             <tr><td colspan=2 class="table_top"><h2>Boitier</h2></td></tr>
-            <form action="configuration.php" method="post">
             <tr class="pale">
                 <td><label for="choixTypeBoitier">Type de boitier (Forme)</label></td>
-                <td><select name="choixTypeBoitier">
+                <td><select id="choixTypeBoitier" name="choixTypeBoitier">
                     <option value="all" selected>Tous / Toutes</option>';
                     $temp = array();
                     foreach ($tblBoitier as $typeboitier){
@@ -883,7 +892,7 @@
             </tr>
             <tr>
                 <td><label for="choixFenetreBoitier">type de fenêtre latérale</label></td>
-                <td><select name="choixFenetreBoitier" id="">
+                <td><select id="choixFenetreBoitier" name="choixFenetreBoitier" >
                     <option value="all" selected>Tous / Toutes</option>';
                     $temp = array();
                     foreach ($tblBoitier as $typeFenetre){
@@ -902,6 +911,7 @@
 
         // tableau de résultats
         echo '<article class="config_result">
+            <form method="post">
             <table>';
             if (isset($_SESSION['choixBoitier'])) {
                 echo '<tr><td class="table_top" colspan=6><h2>Boitier choisi</h2></td></tr>';
@@ -915,7 +925,7 @@
                 <th>Sélection</th>
             </tr>';
             if (isset($_SESSION['choixBoitier'])){
-                echo '<form method="post">
+                echo '
                     <tr class="pale">
                         <td>'.$choixBoitier[0]['fabricant'].'</td>
                         <td>'.$choixBoitier[0]['modele'].'</td>
@@ -923,11 +933,11 @@
                         <td>'.$choixBoitier[0]['typeFenetre'].'</td>
                         <td>'.$choixBoitier[0]['supportusb'].'</td>
                         <td><button class="btn_change" name="choixBoitier" type="submit" value="Changer">Changer</button></td>
-                    </tr></form></table>';
+                    </tr></table>';
             }
             else {
                 $tblenght = count($tblBoitier);
-                echo '<form method="post">';
+           
                 for ($i = 0; $i < $tblenght; $i++) {
                     $pale = '';
                     $i % 2 == 0 ? $pale = ' class="pale"':''; 
@@ -940,11 +950,9 @@
                         <td><input name="choixBoitier" type="radio" value="'.$tblBoitier[$i]['id'].'"></td>
                     </tr>';
                 }
-                echo '</table><button class="btn_confirm" type="submit" value="Confirmer">Confirmer la sélection</button></form>';
+                echo '</table><button class="btn_confirm" type="submit" value="Confirmer">Confirmer la sélection</button>';
             }
-    echo '</article></section>';
-
-               
+    echo '</article></form></section>';
 
         if(isset($_SESSION['choixCarteMere']) && $_SESSION['choixCarteMere'] != 'Changer' && isset($_SESSION['choixProcesseur']) && $_SESSION['choixProcesseur'] != 'Changer' && isset($_SESSION['choixRam']) && $_SESSION['choixRam'] != 'Changer' && isset($_SESSION['choixCarteGraphique']) && $_SESSION['choixCarteGraphique'] != 'Changer' && isset($_SESSION['choixCooler']) && $_SESSION['choixCooler'] != 'Changer' && isset($_SESSION['choixStockage']) && $_SESSION['choixStockage'] != 'Changer' &&  isset($_SESSION['choixBoitier']) && $_SESSION['choixBoitier'] != 'Changer' ){
             echo'
