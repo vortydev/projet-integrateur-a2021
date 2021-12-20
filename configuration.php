@@ -159,7 +159,7 @@
         {
             if(!$configManager->verificationCompatibilite($Cartechoisie[0]['socket'],$processeurChoisi[0]['socket']))
             {
-            echo"<h1>Attention : Le socket du processeur et la carte mere ne sont pas compatibiles!</h1>";
+            echo"<h2>Attention: Le socket du processeur et la carte mère ne sont pas compatibles!</h2>";
             }
         }
         //compatiblite Carte Mere et Memoire Vive
@@ -167,15 +167,15 @@
         {
             if(!$configManager->verificationCompatibilite($Cartechoisie[0]['typememoire'],$MvChoisi[0]['typememoire']))
             {
-            echo"<h1>Attention : Le socket(type de memoire) de la memoire vive et la carte mere ne sont pas compatibiles!</h1>";
+            echo"<h2>Attention: Le socket(type de memoire) de la memoire vive et la carte mere ne sont pas compatibles!</h2>";
             }
             if(!$configManager->verificationNbCompatibilite($Cartechoisie[0]['capaciteRam'],$MvChoisi[0]['capacite']))
             {
-            echo"<h1>Attention : La capacite RAM de la carte mere et la memoire vive ne sont pas compatibles!</h1>";
+            echo"<h2>Attention: La capacite RAM de la carte mere et la memoire vive ne sont pas compatibles!</h2>";
             }
             if(!$configManager->verificationNbCompatibilite($Cartechoisie[0]['nbConnecteurRam'],$MvChoisi[0]['nbBarrettes']))
             {
-            echo"<h1>Attention :Le nombre de connecteurs ram entre la carte mere et la memoire vive ne sont pas compatibles!</h1>";
+            echo"<h2>Attention: Le nombre de connecteurs ram entre la carte mere et la memoire vive ne sont pas compatibles!</h2>";
             }
         }
         //compatibilite Boitier et Carte mere
@@ -183,13 +183,14 @@
         {
             if(!$configManager->verificationCompatibilite($Cartechoisie[0]['forme'],$choixBoitier[0]['forme']))
             {
-            echo"<h1>Attention : La forme du boitier et la carte mere ne sont pas compatibles!</h1>";
+            echo"<h2>Attention: La forme du boitier et la carte mere ne sont pas compatibles!</h2>";
             }
         }
         
     // CARTE MÈRE
+    $hidden = isset($_SESSION['choixCarteMere'])? $hidden = ' hidden':'';
     echo '<section>
-        <article class="config_filtre">
+        <article class="config_filtre'. $hidden .'">
             <table>
                 <tr><td colspan=2 class="table_top"><h2>Carte mère</h2></td></tr>
                 <form action="configuration.php" method="post">
@@ -313,8 +314,9 @@
     echo '</article></section>';
         
     // PROCESSEUR
+    $hidden = isset($_SESSION['choixProcesseur'])? $hidden = ' hidden':'';
     echo '<section>
-        <article class="config_filtre">
+        <article class="config_filtre'. $hidden .'">
             <table>
             <tr><td colspan=2 class="table_top"><h2>Processeur</h2></td></tr>
             <form action="configuration.php" method="post">
@@ -412,8 +414,9 @@
     echo '</article></section>';
 
     // COOLER
+    $hidden = isset($_SESSION['choixCooler'])? $hidden = ' hidden':'';
     echo '<section>
-        <article class="config_filtre">
+        <article class="config_filtre'.$hidden.'">
             <table>
                 <tr><td colspan=2 class="table_top"><h2>Système de refroidissement</h2></td></tr>
                 <form action="configuration.php" method="post">
@@ -489,8 +492,9 @@
     echo '</article></section>';
 
     // MÉMOIRE VIVE
+    $hidden = isset($_SESSION['choixRam'])? $hidden = ' hidden':'';
     echo '<section>
-        <article class="config_filtre">
+        <article class="config_filtre'.$hidden.'">
             <table>
                 <tr><td colspan=2 class="table_top"><h2>Mémoire vive</h2></td></tr>
                 <form action="configuration.php" method="post">
@@ -606,8 +610,9 @@
     echo '</article></section>';
 
     // SUPPORT DE STOCKAGE
+    $hidden = isset($_SESSION['choixStockage'])? $hidden = ' hidden':'';
     echo '<section>
-        <article class="config_filtre">
+        <article class="config_filtre'.$hidden.'">
             <table>
                 <tr><td colspan=2 class="table_top"><h2>Support de stockage</h2></td></tr>
                 <form action="configuration.php" method="post">
@@ -731,8 +736,9 @@
     echo '</article></section>';
 
     // CARTE GRAPHIQUE
+    $hidden = isset($_SESSION['choixCarteGraphique'])? $hidden = ' hidden':'';
     echo '<section>
-        <article class="config_filtre">
+        <article class="config_filtre'.$hidden.'">
             <table>
                 <tr><td colspan=2 class="table_top"><h2>Carte graphqiue</h2></td></tr>
                 <form action="configuration.php" method="post">
@@ -855,8 +861,9 @@
     echo '</article></section>';
             
     // BOITIER
+    $hidden = isset($_SESSION['choixBoitier'])? $hidden = ' hidden':'';
     echo '<section>
-        <article class="config_filtre">
+        <article class="config_filtre'.$hidden.'">
             <table>
             <tr><td colspan=2 class="table_top"><h2>Boitier</h2></td></tr>
             <form action="configuration.php" method="post">
@@ -938,12 +945,12 @@
     echo '</article></section>';
 
                
-    
+
         if(isset($_SESSION['choixCarteMere']) && $_SESSION['choixCarteMere'] != 'Changer' && isset($_SESSION['choixProcesseur']) && $_SESSION['choixProcesseur'] != 'Changer' && isset($_SESSION['choixRam']) && $_SESSION['choixRam'] != 'Changer' && isset($_SESSION['choixCarteGraphique']) && $_SESSION['choixCarteGraphique'] != 'Changer' && isset($_SESSION['choixCooler']) && $_SESSION['choixCooler'] != 'Changer' && isset($_SESSION['choixStockage']) && $_SESSION['choixStockage'] != 'Changer' &&  isset($_SESSION['choixBoitier']) && $_SESSION['choixBoitier'] != 'Changer' ){
-            echo"
-            <form action='configuration.php' method='post'>
-                <input type='submit' name='save' value='Sauvegarder la configuration'>
-            </form>";
+            echo'
+            <form class="saveform" action="configuration.php" method="post">
+                <button class="btn_save" type="submit" name="save" value="Sauvegarder la configuration">Sauvegarder la configuration</button>
+            </form>';
         }
     }
     function trouverdoublon($mot,array $temp){
