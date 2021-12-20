@@ -139,7 +139,7 @@ footer {
     background-color: var(--bleu);
 }
 
-.blue_theme .flexnav a:hover, .blue_theme [class*="config"], .blue_theme .btn_change, .blue_theme .btn_save, .blue_theme .btn_CDC {
+.blue_theme .flexnav a:hover, .blue_theme [class*="config"], .blue_theme .btn_change, .blue_theme .btn_save, .blue_theme .btn_CDC, .blue_theme .cdc_preview, .blue_theme .cdc_ajout {
     background-color: var(--bleu_accent);
 }
 
@@ -147,7 +147,7 @@ footer {
     background-color: var(--vert);
 }
 
-.green_theme .flexnav a:hover, .green_theme [class*="config"], .green_theme .btn_change, .green_theme .btn_save, .green_theme .btn_CDC{
+.green_theme .flexnav a:hover, .green_theme [class*="config"], .green_theme .btn_change, .green_theme .btn_save, .green_theme .btn_CDC, .green_theme .cdc_preview, .green_theme .cdc_ajout{
     background-color: var(--vert_accent);
 }
 
@@ -206,7 +206,7 @@ button {
     transition: all 0.1s ease-in-out; 
 }
 
-.btn_inscription:hover, .btn_connexion:hover {
+.btn_inscription:hover, .btn_connexion:hover, .btn_CDC:hover {
     color: var(--gris);
 }
 
@@ -239,50 +239,88 @@ button {
     color: red;
 }
 
-
-/*Page Choix du chef */
-h4 {
+/* CHOIX DU CHEF */
+.cdc {
     text-align: center;
+}
+
+.cdc_break {
     margin: auto;
-}
-.split 
-{  
-   display:flex;
-   margin-top: 20px;
-}
-.split div:first-of-type {
-    width: 43%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 95%;
+    border: 2px var(--gris) solid;
 }
 
-.CDC article 
-{
-    width:75%;
+.cdc_text {
+    width: 100%;
+    font-size: 1.2rem;;
 }
-.CDC aside
-{
-    width: 25%;    
-    border: 1px;
-    border-style: solid;
-    border-color: white;
+
+.flexcdc {
+    margin-top: 15px;
+}
+
+.cdc_compos {
+    width: 75%;
+    padding: 10px;
+}
+
+.split {
+    display: flex;
     text-align: center;
+    margin-bottom: 10px;
 }
-.CDC aside div p 
+
+.split > div {
+    width: 48%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    border: 2px black solid;
+    border-radius: 5px;
+}
+
+.cdc_preview {
+    width: 25%;    
+    text-align: center;
+    border: black 2px solid;
+    border-radius: 5px;
+    background-color: var(--rouge_accent);
+    padding: 10px;
+}
+.cdc_preview div 
 {
     margin-top: 10px;
 }
 
-.CDC {
-    margin-top: 30px;
-    display: flex;
-    height: 300px;
-}
-
 .btn_CDC {
     height: auto;
-    width: 200px;
+    width: fit-content;
+    padding: 5px;
     background-color: var(--rouge_accent);
-    bottom: 0px;
     margin: auto;
+    margin-top: 5px;
+}
+
+.cdc_ajout {
+    text-decoration: none;
+    background-color: var(--rouge);
+    border-radius: 5px;
+    border: 2px black solid;
+    padding: 5px;   
+    transition: all 0.1s ease-in-out;
+    margin: auto;
+}
+
+.cdc_ajout:hover {
+    color: var(--gris);
+}
+
+.ajout_box {
+    margin-top: 15px;
+    width: 25%;
+    margin-left: auto;
 }
 
 /* SETUP PAR DÉFAULT DE TABLES */
@@ -479,25 +517,28 @@ table h3 {
     main {
         width: 90%;
     }
-    .split
-    {
+
+    /* CHOIX DU CHEF */
+    .cdc_compos, .cdc_preview {
+        width: 50%;
+    }
+
+    .split {
+        /* display: flex; */
+        /* text-align: center; */
+        margin-bottom: 0;
         flex-direction: column;
     }
-    .CDC article {
+    
+    .split > div {
+        width: 95%;
+        margin-bottom: 10px;
+    }
+
+    .ajout_box {
         width: 50%;
     }
-    .CDC aside {
-        width: 50%;
-        height: 300px;
-    }
-    .CDC 
-    {
-        height: 600px;
-    }
-    .CDC div 
-    {
-        margin-top: 10px;
-    }
+
     #f_inscription > input, #f_connexion > input 
     {
         width: 100%;

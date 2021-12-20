@@ -227,9 +227,7 @@ class Configuration {
     }
 
     public function print_All() {
-        echo
-        '
-        <article>
+        echo '<article class="cdc_compos">
             <div class="split">';
             
                 $this->get_carteMere()->print_Button();
@@ -267,8 +265,9 @@ class Configuration {
             echo '</div>';
         }
         
-        echo '</article>
-        <aside>';
+        echo '</article>';
+
+        echo '<aside class="cdc_preview">';
             $this->get_boitier()->print_Info();
             $this->get_processeur()->print_Info();
             $this->get_memoireVive()->print_Info();

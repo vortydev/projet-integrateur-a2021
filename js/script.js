@@ -256,7 +256,7 @@ for (let i = 0;i < btn_CDC.length;i++) {
 }
 
 function changementDescription(e) {
-    let divAside = document.getElementsByClassName('CDC')[0].getElementsByTagName('aside')[0].getElementsByTagName('div');
+    let divAside = document.getElementsByClassName('cdc_preview')[0].getElementsByTagName('div');
     for (let i = 0 ; i < divAside.length;i++) {
         if(!divAside[i].classList.contains('hidden'))
             divAside[i].classList.add('hidden');

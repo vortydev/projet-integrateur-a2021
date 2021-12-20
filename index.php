@@ -10,7 +10,6 @@
 <h2>Qu'attendez-vous? Commencez à configurer <em>maintenant</em>!</h2>
 
 <?php
-
     $cm  = new ConfigurationManager(PDOFactory::getMySQLConnection());
     $arrayOfId = $cm->choixDuChef(); 
     $config = new Configuration($arrayOfId);
@@ -34,7 +33,7 @@
     $config->set_carteMere($carteMere);
 
     if (isset($arrayOfId['idSupportStockage'])) {
-       $supportStockage = $cm->get_SupportStockageById($arrayOfId['idSupportStockage']);
+        $supportStockage = $cm->get_SupportStockageById($arrayOfId['idSupportStockage']);
         $config->set_supportStockage($supportStockage);
     }
     else {
@@ -45,18 +44,21 @@
         array_push($arrayObjectSupport, $supportStockage1);
         array_push($arrayObjectSupport, $supportStockage2);
         $config->set_multipleSupportStockage($arrayObjectSupport);
-    }  
-    echo '<h1><em>Le choix du chef</em></h1>';
-    echo '<h4><em>Le choix du chef est une configuration fait par nos experts et que vous pouvez ajouter à vos configurations. </em></h4>';
-    echo '<section class="CDC">';
-  
-    $config->print_All();    
-    echo '</section>';
-    if(isset($_SESSION['idClient']))
-        echo'<a class="ajoutCDC" href="./traitement.php?action=ajoutCDC">Ajouter la configuration</a>';
+    }
+
+    echo '<hr class="cdc_break">';
+    echo '<section class="cdc">
+            <div class="cdc_text">
+                <h2><em>Le choix du chef</em></h2>
+                <h3><em>Le choix du chef est une configuration fait par nos experts et que vous pouvez ajouter à vos configurations.</em></h3>
+            </div>';
+
+    echo '<div class="flexcdc">';
+    $config->print_All();
+    if (isset($_SESSION['idClient'])) {
+        echo'<div class="ajout_box"><a class="cdc_ajout" href="./traitement.php?action=ajoutCDC">Ajouter la configuration</a></div>';
+    }
+    echo '</div></section>';
     
-
-
-
     require_once './inc/footer.php';
 ?>
