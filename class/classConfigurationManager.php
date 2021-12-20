@@ -523,6 +523,7 @@ class ConfigurationManager {
         $whereClause ='';
         if(isset($filtre['choixFabricantBoitier']) && $filtre['choixFabricantBoitier'] != 'all')
         {
+            echo '<h1>'.$filtre['choixFabricantBoitier']. $whereClause.'</h1>';
             $this->ajoutFabricantQuery($whereClause,$bindParamArray,$filtre['choixFabricantBoitier']);
         }
         if(isset($filtre['choixTypeBoitier']) && $filtre['choixTypeBoitier'] != 'all')
@@ -539,6 +540,7 @@ class ConfigurationManager {
             $dbResult = $this->_bdd->query(self::SELECT_ALL_BOITIER)->fetchAll();
         }else {
             $query = $this->_bdd->prepare(self::SELECT_ALL_BOITIER." WHERE ". $whereClause);
+            // echo '<h1>'.self::SELECT_ALL_BOITIER.' WHERE '. $whereClause.'</h1>';
             $query->execute($bindParamArray);
             $dbResult = $query->fetchAll();         
         }
@@ -824,7 +826,9 @@ class ConfigurationManager {
         return $dbResult;
     }
     public function getBoitierChoisi($id){
+        
         $dbResult = $this->_bdd->query(self::SELECT_ALL_BOITIER. ' WHERE b.id ='. $id)->fetchAll();
+        
         return $dbResult;
     }
 

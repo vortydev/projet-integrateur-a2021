@@ -494,7 +494,8 @@
                     }
                     echo '</table><button class="btn_confirm" type="submit" value="Confirmer">Confirmer la sélection</button>';
                 }
-    echo '</article></form></section>';
+    echo '</form></article>
+    </section>';
 
     // MÉMOIRE VIVE
     $hidden = isset($_SESSION['choixRam'])? $hidden = ' hidden':'';
@@ -682,7 +683,7 @@
                 </tr>
                 <tr class="pale">
                     <td><label for="choixCapaciteStockage">Capacité minimale (GB)</label></td>
-                    <td><input id="choixCapaciteStockage" type="number" id="choixCapaciteStockage" name="choixCapaciteStockage"></td>
+                    <td><input id="choixCapaciteStockage" type="number" name="choixCapaciteStockage"></td>
                 </tr>
                 <tr>
                     <td><label for="choixTransferStockage">Taux de transfert minimal (mo/s)</label></td>
@@ -691,7 +692,7 @@
             </table>
             <button class="btn_filtre" type="submit" value="Filtrer">Filtrer</button>
             
-        </article></form>';
+            </form></article>';
 
         // tableau des résultats des filtres
         echo '<article class="config_result">
@@ -742,7 +743,7 @@
                     }
                     echo '</table><button class="btn_confirm" type="submit" value="Confirmer">Confirmer la sélection</button>';
                 }
-    echo '</article></form></section>';
+    echo '</form></article></section>';
 
     // CARTE GRAPHIQUE
     $hidden = isset($_SESSION['choixCarteGraphique'])? $hidden = ' hidden':'';
@@ -867,24 +868,27 @@
                     }
                     echo '</table><button class="btn_confirm" type="submit" value="Confirmer">Confirmer la sélection</button>';
                 }
-    echo '</article></form></section>';
+    echo '</form>
+        </article>
+    </section>';
             
     // BOITIER
     $hidden = isset($_SESSION['choixBoitier'])? $hidden = ' hidden':'';
     echo '<section>
-        <form action="configuration.php" method="post">
+        
         <article class="config_filtre'.$hidden.'">
+            <form action="configuration.php" method="post">
             <table>
             <tr><td colspan=2 class="table_top"><h2>Boitier</h2></td></tr>
             <tr class="pale">
-                <td><label for="choixTypeBoitier">Type de boitier (Forme)</label></td>
-                <td><select id="choixTypeBoitier" name="choixTypeBoitier">
+                <td><label for="choixFabricantBoitier">Type de boitier (Forme)</label></td>
+                <td><select id="choixFabricantBoitier" name="choixFabricantBoitier">
                     <option value="all" selected>Tous / Toutes</option>';
                     $temp = array();
-                    foreach ($tblBoitier as $typeboitier){
-                        if(!trouverdoublon($typeboitier['typeboitier'], $temp)){
-                            echo '<option value="' . $typeboitier['typeboitier'] . '">' . $typeboitier['fabricant'] . '</option>';
-                            array_push($temp, $typeboitier['typeboitier']);
+                    foreach ($tblBoitier as $formeB){
+                        if(!trouverdoublon($formeB['fabricant'], $temp)){
+                            echo '<option value="' . $formeB['fabricant'] . '">' . $formeB['fabricant'] . '</option>';
+                            array_push($temp, $formeB['fabricant']);
                         }
                     }
                     unset($temp); 
@@ -906,12 +910,14 @@
             </tr>
             </table>
             <button class="btn_filtre" type="submit" value="Filtrer">Filtrer</button>
+            
             </form>
-        </article>';
+        </article>
+        ';
 
         // tableau de résultats
         echo '<article class="config_result">
-            <form method="post">
+            <form action="configuration.php" method="post">
             <table>';
             if (isset($_SESSION['choixBoitier'])) {
                 echo '<tr><td class="table_top" colspan=6><h2>Boitier choisi</h2></td></tr>';
@@ -952,7 +958,7 @@
                 }
                 echo '</table><button class="btn_confirm" type="submit" value="Confirmer">Confirmer la sélection</button>';
             }
-    echo '</article></form></section>';
+    echo '</form></article></section>';
 
         if(isset($_SESSION['choixCarteMere']) && $_SESSION['choixCarteMere'] != 'Changer' && isset($_SESSION['choixProcesseur']) && $_SESSION['choixProcesseur'] != 'Changer' && isset($_SESSION['choixRam']) && $_SESSION['choixRam'] != 'Changer' && isset($_SESSION['choixCarteGraphique']) && $_SESSION['choixCarteGraphique'] != 'Changer' && isset($_SESSION['choixCooler']) && $_SESSION['choixCooler'] != 'Changer' && isset($_SESSION['choixStockage']) && $_SESSION['choixStockage'] != 'Changer' &&  isset($_SESSION['choixBoitier']) && $_SESSION['choixBoitier'] != 'Changer' ){
             echo'
