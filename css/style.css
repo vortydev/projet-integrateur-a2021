@@ -162,19 +162,29 @@ footer {
     width: 20px;
     display: block;
     color: white;
+    border: 1px black solid;
     border-color: black;
 }
 
 #btn_r {
     background-color: var(--rouge);
 }
+#btn_r:hover {
+    background-color: var(--rouge_accent);
+}
 
 #btn_g {
     background-color: var(--vert);
 }
+#btn_g:hover {
+    background-color: var(--vert_accent);
+}
 
 #btn_b {
     background-color: var(--bleu);
+}
+#btn_b:hover {
+    background-color: var(--bleu_accent);
 }
 
 /* POINTERS */
@@ -305,7 +315,7 @@ button {
 
 .cdc_ajout {
     text-decoration: none;
-    background-color: var(--rouge);
+    background-color: var(--rouge_accent);
     border-radius: 5px;
     border: 2px black solid;
     padding: 5px;   
