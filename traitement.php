@@ -57,5 +57,9 @@ else if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'delete_config') {
     $configManager->deleteConfig($idConfig);
 }
 
+//ajout de choix du chef
+else if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'ajoutCDC')
+    $configManager->insert_choixChef($_SESSION['idClient']);
+
 require_once './inc/footer.php';
 ?>

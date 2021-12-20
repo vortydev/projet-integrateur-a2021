@@ -559,6 +559,35 @@ class ConfigurationManager {
         return false;
     }
 
+    public function insert_choixChef(int $id) {
+       
+        //verifie si existe deja choix du chef
+        date_default_timezone_set('America/New_York');
+        $dateCreation = date("Y-m-d");
+        $bindParams = array(':dateAjd' => $dateCreation,
+                            ':id' => 3);
+        $queryResults = $this->_bdd->prepare(self::SELECT_CONFIG_WITH_DATE);
+        $queryResults->execute($bindParams);
+        $results = $queryResults->fetch();
+        
+        $bindParams2 = array (':idConfig' => $results['id']);
+        $queryResults = $this->_bdd->prepare(self::SELECT_CONFIG_STOCKAGE);
+        $queryResults->execute($bindParams2);
+        $stockage = $queryResults->fetchAll();
+        $results['idClient'] = $id;
+
+        $config = new Configuration($results);
+        
+        if(count($stockage) == 1)
+
+            $config->add_idStockage($stockage[0]['idStockage']);
+        else {
+            $config->add_idStockage($stockage[0]['idStockage']);
+            $config->add_idStockage($stockage[1]['idStockage']);
+        }
+        $this->addConfig($config);
+    } 
+
     public function ajoutFenetre(string& $whereClause, array& $bindArray, string $Fenetre){
         $whereClause .= 'b.typeFenetre=:Fenetre';
         $bindArray[':Fenetre'] = $Fenetre;
