@@ -44,6 +44,7 @@ function greenTheme() {
     let bodyTag = document.getElementsByTagName("body")[0];
     document.getElementById("csLogo").src='./img/logoG.png';
 
+
     bodyTag.classList.remove("blue_theme");
     bodyTag.classList.add("green_theme");
 

@@ -59,7 +59,10 @@ else if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'delete_config') {
 
 //ajout de choix du chef
 else if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'ajoutCDC')
+{
+    require_once './inc/header.php';
+    echo '<h1>La configuration a été ajouté avec succès<h1>';
     $configManager->insert_choixChef($_SESSION['idClient']);
-
+}
 require_once './inc/footer.php';
 ?>

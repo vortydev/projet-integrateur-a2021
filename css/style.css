@@ -139,7 +139,7 @@ footer {
     background-color: var(--bleu);
 }
 
-.blue_theme .flexnav a:hover, .blue_theme [class*="config"], .blue_theme .btn_change, .blue_theme .btn_save {
+.blue_theme .flexnav a:hover, .blue_theme [class*="config"], .blue_theme .btn_change, .blue_theme .btn_save, .blue_theme .btn_CDC {
     background-color: var(--bleu_accent);
 }
 
@@ -147,7 +147,7 @@ footer {
     background-color: var(--vert);
 }
 
-.green_theme .flexnav a:hover, .green_theme [class*="config"], .green_theme .btn_change, .green_theme .btn_save {
+.green_theme .flexnav a:hover, .green_theme [class*="config"], .green_theme .btn_change, .green_theme .btn_save, .green_theme .btn_CDC{
     background-color: var(--vert_accent);
 }
 
