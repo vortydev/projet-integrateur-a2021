@@ -139,7 +139,7 @@ footer {
     background-color: var(--bleu);
 }
 
-.blue_theme .flexnav a:hover, .blue_theme [class*="config"], .blue_theme .btn_change {
+.blue_theme .flexnav a:hover, .blue_theme [class*="config"], .blue_theme .btn_change, .blue_theme .btn_save {
     background-color: var(--bleu_accent);
 }
 
@@ -147,7 +147,7 @@ footer {
     background-color: var(--vert);
 }
 
-.green_theme .flexnav a:hover, .green_theme [class*="config"], .green_theme .btn_change {
+.green_theme .flexnav a:hover, .green_theme [class*="config"], .green_theme .btn_change, .green_theme .btn_save {
     background-color: var(--vert_accent);
 }
 
@@ -333,7 +333,7 @@ table h3 {
     padding: 5px;
 }
 
-.btn_filtre, .btn_confirm, .btn_change {
+.btn_filtre, .btn_confirm, .btn_change, .btn_save {
     color: white;
     background-color: var(--rouge);
     border-radius: 5px;
@@ -343,14 +343,20 @@ table h3 {
     transition: all 0.1s ease-in-out;
 }
 
-.btn_change {
+.btn_change, .btn_save {
     margin: 0;
     background-color: var(--rouge_accent);
     margin-top: 5px;
     margin-bottom: 5px;
 }
 
-.btn_filtre:hover, .btn_confirm:hover, .btn_change:hover {
+.saveform {
+    text-align: center;
+    margin: auto;
+    width: fit-content;
+}
+
+.btn_filtre:hover, .btn_confirm:hover, .btn_change:hover, .btn_save:hover {
     color: var(--gris);
 }
 
@@ -358,7 +364,7 @@ table h3 {
     width: 95%;
     margin: auto;
     margin-top: 15px;
-    margin-bottom: 50px;
+    margin-bottom: 15px;
     padding: 10px;
     text-align: center;
     border: black 2px solid;
