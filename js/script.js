@@ -233,7 +233,7 @@ function updateConfigsShown() {
 }
 
 function elementInView(e) {
-    return (e.getBoundingClientRect().top <= window.screen.height) && (e.getBoundingClientRect().bottom > window.screen.top);
+    return (e.getBoundingClientRect().top <= window.screen.height) && (e.getBoundingClientRect().bottom > 0);
 }
 
 function disappearRes(r) {
@@ -248,7 +248,6 @@ function appearRes(r, i) {
 
 /*fonction et event listener relie a au choix du chef */
 
-/*fonction et event listener relie a au choix du chef */
 
 let btn_CDC = document.getElementsByClassName("btn_CDC");
 for (let i = 0;i < btn_CDC.length;i++) {

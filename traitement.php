@@ -33,7 +33,7 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] == "inscription") {
     }
 }
 // CONNEXION DU CLIENT 
-else if (isset($_REQUEST['action']) && $_REQUEST['action'] == "connexion") {
+else if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'connexion') {
     
     if ($cm->connexionVerification($_REQUEST['co_email'],$_REQUEST['co_password']) == false)
     {

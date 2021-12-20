@@ -479,4 +479,37 @@ table h3 {
     main {
         width: 90%;
     }
+    .split
+    {
+        flex-direction: column;
+    }
+    .CDC article {
+        width: 50%;
+    }
+    .CDC aside {
+        width: 50%;
+        height: 300px;
+    }
+    .CDC 
+    {
+        height: 600px;
+    }
+    .CDC div 
+    {
+        margin-top: 10px;
+    }
+    #f_inscription > input, #f_connexion > input 
+    {
+        width: 100%;
+    }
+
+    .inscription, .connexion 
+    {
+        width: 80%;
+    }
+
+    .btn_inscription, .btn_connexion {
+        width: 100%;
+    }
+
 }
